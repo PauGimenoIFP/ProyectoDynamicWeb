@@ -1,4 +1,6 @@
 /*Estilos específicos de un componente*/
+@import './styles/colors.css';
+
 main {
   display: flex;
   flex-direction: column;
@@ -22,10 +24,24 @@ main {
 }
 
 /* Puedes ajustar o mantener los estilos individuales de los botones */
-.boton-izquierdo, .boton-derecho {
+.boton-izquierdo {
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
+  background-color: var(--primary-color); /* Fondo azul */
+  color: var(--text-color);         /* Texto blanco */
+  border: none;
+  border-radius: 8px;        /* Bordes redondeados */
+}
+
+.boton-derecho {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: transparent;
+  color: var(--primary-color);           /* Texto azul */
+  border: 2px solid var(--primary-color); /* Borde azul */
+  border-radius: 8px;        /* Bordes redondeados */
 }
 
 

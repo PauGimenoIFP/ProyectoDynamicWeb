@@ -1,5 +1,7 @@
 /*Estilos globales y base*/
+@import './styles/colors.css';
+
 body {
-  background-color: #000000; /* Fondo negro */
+  background-color: var(--background-color); /* Fondo negro */
   margin:0%;
 }
