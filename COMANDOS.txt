@@ -1,10 +1,10 @@
 Pasos para conectar con el repositorio:
 
 // Copiar el repositorio a tu carpeta local
-1. git clone https://github.com/Isroca23/Proyecto-safa.git
+1. git clone https://github.com/PauGimenoIFP/ProyectoDynamicWeb.git
 
 // Moverte a la carpeta del Proyecto
-2. cd Proyecto-safa
+2. cd App_Web
 
 // Entrar a tu rama de trabajo
 3. git checkout nombredelarama
@@ -33,13 +33,10 @@ Pasos para hacer un commit:
 Hacer estos comandos para poder ver la pagina
 Pasos para abrir en local:
 
-// Build de tailwind
-1. npx tailwind -i ./src/input.css -o ./src/output.css
-
 // Instalar npm
-2. npm i
+1. npm i
 
 // Ejecutar local
-3. npm run dev
+2. npm run dev
 
 
