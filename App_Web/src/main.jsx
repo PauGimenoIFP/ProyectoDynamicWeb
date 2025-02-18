@@ -1,11 +1,11 @@
 import React from 'react' 
 import ReactDOM from 'react-dom/client'
-import { App } from './App.jsx'
+import { Registration_Section } from './registration_Section.jsx'
 import './index.css'
 
 const root = ReactDOM.createRoot(document.getElementById
 ('root'))
 
 root.render(
-    <App />
+    <Registration_Section/>
 )
