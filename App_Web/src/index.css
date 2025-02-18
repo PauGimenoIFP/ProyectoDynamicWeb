@@ -6,4 +6,5 @@ body {
   background-color: var(--background-color); /* Fondo negro */
   margin:0%;
   font-family: 'Inter', sans-serif;
+  color: white;
 }
