@@ -1,4 +1,4 @@
-import './App.css'
+import './App.css';
 import logosolo from './assets/logo_dynamic_letras_blanco.png';
 
 export function Register(){
