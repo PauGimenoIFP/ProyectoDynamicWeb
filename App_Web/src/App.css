@@ -44,4 +44,16 @@ main {
   border-radius: 8px;        /* Bordes redondeados */
 }
 
+.logo-dynamic-form {
+  max-width: 15%;
+  height: auto;
+  display: block;
+  position: absolute;
+  top: 5%;
+  left: 5%;
+}
 
+.texto-titulo-form {
+  top: 17%;
+  position: absolute;
+}
