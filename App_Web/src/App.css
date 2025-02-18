@@ -1,7 +1,8 @@
 /*Estilos específicos de un componente*/
 @import './styles/colors.css';
 
-main {
+/*Componentes de Registration Section*/
+.main-registration-sectio {
   display: flex;
   flex-direction: column;
   justify-content: center; /* Centra verticalmente */
@@ -62,7 +63,9 @@ main {
   width: 250px;  
   height: 50px;    
 }
+/*------------------------------------------------------*/
 
+/*Componentes de Registration Section*/
 .logo-dynamic-form {
   max-width: 15%;
   height: auto;
@@ -76,3 +79,4 @@ main {
   top: 17%;
   position: absolute;
 }
+/*------------------------------------------------------*/
