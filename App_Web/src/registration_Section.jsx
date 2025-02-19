@@ -14,15 +14,15 @@ export function Registration_Section() {
   };
 
   return(
-    <main className = "main-registration-section">
-      <div className = "logo-container">
-        <img src={logo} className="logo-dynamic"/>
+    <main className = "main-r-s">
+      <div className = "logo-container-r-s">
+        <img src={logo} className="logo-dynamic-r-s"/>
       </div>
-      <div className="form-group">
-        <h2 className = "question">¿Tienes cuenta Admin Dynamic?</h2>
-        <div className = "button-container">
-          <button className = "boton-izquierdo" onClick={handleNewAccount}>Nueva cuenta</button>
-          <button className = "boton-derecho" onClick={handleExistingAccount}>Ya tengo una cuenta</button>
+      <div className="form-group-r-s">
+        <h2 className = "question-r-s">¿Tienes cuenta Admin Dynamic?</h2>
+        <div className = "button-container-r-s">
+          <button className = "boton-izquierdo-r-s" onClick={handleNewAccount}>Nueva cuenta</button>
+          <button className = "boton-derecho-r-s" onClick={handleExistingAccount}>Ya tengo una cuenta</button>
         </div>
       </div>
     </main>

@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 export function Login() {
 
   return(
-    <main className = "main-login">
-      <div className = "logo-container">
-        <img src={logo} className="logo-dynamic"/>
+    <main className = "main-l">
+      <div className = "logo-container-l">
+        <img src={logo} className="logo-dynamic-l"/>
       </div>
     </main>
   );
