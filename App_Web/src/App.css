@@ -2,7 +2,7 @@
 @import './styles/colors.css';
 
 /*Componentes de Registration Section*/
-.main-registration-sectio {
+.main-registration-section {
   display: flex;
   flex-direction: column;
   justify-content: center; /* Centra verticalmente */
@@ -27,10 +27,9 @@
 
 .question {
   text-align: center;
-  color: var(--text-color); 
   margin-top: 20px;
   font-size: 24px;
-  margin: 180px auto 0 auto; 
+  margin: 150px auto 0 auto; 
 }
 
 .button-container {
@@ -38,6 +37,7 @@
   justify-content: center; /* Centra los botones horizontalmente */
   align-items: center;     /* Opcional: centra verticalmente si el contenedor tiene altura */
   gap: 25px;               /* Espacio mínimo entre los botones */
+  margin: 20px auto 0 auto; 
 }
 
 .boton-izquierdo {
