@@ -70,13 +70,23 @@
   max-width: 15%;
   height: auto;
   display: block;
-  position: absolute;
+  position: relative;
   top: 5%;
   left: 5%;
 }
 
 .texto-titulo-form {
   top: 17%;
-  position: absolute;
+  position: relative;
+  justify-content: center;
+  display: flex;
+}
+
+.marco-input-form{
+  left: auto;
+}
+.input-form {
+  background-color: #282828;
+  color: #9C9C9C;
 }
 /*------------------------------------------------------*/
