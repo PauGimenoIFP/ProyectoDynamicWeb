@@ -9,18 +9,24 @@ export function SignUp_Form(){
         <h1>Datos del Centro Deportivo &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Datos del Responsable</h1>
       </div>
       <form>
-      <div className="marco-input-form">
-        <input type='text' className="input-form">
-        </input>
-        <input type='text' className="input-form">
-        </input>
-      </div>
-      <div>
-        <input type='text' className="input-form">
-        </input>
-        <input type='text' className="input-form">
-        </input>
-      </div>
+        <div className='grid-form'>
+          <div className="marco-input-form">
+            <a>Nombre del polideportivo</a>
+            <input type='text' className="input-form">
+            </input>
+            <a>Modalidad legal</a>
+            <input type='text' className="input-form">
+            </input>
+          </div>
+          <div className="marco-input-form">
+            <a>Nombre</a>
+            <input type='text' className="input-form">
+            </input>
+            <a>Primer apellido</a>
+            <input type='text' className="input-form">
+            </input>
+          </div>
+        </div>
       </form>
     </main>
   )

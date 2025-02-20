@@ -66,6 +66,10 @@
 /*------------------------------------------------------*/
 
 /*Componentes de Registration Section*/
+.main-signup-form {
+  
+}
+
 .logo-dynamic-form {
   max-width: 15%;
   height: auto;
@@ -81,13 +85,28 @@
   justify-content: center;
   display: flex;
 }
+.grid-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 
 .marco-input-form{
-  left: auto;
+  left: 10%;
+  position: relative;
+  display: flex;
+  overflow-y: auto;
+  flex-direction: column;
+  width: 90%;
+  justify-content: center;
 }
+
 .input-form {
   background-color: #282828;
   color: #9C9C9C;
+  width: 90%;  
+  height: 40px;
+  margin: 5px;
+  border-radius: 20px;
 }
 /*------------------------------------------------------*/
 
