@@ -42,7 +42,6 @@
 
 .boton-izquierdo-r-s {
   padding: 10px 20px;
-  font-size: 17px;
   cursor: pointer;
   background-color: var(--primary-color); 
   color: var(--text-color);        
@@ -54,7 +53,6 @@
 
 .boton-derecho-r-s {
   padding: 10px 20px;
-  font-size: 17px;
   cursor: pointer;
   background-color: transparent;
   color: var(--text-color);           
@@ -102,12 +100,8 @@
 }
 
 .input-s {
-  background-color: #282828;
-  color: #9C9C9C;
   width: 90%;  
-  height: 40px;
-  margin: 5px;
-  border-radius: 20px;
+  margin: 10px;
 }
 .form-s{
   left: 5%;
@@ -174,7 +168,7 @@
 }
 
 .label-email-l {
-  font-size: 17px;
+  
 }
 
 .email-l {
