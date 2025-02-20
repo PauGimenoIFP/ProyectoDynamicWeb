@@ -66,18 +66,59 @@
 /*------------------------------------------------------*/
 
 /*Componentes de Registration Section*/
-.logo-dynamic-form {
+.main-signup-s {
+  
+}
+
+.logo-dynamic-s {
   max-width: 15%;
   height: auto;
   display: block;
-  position: absolute;
+  position: relative;
   top: 5%;
   left: 5%;
 }
 
-.texto-titulo-form {
-  top: 17%;
-  position: absolute;
+.texto-titulo-s {
+  top: 10%;
+  position: relative;
+  justify-content: center;
+  display: flex;
+  margin-bottom: 10%;
+}
+.grid-s {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.marco-input-s {
+  left: 10%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  justify-content: center;
+}
+
+.input-s {
+  background-color: #282828;
+  color: #9C9C9C;
+  width: 90%;  
+  height: 40px;
+  margin: 5px;
+  border-radius: 20px;
+}
+.form-s{
+  left: 5%;
+  position: relative;
+  width: 95%;
+}
+.marco-CodTel-s{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  
 }
 /*------------------------------------------------------*/
 
