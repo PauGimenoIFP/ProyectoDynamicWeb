@@ -2,7 +2,7 @@
 @import './styles/colors.css';
 
 /*Componentes de Registration Section*/
-.main-registration-sectio {
+.main-r-s {
   display: flex;
   flex-direction: column;
   justify-content: center; /* Centra verticalmente */
@@ -10,13 +10,13 @@
   height: 100vh;
 }
 
-.logo-container {
+.logo-container-r-s {
   position: relative; /* Establece el contexto de posicionamiento para el logo */
   width: 100%;
   height: 100px; /* Ajusta la altura según lo que necesites */
 }
 
-.logo-dynamic {
+.logo-dynamic-r-s {
   position: absolute;
   top: -20px; 
   left: 50%;
@@ -25,22 +25,22 @@
   height: auto;
 }
 
-.question {
+.question-r-s {
   text-align: center;
-  color: var(--text-color); 
   margin-top: 20px;
   font-size: 24px;
-  margin: 180px auto 0 auto; 
+  margin: 150px auto 0 auto; 
 }
 
-.button-container {
+.button-container-r-s {
   display: flex;
   justify-content: center; /* Centra los botones horizontalmente */
   align-items: center;     /* Opcional: centra verticalmente si el contenedor tiene altura */
   gap: 25px;               /* Espacio mínimo entre los botones */
+  margin: 20px auto 0 auto; 
 }
 
-.boton-izquierdo {
+.boton-izquierdo-r-s {
   padding: 10px 20px;
   font-size: 17px;
   cursor: pointer;
@@ -52,7 +52,7 @@
   height: 50px;
 }
 
-.boton-derecho {
+.boton-derecho-r-s {
   padding: 10px 20px;
   font-size: 17px;
   cursor: pointer;
@@ -89,4 +89,30 @@
   background-color: #282828;
   color: #9C9C9C;
 }
+/*------------------------------------------------------*/
+
+/*Componentes de Registration Section*/
+.main-l {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente */
+  align-items: center;     /* Centra horizontalmente */
+  height: 100vh;
+}
+
+.logo-container-l {
+  position: relative; /* Establece el contexto de posicionamiento para el logo */
+  width: 100%;
+  height: 100px; /* Ajusta la altura según lo que necesites */
+}
+
+.logo-dynamic-l {
+  position: absolute;
+  top: -20px; 
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 12%;
+  height: auto;
+}
+
 /*------------------------------------------------------*/
