@@ -12,26 +12,26 @@ export function SignUp_Form(){
               <h1>Datos del Centro Deportivo</h1>
             </div>
             <div className='form-s'>
-              <a>Nombre del polideportivo</a>
+              <label>Nombre del polideportivo</label>
               <input type='text' className="input-s">
               </input>
-              <a>Modalidad legal</a>
+              <label>Modalidad legal</label>
               <input type='text' className="input-s">
               </input>
-              <a>Identificador Fiscal (NIF/CIF)</a>
+              <label>Identificador Fiscal (NIF/CIF)</label>
               <input type='text' className="input-s">
               </input>
-              <a>Dirección completa</a>
+              <label>Dirección completa</label>
               <input type='text' className="input-s">
               </input>
               <div className='grid-s'>
                 <div className='marco-CodTel-s'>
-                  <a>Código Postal</a>
+                  <label>Código Postal</label>
                   <input type='text' className="input-s">
                   </input>
                 </div>
                 <div className='marco-CodTel-s'>
-                  <a>Teléfono</a>
+                  <label>Teléfono</label>
                   <input type='text' className="input-s">
                   </input>
                 </div>
@@ -43,19 +43,19 @@ export function SignUp_Form(){
               <h1>Datos del Responsable</h1>
             </div>
             <div className='form-s'>
-              <a>Nombre</a>
+              <label>Nombre</label>
               <input type='text' className="input-s">
               </input><br></br>
-              <a>Primer apellido</a>
+              <label>Primer apellido</label>
               <input type='text' className="input-s">
               </input>
-              <a>Segundo apellido</a>
+              <label>Segundo apellido</label>
               <input type='text' className="input-s">
               </input>
-              <a>Correo electronico</a>
+              <label>Correo electronico</label>
               <input type='text' className="input-s">
               </input>
-              <a>Contraseña</a>
+              <label>Contraseña</label>
               <input type='text' className="input-s">
               </input>
             </div>
