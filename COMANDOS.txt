@@ -28,7 +28,11 @@ Pasos para hacer un commit:
 4. git push origin nombre_rama
 
 
+Si no te deja hacer el pull:
+// con esto guardas los cambios que tengas
+1. git stash 
 
+2. git pull origin main
 
 Hacer estos comandos para poder ver la pagina
 Pasos para abrir en local:
