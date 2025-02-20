@@ -10,7 +10,7 @@
   height: 100vh;
 }
 
-.logo-container-r-s {
+.container-logo-r-s {
   position: relative; /* Establece el contexto de posicionamiento para el logo */
   width: 100%;
   height: 100px; /* Ajusta la altura según lo que necesites */
@@ -32,7 +32,7 @@
   margin: 150px auto 0 auto; 
 }
 
-.button-container-r-s {
+.container-boton-r-s {
   display: flex;
   justify-content: center; /* Centra los botones horizontalmente */
   align-items: center;     /* Opcional: centra verticalmente si el contenedor tiene altura */
@@ -64,6 +64,7 @@
   height: 50px;    
 }
 /*------------------------------------------------------*/
+
 
 /*Componentes de Registration Section*/
 .main-signup-s {
@@ -122,7 +123,8 @@
 }
 /*------------------------------------------------------*/
 
-/*Componentes de Registration Section*/
+
+/*Componentes de Login*/
 .main-l {
   display: flex;
   flex-direction: column;
@@ -131,19 +133,86 @@
   height: 100vh;
 }
 
-.logo-container-l {
-  position: relative; /* Establece el contexto de posicionamiento para el logo */
-  width: 100%;
-  height: 100px; /* Ajusta la altura según lo que necesites */
+.container-login-l {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--background-color); /* Por ejemplo, negro */
 }
 
-.logo-dynamic-l {
-  position: absolute;
-  top: -20px; 
-  left: 50%;
-  transform: translateX(-50%);
-  max-width: 12%;
-  height: auto;
+/* Sección del logo: se desplaza ligeramente hacia arriba */
+.container-logo-l {
+  transform: translateY(-10%); /* Ajusta este valor según necesites */
 }
+
+/* El logo se mantiene centrado en su sección */
+.logo-dynamic-l {
+  max-width: 200px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Sección del formulario: separada del logo */
+.container-formulario-l {
+  margin-left: 100px;
+}
+
+/* Título de la sección de login */
+.titulo-l {
+  color: var(--text-color);
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+
+/* Estilos para el formulario de login */
+.formulario-l {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.label-email-l {
+  font-size: 17px;
+}
+
+.email-l {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 30px;
+  width: 300px;     
+  height: 20px;
+  border: 1px solid #282828;
+  background-color: var(--inputs);
+  color: var(--text-color);
+}
+
+.label-contraseña-l {
+  font-size: 17px;
+}
+
+.contraseña-l {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 30px;
+  width: 300px;     
+  height: 20px;
+  border: 1px solid #282828;
+  background-color: var(--inputs);
+  color: var(--text-color);
+  margin-bottom: 20px; 
+}
+
+.boton-entrar-l {
+  padding: 10px;
+  font-size: 17px;
+  border-radius: 30px;
+  background-color: var(--primary-color);
+  border: none;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
 
 /*------------------------------------------------------*/
