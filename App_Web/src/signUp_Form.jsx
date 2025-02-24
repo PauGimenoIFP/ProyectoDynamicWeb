@@ -23,26 +23,34 @@ export function SignUp_Form(){
             </div>
             <div className='form-s'>
               <label>Nombre del polideportivo</label>
+              <br></br>
               <input type='text' className="input-s" id="nomGym">
               </input>
+              <br></br>
               <label>Modalidad legal</label>
+              <br></br>
               <input type='text' className="input-s" id="modalidad">
               </input>
+              <br></br>
               <label>Identificador Fiscal (NIF/CIF)</label>
+              <br></br>
               <input type='text' className="input-s" id="NIF/CIF">
               </input>
+              <br></br>
               <label>Dirección completa</label>
+              <br></br>
               <input type='text' className="input-s" id="direccion">
               </input>
+              <br></br>
               <div className='grid-s'>
                 <div className='marco-CodTel-s'>
                   <label>Código Postal</label>
-                  <input type='text' className="input-s" id="codPostal">
+                  <input type='number' className="input-s" id="codPostal" max={99999}>
                   </input>
                 </div>
                 <div className='marco-CodTel-s'>
                   <label>Teléfono</label>
-                  <input type='text' className="input-s" id="telefono">
+                  <input type='number' className="input-s" id="telefono" max={999999999}>
                   </input>
                 </div>
               </div>
@@ -54,18 +62,27 @@ export function SignUp_Form(){
             </div>
             <div className='form-s'>
               <label>Nombre</label>
+              <br></br>
               <input type='text' className="input-s" id="nom">
-              </input><br></br>
+              </input>
+              <br></br>
               <label>Primer apellido</label>
+              <br></br>
               <input type='text' className="input-s" id="primerApellido">
               </input>
+              <br></br>
               <label>Segundo apellido</label>
+              <br></br>
               <input type='text' className="input-s" id="segundoApellido">
               </input>
+              <br></br>
               <label>Correo electronico</label>
+              <br></br>
               <input type='text' className="input-s" id="email">
               </input>
+              <br></br>
               <label>Contraseña</label>
+              <br></br>
               <input type='password' className="input-s" id="contraseña">
               </input>
             </div>
