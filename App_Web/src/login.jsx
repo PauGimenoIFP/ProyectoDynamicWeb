@@ -3,7 +3,11 @@ import logo from './assets/logo_dynamic_blanco.png';
 import { useNavigate } from 'react-router-dom';
 
 export function Login() {
+  const navigate = useNavigate();
 
+  const handleNewAccount = () => {
+    navigate('/Package_Payment');
+  };
   return(
     <main className="main-l">
       <div className="container-login-l">
@@ -17,7 +21,7 @@ export function Login() {
             <input className="email-l" placeholder=" Obligatorio" required />
             <label className="label-contraseña-l">Contraseña</label>
             <input className="contraseña-l" type="password" placeholder=" Obligatorio" required />
-            <button className="boton-entrar-l" type="submit">Entrar</button>
+            <button className="boton-entrar-l" type="submit"onClick={handleNewAccount}>Entrar</button>
           </form>
         </div>
       </div>

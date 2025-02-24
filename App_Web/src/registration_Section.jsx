@@ -6,11 +6,11 @@ export function Registration_Section() {
   const navigate = useNavigate();
 
   const handleNewAccount = () => {
-    navigate('/signup');
+    navigate('/SignUp_Form');
   };
 
   const handleExistingAccount = () => {
-    navigate('/login');
+    navigate('/Login');
   };
 
   return(

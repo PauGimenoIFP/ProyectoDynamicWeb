@@ -9,16 +9,20 @@ body {
   color: white;
   font-size: 17px;
 }
+
 button{
   font-size: 17px;
   font-weight: bold;
 }
+
 a {
   font-size: 17px;
 }
+
 label {
   font-size: 17px;
 }
+
 input {
   border: 1px solid #282828;
   border-radius: 30px;
