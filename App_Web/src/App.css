@@ -69,29 +69,41 @@
   
 }
 
+.img-container-s {
+  display: flex;
+  gap: 10px;
+}
+
+.arrow-back-s {
+  display: block;
+  position: relative;
+  width: 54px;
+  height: 54px;
+  cursor: pointer;
+}
+
 .logo-dynamic-s {
   max-width: 15%;
   height: auto;
   display: block;
   position: relative;
-  top: 5%;
-  left: 5%;
+  top: 10%;
 }
 
 .texto-titulo-s {
-  top: 10%;
   position: relative;
   justify-content: center;
   display: flex;
-  margin-bottom: 10%;
+  margin-bottom: 2%;
 }
+
 .grid-s {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
 
 .marco-input-s {
-  left: 10%;
+  left: 5%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -103,11 +115,16 @@
   width: 90%;  
   margin: 10px;
 }
+
 .form-s{
   left: 5%;
   position: relative;
   width: 95%;
+  label {
+    margin-left: 15px;
+  }
 }
+
 .marco-CodTel-s{
   position: relative;
   display: flex;
@@ -115,6 +132,39 @@
   width: 90%;
   
 }
+
+.btn-save-s {
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: var(--primary-color); 
+  color: var(--text-color);        
+  border: none;
+  border-radius: 30px;    
+  width: 200px;     
+  height: 50px;
+  margin-top: 30px;
+  position: relative;
+  margin-left: auto;
+  margin-right: 40px;
+}
+
+.btn-container-s {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.separador-s {
+  position: absolute;
+  left: 50%; /* Lo centra horizontalmente */
+  top: 12%; /* Baja un poco desde el inicio */
+  transform: translateX(-50%); /* Ajuste fino para centrar bien */
+  width: 3px;
+  height: 75vh;
+  background-color: rgb(105, 105, 105);
+  border-radius: 5px;
+}
+
 /*------------------------------------------------------*/
 
 
