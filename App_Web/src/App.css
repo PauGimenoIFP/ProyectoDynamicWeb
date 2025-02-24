@@ -171,8 +171,216 @@
 .main-p-p{
 }
 
+.container-paquetes-p-p {
+  display: flex;
+  justify-content: center;
+  gap: 40px; /* Espacio entre tarjetas */
+  padding: 20px;
+}
+
+.paquete-basico-p-p {
+  background-color: transparent; 
+  border-radius: 25px;      /* Bordes redondeados */
+  border: 2px solid var(--secondary-color);  
+  /*box-shadow: 0 2px 5px rgba(147, 35, 239, 0.1);*/
+  padding: 20px;
+  width: 240px;             /* Ancho fijo para uniformidad */
+  height: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 17px;  
+}
+
+.header-basico-p-p {
+  font-size: 23px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.trecientos-basico-p-p {
+  color: var(--primary-color);
+}
+
+.separador-basico-p-p {
+  width: 100%;
+  border: none;
+  border-top: 2px solid var(--secondary-color);
+  margin-bottom: 0px;
+}
+
+.body-basico-p-p {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.precio-basico-p-p {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.funcionalidades-basico-p-p {
+  font-size: 18px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.funcionalidades-basico-p-p li {
+  margin-bottom: 5px;
+}
+
+.boton-basico-p-p{
+  background-color: transparent;
+  color: var(--text-color);
+  border: 2px solid var(--secondary-color);
+  padding: 10px 50px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
 
 
+.paquete-premium-p-p {
+  background-color: transparent; 
+  border-radius: 25px;      /* Bordes redondeados */
+  border: 3px solid var(--primary-color);  
+  /*box-shadow: 0 2px 5px rgba(147, 35, 239, 0.1);*/
+  padding: 20px;
+  width: 255px;             /* Ancho fijo para uniformidad */
+  height: 390px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header-premium-p-p {
+  font-size: 23px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.ilimitados-premium-p-p {
+  color: var(--primary-color);
+}
+
+.separador-premium-p-p {
+  width: 100%;
+  border: none;
+  border-top: 3px solid var(--primary-color);
+  margin-bottom: 0px;
+}
+
+.body-premium-p-p {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.precio-premium-p-p {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.funcionalidades-premium-p-p {
+  font-size: 18px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.funcionalidades-premium-p-p li {
+  margin-bottom: 5px;
+}
+
+.funcionalidades-premium-p-p lo {
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+
+.boton-premium-p-p{
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: 2px solid var(--primary-color);
+  padding: 10px 50px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+
+.paquete-medio-p-p {
+  background-color: transparent; 
+  border-radius: 25px;      /* Bordes redondeados */
+  border: 2px solid var(--secondary-color);  
+  /*box-shadow: 0 2px 5px rgba(147, 35, 239, 0.1);*/
+  padding: 20px;
+  width: 240px;             /* Ancho fijo para uniformidad */
+  height: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 19px;  
+}
+
+.header-medio-p-p {
+  font-size: 23px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.quinietos-medio-p-p {
+  color: var(--primary-color);
+}
+
+.separador-medio-p-p {
+  width: 100%;
+  border: none;
+  border-top: 2px solid var(--secondary-color);
+  margin-bottom: 0px;
+}
+
+.body-medio-p-p {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.precio-medio-p-p {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.funcionalidades-medio-p-p {
+  font-size: 18px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.funcionalidades-medio-p-p li {
+  margin-bottom: 5px;
+}
+
+.boton-medio-p-p{
+  background-color: transparent;
+  color: var(--text-color);
+  border: 2px solid var(--secondary-color);
+  padding: 10px 50px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
 /*------------------------------------------------------*/
 
 
