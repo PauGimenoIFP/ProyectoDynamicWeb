@@ -1,7 +1,13 @@
 import './App.css'
 import logosolo from './assets/logo_dynamic_letras_blanco.png';
+import { useNavigate } from 'react-router-dom';
 
 export function Package_Payment(){
+  const navigate = useNavigate();
+
+  const goToForm = () => {
+    navigate('/Package_Payment2');
+};
   return (
     <main className = "main-p-p">
       <img src={logosolo} className='logo-dynamic-s'/>
@@ -41,7 +47,7 @@ export function Package_Payment(){
               <lo> y muchos mas...</lo>
             </ul>
           </div>
-          <button className="boton-premium-p-p">Empezar</button>
+          <button className="boton-premium-p-p" onClick={goToForm}>Empezar</button>
         </div>
         
         <div className="paquete-medio-p-p">

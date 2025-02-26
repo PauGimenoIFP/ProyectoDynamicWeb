@@ -1,6 +1,8 @@
 import './App.css'
 import logosolo from './assets/logo_dynamic_letras_blanco.png';
 import arrow from './assets/arrow-back.png';
+import visamc from './assets/visa-MC-logo.png';
+import amex from './assets/amex-icon.png';
 import { useNavigate } from 'react-router-dom';
 
 export function Package_Payment2(){
@@ -11,10 +13,10 @@ export function Package_Payment2(){
     };
     return (
         <main>
-            <div className='img-container-s'>
-                <div className='boton-atras-s'>
+            <div className='boton-atras-s'>
                 <img src={arrow} className='arrow-back-s' onClick={goToPlans}/>
-                </div>
+            </div>
+            <div className='img-container-s'>
                 <img src={logosolo} className='logo-dynamic-s'/>
             </div>
             <div className="separador-p-p-2"></div>
@@ -27,7 +29,8 @@ export function Package_Payment2(){
                     <h1>Pagos</h1>
                 </div>
                 <div className="texto-titulo-s">
-                    <h1>Fotos pago</h1>
+                    <img src={visamc} className='imagen-visa-p-p-2'/>
+                    <img src={amex} className='imagen-visa-p-p-2'/>
                 </div>
             </div>
             <div className='grid-s'>
@@ -74,6 +77,9 @@ export function Package_Payment2(){
                 </div>
             </div>
             </form>
+            <div className='btn-container-s'>
+                <button className='btn-save-p-p-2'>Confirmar</button>
+            </div>
         </main>
     )
 }
