@@ -1,6 +1,6 @@
 import './App.css'
 import logosolo from './assets/logo_dynamic_letras_blanco.png';
-import arrow from './assets/circulo-flecha.png';
+import arrow from './assets/arrow-back.png';
 import { useNavigate } from 'react-router-dom';
 
 export function SignUp_Form(){

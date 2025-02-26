@@ -1,6 +1,6 @@
 import './App.css'
 import logosolo from './assets/logo_dynamic_letras_blanco.png';
-import arrow from './assets/circulo-flecha.png';
+import arrow from './assets/arrow-back.png';
 import { useNavigate } from 'react-router-dom';
 
 export function Package_Payment2(){
@@ -12,7 +12,9 @@ export function Package_Payment2(){
     return (
         <main>
             <div className='img-container-s'>
+                <div className='boton-atras-s'>
                 <img src={arrow} className='arrow-back-s' onClick={goToPlans}/>
+                </div>
                 <img src={logosolo} className='logo-dynamic-s'/>
             </div>
             <div className="separador-p-p-2"></div>
