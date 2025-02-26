@@ -1,6 +1,6 @@
 import './App.css'
 import logosolo from './assets/logo_dynamic_letras_blanco.png';
-import arrow from './assets/arrow-back.png'
+import arrow from './assets/circulo-flecha.png';
 import { useNavigate } from 'react-router-dom';
 
 export function SignUp_Form(){
@@ -9,6 +9,9 @@ export function SignUp_Form(){
   const goToStart = () => {
     navigate('/');
   };
+  const goToPlans = () => {
+    navigate('/Package_Payment');
+};
   return (
     <main className = "main-signup-s">
       <div className='boton-atras-s'>
@@ -93,7 +96,7 @@ export function SignUp_Form(){
       </form>
       <div className="separador-s"></div>
       <div className='btn-container-s'>
-        <button className='btn-save-s'>Confirmar</button>
+        <button className='btn-save-s' onClick={goToPlans}>Confirmar</button>
       </div>
     </main>
   )

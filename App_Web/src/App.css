@@ -85,6 +85,8 @@
   width: 60px;
   height: auto;
   cursor: pointer;
+  margin-top: 25px;
+  margin-left: 10px;
 }
 
 .logo-dynamic-s {
@@ -148,11 +150,11 @@
   border-radius: 30px;    
   width: 200px;     
   height: 50px;
-  margin-top: 30px;
+  margin-top: 10px;
   position: relative;
   margin-left: auto;
   margin-right: 5%;
-}
+  }
 
 .btn-container-s {
   display: flex;
@@ -388,7 +390,48 @@
   font-size: 16px;
 }
 /*------------------------------------------------------*/
+/*Componentes de Package_Payment2*/
 
+.grid-p-p-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.separador-p-p-2 {
+  position: absolute;
+  left: 40%; /* Lo centra horizontalmente */
+  top: 20%; /* Baja un poco desde el inicio */
+  transform: translateX(-50%); /* Ajuste fino para centrar bien */
+  width: 3px;
+  height: 75vh;
+  background-color: rgb(105, 105, 105);
+  border-radius: 5px;
+}
+
+.texto-titulo-p-p-2 {
+  position: relative;
+  justify-content: center;
+  display: flex;
+  margin-bottom: 2%;
+  margin-left: 15%;
+}
+
+.marco-input-p-p-2 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 77%;
+  label {
+    margin-left: 15px;
+  }
+}
+
+.centrar-caja-p-p-2 {
+  place-items: center;
+}
+
+/*------------------------------------------------------*/
 
 /*Componentes de Login*/
 .main-l {
