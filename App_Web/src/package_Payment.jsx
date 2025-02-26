@@ -5,8 +5,14 @@ import { useNavigate } from 'react-router-dom';
 export function Package_Payment(){
   const navigate = useNavigate();
 
-  const goToForm = () => {
+  const goToForm1 = () => {
+    navigate('/Package_Payment1');
+};
+  const goToForm2 = () => {
     navigate('/Package_Payment2');
+};
+  const goToForm3 = () => {
+    navigate('/Package_Payment3');
 };
   return (
     <main className = "main-p-p">
@@ -29,7 +35,7 @@ export function Package_Payment(){
               <li>✓ Creacion y asignacion de rutinas.</li>
             </ul>
           </div>
-          <button className="boton-basico-p-p">Empezar</button>
+          <button className="boton-basico-p-p" onClick={goToForm1}>Empezar</button>
         </div>
         
         <div className="paquete-premium-p-p">
@@ -47,7 +53,7 @@ export function Package_Payment(){
               <lo> y muchos mas...</lo>
             </ul>
           </div>
-          <button className="boton-premium-p-p" onClick={goToForm}>Empezar</button>
+          <button className="boton-premium-p-p" onClick={goToForm2}>Empezar</button>
         </div>
         
         <div className="paquete-medio-p-p">
@@ -64,7 +70,7 @@ export function Package_Payment(){
               <li>✓ Creacion y asignacion de rutinas.</li>
             </ul>
           </div>
-          <button className="boton-medio-p-p">Empezar</button>
+          <button className="boton-medio-p-p" onClick={goToForm3}>Empezar</button>
         </div>
       </section>
     </main>
