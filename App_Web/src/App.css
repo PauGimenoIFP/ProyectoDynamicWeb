@@ -64,27 +64,33 @@
 /*------------------------------------------------------*/
 
 
-/*Componentes de Registration Section*/
+/*Componentes de SingUp Form*/
 .main-signup-s {
+}
+
+.boton-atras-s{
+  margin-left: 15px;
+  margin-top: 10px;
 }
 
 .img-container-s {
   display: flex;
-  gap: 1%;
+  gap: 2%;
+  margin-left: 70px;
 }
 
 .arrow-back-s {
   display: block;
   position: relative;
-  width: 44px;
-  height: 44px;
+  width: 60px;
+  height: auto;
   cursor: pointer;
   margin-top: 25px;
   margin-left: 10px;
 }
 
 .logo-dynamic-s {
-  margin-top: 40px;
+  margin-top: -19px;
   max-width: 15%;
   height: auto;
   display: block;
@@ -159,11 +165,11 @@
 .separador-s {
   position: absolute;
   left: 50%; /* Lo centra horizontalmente */
-  top: 12%; /* Baja un poco desde el inicio */
+  top: 260px; /* Baja un poco desde el inicio */
   transform: translateX(-50%); /* Ajuste fino para centrar bien */
   width: 3px;
-  height: 75vh;
-  background-color: rgb(105, 105, 105);
+  height: 50vh;
+  background-color: var(--secondary-color);
   border-radius: 5px;
 }
 
@@ -436,6 +442,21 @@
   height: 100vh;
 }
 
+.back-button {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10; /* Para asegurarse de que esté por encima del resto */
+}
+
+.back-button img {
+  width: 70px; /* Ajusta el tamaño según lo necesites */
+  height: auto;
+}
+
 .container-login-l {
   display: flex;
   justify-content: center;
@@ -476,10 +497,6 @@
   gap: 15px;
 }
 
-.label-email-l {
-  
-}
-
 .email-l {
   padding: 10px;
   font-size: 16px;
@@ -489,10 +506,6 @@
   border: 1px solid #282828;
   background-color: var(--inputs);
   color: var(--text-color);
-}
-
-.label-contraseña-l {
-  font-size: 17px;
 }
 
 .contraseña-l {
@@ -516,6 +529,4 @@
   cursor: pointer;
   color: var(--text-color);
 }
-
-
 /*------------------------------------------------------*/

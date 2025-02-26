@@ -14,11 +14,13 @@ export function SignUp_Form(){
 };
   return (
     <main className = "main-signup-s">
-      <div className='img-container-s'>
-      <img src={arrow} className='arrow-back-s' onClick={goToStart}/>
-      <img src={logosolo} className='logo-dynamic-s'/>
+      <div className='boton-atras-s'>
+        <img src={arrow} className='arrow-back-s' onClick={goToStart}/>
       </div>
-      <form>
+      <div className='img-container-s'>
+        <img src={logosolo} className='logo-dynamic-s'/>
+      </div>
+      <form className="container-formulario-s">
         <div className='grid-s'>
           <div className="marco-input-s">
             <div className="texto-titulo-s">
