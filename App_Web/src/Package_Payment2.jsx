@@ -25,7 +25,7 @@ export function Package_Payment2(){
             </div>
             <div className="separador-p-p-2"></div>
             <form>
-            <div className='grid-p-p-3'>
+            <div className='grid-p-p-2'>
                 <div className="texto-titulo-p-p-2" >
                     <h1>Tu paquete</h1>
                 </div>
