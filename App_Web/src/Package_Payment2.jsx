@@ -20,12 +20,12 @@ export function Package_Payment2(){
             <div className='boton-atras-s'>
                 <img src={arrow} className='arrow-back-s' onClick={goToPlans}/>
             </div>
-            <div className='img-container-s'>
+            <div className='img-container-p-p-2'>
                 <img src={logosolo} className='logo-dynamic-s'/>
             </div>
             <div className="separador-p-p-2"></div>
             <form>
-            <div className='grid-p-p-2'>
+            <div className='grid-p-p-3'>
                 <div className="texto-titulo-p-p-2" >
                     <h1>Tu paquete</h1>
                 </div>
@@ -37,7 +37,7 @@ export function Package_Payment2(){
                     <img src={amex} className='imagen-visa-p-p-2'/>
                 </div>
             </div>
-            <div className='grid-s'>
+            <div className='grid-p-p-3'>
                 <div className="marco-input-p-p-2">
                     <div className='centrar-caja-p-p-2'>
                         <div className="paquete-premium-p-p">
@@ -61,27 +61,27 @@ export function Package_Payment2(){
                 </div>
                 <div className="marco-input-p-p-2">
                     <label>Nombre del titular de la tarjeta</label>
-                    <input type="text" id="titular" className='input-s'></input>
+                    <input type="text" id="titular" className='input-p-p-2'></input>
                     <label>Numero de la tarjeta</label>
-                    <input type="text" id="numTarjeta" className='input-s'></input>
-                    <div className='grid-s'>
-                        <div className='marco-CodTel-s'>
+                    <input type="text" id="numTarjeta" className='input-p-p-2'></input>
+                    <div className='grid-p-p-3'>
+                        <div className='marco-CodTel-p-p-2'>
                             <label>Fecha de vencimiento</label>
-                            <input type='date' className="input-s" id="FechaVenc">
+                            <input type='date' className="input-p-p-2" id="FechaVenc">
                             </input>
                         </div>
-                        <div className='marco-CodTel-s'>
+                        <div className='marco-CodTel-p-p-2'>
                             <label>Codigo de seguridad (CVV)</label>
-                            <input type='password' className="input-s" id="CVV" max={999}>
+                            <input type='password' className="input-p-p-2" id="CVV" max={999}>
                             </input>
                         </div>
                     </div>
                     <label>Dirección de facturación</label>
-                    <input type="text" id="DireccionFact" className='input-s'></input>
+                    <input type="text" id="DireccionFact" className='input-p-p-2'></input>
                 </div>
             </div>
             </form>
-            <div className='btn-container-s'>
+            <div className='btn-container-p-p-2'>
                 <button className='btn-save-p-p-2' onClick={goToPanel}>Confirmar</button>
             </div>
         </main>
