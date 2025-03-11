@@ -1,5 +1,5 @@
 import './app.css';
-import logo from './assets/logo_dynamic_blanco.png';
+import logo from './assets/logo_dynamic_lema_blanco.png';
 import { useNavigate } from 'react-router-dom';
 
 export function Registration_Section() {

@@ -21,15 +21,14 @@
   top: -20px; 
   left: 50%;
   transform: translateX(-50%);
-  max-width: 12%;
-  height: auto;
+  max-width: 240px;
 }
 
 .question-r-s {
   text-align: center;
   margin-top: 20px;
   font-size: 24px;
-  margin: 150px auto 0 auto; 
+  margin: 200px auto 0 auto; 
 }
 
 .container-boton-r-s {
@@ -76,15 +75,7 @@
 .img-container-s {
   display: flex;
   gap: 2%;
-  margin-left: 70px;
-}
-
-.arrow-back-s {
-  display: block;
-  position: relative;
-  width: 60px;
-  height: auto;
-  cursor: pointer;
+  margin-left: 90px;
 }
 
 .logo-dynamic-s {
@@ -95,16 +86,41 @@
   position: relative;
 }
 
+.arrow-back-s {
+  display: block;
+  position: relative;
+  width: 60px;
+  height: auto;
+  cursor: pointer;
+}
+
 .texto-titulo-s {
   position: relative;
   justify-content: center;
   display: flex;
   margin-bottom: 2%;
+  margin-left: 9%;
+}
+
+.texto-titulo-derecho-s {
+  position: relative;
+  justify-content: center;
+  display: flex;
+  margin-bottom: 2%;
+  margin-right: 26%;
 }
 
 .grid-s {
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+
+.grid-pequeño-s {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 0px; /* Separa las dos columnas 20px */
+  margin: 0; /* Asegúrate de que no haya margen en el contenedor */
+  padding: 0;
 }
 
 .marco-input-s {
@@ -117,18 +133,43 @@
 }
 
 .input-s {
-  width: 90%;  
+  width: 70%;  
   margin: 10px;
   font-size: 17px;
 }
 
+.input-pequeños-s {
+  width: 90%;  
+  margin-top: 10px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-bottom: 10px;
+  font-size: 17px;
+}
+
 .form-s{
-  left: 5%;
+  left: 20%;
   position: relative;
   width: 95%;
   label {
-    margin-left: 15px;
+    margin-left: 11px;
+    max-width: 50%;
   }
+}
+
+.form-derecho-s{
+  left: 8%;
+  position: relative;
+  width: 95%;
+  label {
+    margin-left: 11px;
+  }
+}
+
+.form-pequeño-s{
+  left: 20%;
+  position: relative;
+  width: 82%;
 }
 
 .marco-CodTel-s{
@@ -138,6 +179,14 @@
   width: 90%;
 }
 
+.marco-CodTel-pequeño-s{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  padding-left: 10px; 
+}
+
 .btn-save-s {
   padding: 10px 20px;
   cursor: pointer;
@@ -145,9 +194,9 @@
   color: var(--text-color);        
   border: none;
   border-radius: 30px;    
-  width: 200px;     
+  width: 250px;     
   height: 50px;
-  margin-top: 10px;
+  margin-top: 20px;
   position: relative;
   margin-left: auto;
   margin-right: 5%;
@@ -157,12 +206,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-right: 7%;
+  margin-bottom: 20px;
 }
 
 .separador-s {
   position: absolute;
   left: 50%; /* Lo centra horizontalmente */
-  top: 260px; /* Baja un poco desde el inicio */
+  top: 295px; /* Baja un poco desde el inicio */
   transform: translateX(-50%); /* Ajuste fino para centrar bien */
   width: 3px;
   height: 50vh;
@@ -174,6 +225,42 @@
 
 /*Componentes de Package Payment*/
 .main-p-p{
+}
+
+.back-button-p-p {
+  position: absolute;
+  top: 9px;
+  left: 11px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10; /* Para asegurarse de que esté por encima del resto */
+}
+
+.back-button-p-p img {
+  width: 60px; /* Ajusta el tamaño según lo necesites */
+  height: auto;
+}
+
+.img-container-p-p {
+  display: flex;
+  gap: 2%;
+  margin-left: 90px;
+}
+
+.logo-dynamic-p-p {
+  margin-top: 51px;
+  max-width: 15%;
+  height: auto;
+  display: block;
+  position: relative;
+}
+
+.texto-p-p {
+  text-align: center;
+  margin-top: 19px;
+  margin-left: 13%;
+  margin-right: 13%;
 }
 
 .container-paquetes-p-p {
@@ -488,18 +575,18 @@
   height: 100vh;
 }
 
-.back-button {
+.back-button-l {
   position: absolute;
-  top: 30px;
-  left: 30px;
+  top: 9px;
+  left: 11px;
   background: transparent;
   border: none;
   cursor: pointer;
   z-index: 10; /* Para asegurarse de que esté por encima del resto */
 }
 
-.back-button img {
-  width: 70px; /* Ajusta el tamaño según lo necesites */
+.back-button-l img {
+  width: 60px; /* Ajusta el tamaño según lo necesites */
   height: auto;
 }
 
@@ -518,10 +605,11 @@
 
 /* El logo se mantiene centrado en su sección */
 .logo-dynamic-l {
-  max-width: 200px;
+  max-width: 240px;
   height: auto;
   display: block;
   margin: 0 auto;
+  margin-top: 35%;
 }
 
 /* Sección del formulario: separada del logo */
