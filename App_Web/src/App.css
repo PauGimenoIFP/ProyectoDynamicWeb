@@ -576,3 +576,23 @@
   color: var(--text-color);
 }
 /*------------------------------------------------------*/
+
+/*Componentes de main_Panel*/
+
+.main-m-p {
+  display: flex;
+}
+.btn-m-p {
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: var(--primary-color); 
+  color: var(--text-color);        
+  border: none;
+  border-radius: 30px;    
+  width: 200px;     
+  height: 50px;
+  margin-top: 10px;
+  position: relative;
+  margin-left: auto;
+  margin-right: 5%;
+}

@@ -11,6 +11,10 @@ export function Package_Payment3(){
     const goToPlans = () => {
         navigate('/Package_Payment');
     };
+
+    const goToPanel = () => {
+        navigate('/main_Panel');
+    };
     return (
         <main>
             <div className='boton-atras-s'>
@@ -76,7 +80,7 @@ export function Package_Payment3(){
             </div>
             </form>
             <div className='btn-container-s'>
-                <button className='btn-save-p-p-2'>Confirmar</button>
+                <button className='btn-save-p-p-2' onClick={goToPanel}>Confirmar</button>
             </div>
         </main>
     )
