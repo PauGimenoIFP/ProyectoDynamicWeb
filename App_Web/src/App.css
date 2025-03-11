@@ -500,6 +500,14 @@
   margin-left: 15%;
 }
 
+.texto-paquete-p-p-2 {
+  position: relative;
+  justify-content: center;
+  display: flex;
+  margin-bottom: 2%;
+  margin-left: 40%;
+}
+
 .marco-input-p-p-2 {
   position: relative;
   display: flex;
@@ -512,12 +520,14 @@
 
 .centrar-caja-p-p-2 {
   place-items: center;
+  margin-left: 25%;
 }
 
 .imagen-visa-p-p-2 {
-  height: 50px;
+  height: 45px;
   width: auto;
   margin-right: 40px;
+  justify-content: center;
 }
 
 .btn-save-p-p-2 {
@@ -531,8 +541,6 @@
   height: 50px;
   margin-top: -20px;
   position: relative;
-  margin-left: auto;
-  margin-right: 5%;
   }
 
 .img-container-p-p-2 {
@@ -548,8 +556,9 @@
 
 .btn-container-p-p-2 {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  padding-top: 10%;
 }
 
 .input-p-p-2 {
@@ -563,6 +572,18 @@
   display: flex;
   flex-direction: column;
   width: 90%;
+}
+
+.main-p-p-2 {
+  margin-right: 100px;
+}
+
+.imagen-titulo-p-p-2 {
+  position: relative;
+  justify-content: center;
+  display: flex;
+  margin-left: -37%;
+  margin-top: 5%;
 }
 /*------------------------------------------------------*/
 
