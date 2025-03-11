@@ -1,25 +1,39 @@
 import './App.css'
 import logosolo from './assets/logo_dynamic_letras_blanco.png';
+import arrow from './assets/arrow-back.png';
 import { useNavigate } from 'react-router-dom';
 
 export function Package_Payment(){
   const navigate = useNavigate();
 
+  const goToStart = () => {
+    navigate('/SignUp_Form');
+  };
+
   const goToForm1 = () => {
     navigate('/Package_Payment1');
-};
+  };
+
   const goToForm2 = () => {
     navigate('/Package_Payment2');
-};
+  };
+
   const goToForm3 = () => {
     navigate('/Package_Payment3');
-};
+  };
+
   return (
     <main className = "main-p-p">
-      <img src={logosolo} className='logo-dynamic-s'/>
-      <h2 className = "texto-p-p">Dynamic ofrece un modelo de precios flexible y escalonado,
-         basado en la cantidad de usuarios que tenga tu centro deportivo. </h2>
-
+      <button className='back-button-p-p'>
+        <img src={arrow} alt="volver" onClick={goToStart}/>
+      </button>
+      <div className='img-container-p-p'>
+        <img src={logosolo} className='logo-dynamic-p-p'/>
+      </div>
+      <h2 className = "texto-p-p">
+        <div className="linea1-p-p">Dynamic ofrece un modelo de precios flexible y escalonado,</div>
+        <div className="linea2-p-p">basado en la cantidad de usuarios que tenga tu centro deportivo.</div>
+      </h2>
       <section className="container-paquetes-p-p">
         <div className="paquete-basico-p-p">
           <div className="header-basico-p-p">Plan básico hasta 
@@ -50,7 +64,7 @@ export function Package_Payment(){
               <li>✓ Control de pagos.</li>
               <li>✓ Contabilidad.</li>
               <li>✓ Creacion y asignacion de rutinas.</li>
-              <lo> y muchos mas...</lo>
+              <lo>y muchos mas...</lo>
             </ul>
           </div>
           <button className="boton-premium-p-p" onClick={goToForm2}>Empezar</button>

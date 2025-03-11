@@ -1,5 +1,5 @@
 import './app.css';
-import logo from './assets/logo_dynamic_blanco.png';
+import logo from './assets/logo_dynamic_lema_blanco.png';
 import arrow from './assets/arrow-back.png';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,7 +17,7 @@ export function Login() {
   return(
     <main className="main-l">
       {/* Botón de Atrás */}
-      <button className="back-button" onClick={handleBack}>
+      <button className="back-button-l" onClick={handleBack}>
         <img src={arrow} alt="Volver" />
       </button>
       

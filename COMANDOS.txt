@@ -41,7 +41,7 @@ Hacer estos comandos para poder ver la pagina
 Pasos para abrir en local:
 
 // Instalar npm
-1. npm i
+1. npm i 
 
 // Ejecutar local
 2. npm run dev
