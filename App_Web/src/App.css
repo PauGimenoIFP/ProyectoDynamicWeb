@@ -136,7 +136,6 @@
   display: flex;
   flex-direction: column;
   width: 90%;
-  
 }
 
 .btn-save-s {
@@ -429,7 +428,7 @@
 }
 
 .imagen-visa-p-p-2 {
-  height: 60px;
+  height: 50px;
   width: auto;
   margin-right: 40px;
 }
@@ -448,6 +447,36 @@
   margin-left: auto;
   margin-right: 5%;
   }
+
+.img-container-p-p-2 {
+  display: flex;
+  gap: 2%;
+  margin-left: 70px;
+}
+
+.grid-p-p-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.btn-container-p-p-2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-p-p-2 {
+  width: 90%;  
+  margin: 10px;
+  font-size: 17px;
+}
+
+.marco-CodTel-p-p-2 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
 /*------------------------------------------------------*/
 
 /*Componentes de Login*/
@@ -547,3 +576,23 @@
   color: var(--text-color);
 }
 /*------------------------------------------------------*/
+
+/*Componentes de main_Panel*/
+
+.main-m-p {
+  display: flex;
+}
+.btn-m-p {
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: var(--primary-color); 
+  color: var(--text-color);        
+  border: none;
+  border-radius: 30px;    
+  width: 200px;     
+  height: 50px;
+  margin-top: 10px;
+  position: relative;
+  margin-left: auto;
+  margin-right: 5%;
+}
