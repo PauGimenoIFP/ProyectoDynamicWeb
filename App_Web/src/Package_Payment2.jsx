@@ -16,7 +16,7 @@ export function Package_Payment2(){
         navigate('/main_Panel');
     };
     return (
-        <main>
+        <main className='main-p-p-2'>
             <div className='boton-atras-s'>
                 <img src={arrow} className='arrow-back-s' onClick={goToPlans}/>
             </div>
@@ -26,13 +26,13 @@ export function Package_Payment2(){
             <div className="separador-p-p-2"></div>
             <form>
             <div className='grid-p-p-2'>
-                <div className="texto-titulo-p-p-2" >
+                <div className="texto-paquete-p-p-2">
                     <h1>Tu paquete</h1>
                 </div>
                 <div className="texto-titulo-p-p-2">
                     <h1>Pagos</h1>
                 </div>
-                <div className="texto-titulo-s">
+                <div className="imagen-titulo-p-p-2">
                     <img src={visamc} className='imagen-visa-p-p-2'/>
                     <img src={amex} className='imagen-visa-p-p-2'/>
                 </div>
@@ -78,12 +78,12 @@ export function Package_Payment2(){
                     </div>
                     <label>Dirección de facturación</label>
                     <input type="text" id="DireccionFact" className='input-p-p-2'></input>
+                    <div className='btn-container-p-p-2'>
+                        <button className='btn-save-p-p-2' onClick={goToPanel}>Pagar</button>
+                    </div>
                 </div>
             </div>
             </form>
-            <div className='btn-container-p-p-2'>
-                <button className='btn-save-p-p-2' onClick={goToPanel}>Confirmar</button>
-            </div>
         </main>
     )
 }
