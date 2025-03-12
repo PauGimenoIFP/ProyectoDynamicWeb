@@ -690,18 +690,83 @@
 
 .main-m-p {
   display: flex;
+  margin-top: 2%;
 }
-.btn-m-p {
+.btn-selected-m-p {
   padding: 10px 20px;
   cursor: pointer;
   background-color: var(--primary-color); 
   color: var(--text-color);        
   border: none;
   border-radius: 30px;    
-  width: 200px;     
-  height: 50px;
+  width: 150px;     
+  height: 40px;
   margin-top: 10px;
   position: relative;
   margin-left: auto;
   margin-right: 5%;
+}
+
+.btn-m-p {
+  padding: 10px 20px;
+  cursor: pointer; 
+  background-color: var(--background-color);
+  color: var(--text-color);        
+  border: none;
+  border-radius: 30px;    
+  width: 150px;     
+  height: 40px;
+  margin-top: 10px;
+  position: relative;
+  margin-left: auto;
+  margin-right: 5%;
+}
+
+.btn-m-p:hover{
+  background-color: var(--inputs);
+}
+
+.btn-container-m-p {
+  max-width: 10%;
+  margin-left: 3%;
+}
+
+#log-off:hover {
+  background-color: rgb(202, 0, 0); 
+}
+.img-logo-m-p {
+  height: 50px;
+  width: auto;
+  margin-right: 1%;
+  margin-left: 3%;
+}
+
+.img-perfil-m-p {
+  height: 50px;
+  width: auto;
+  right: 3%;
+  position: absolute;
+}
+
+.input-m-p {
+  position: absolute;
+  width: 40%;  
+  margin: 10px;
+  font-size: 17px;
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+.contenedor-input-m-p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+.img-lupa-m-p {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  margin-left: 68%;
+  margin-top: 15px;
 }
