@@ -59,7 +59,7 @@ export function SignUp_Form(){
                 </div>
                 <div className='marco-CodTel-pequeño-derecho-s'>
                   <label>Ciudad</label>
-                  <input className="input-pequeños-s" id="ciudad" max={999999999} placeholder=" Obligatorio" required>
+                  <input className="input-pequeños-derecho-s" id="ciudad" max={999999999} placeholder=" Obligatorio" required>
                   </input>
                 </div>
                 <div className='marco-CodTel-pequeño-s'>
@@ -69,7 +69,7 @@ export function SignUp_Form(){
                 </div>
                 <div className='marco-CodTel-pequeño-derecho-s'>
                   <label>Teléfono</label>
-                  <input className="input-pequeños-s" id="telefono" max={999999999} placeholder=" Obligatorio" required>
+                  <input className="input-pequeños-derecho-s" id="telefono" max={999999999} placeholder=" Obligatorio" required>
                   </input>
                 </div>
               </div>

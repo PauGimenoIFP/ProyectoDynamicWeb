@@ -20,7 +20,7 @@ export function Package_Payment1(){
                 <img src={arrow} className='arrow-back-s' onClick={goToPlans}/>
             </div>
             <div className='img-container-p-p-2'>
-                <img src={logosolo} className='logo-dynamic-s'/>
+                <img src={logosolo} className='logo-dynamic-p-p-2'/>
             </div>
             <div className="separador-p-p-2"></div>
             <form>

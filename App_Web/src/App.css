@@ -147,6 +147,15 @@
   font-size: 17px;
 }
 
+.input-pequeños-derecho-s {
+  width: 90%;  
+  margin-top: 10px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-bottom: 10px;
+  font-size: 17px;
+}
+
 .form-s{
   left: 20%;
   position: relative;
@@ -180,6 +189,14 @@
 }
 
 .marco-CodTel-pequeño-s{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  padding-left: 10px; 
+}
+
+.marco-CodTel-pequeño-derecho-s{
   position: relative;
   display: flex;
   flex-direction: column;
@@ -546,7 +563,15 @@
 .img-container-p-p-2 {
   display: flex;
   gap: 2%;
-  margin-left: 70px;
+  margin-left: 90px;
+}
+
+.logo-dynamic-p-p-2 {
+  margin-top: -19px;
+  max-width: 217px;
+  height: auto;
+  display: block;
+  position: relative;
 }
 
 .grid-p-p-3 {
