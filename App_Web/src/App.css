@@ -501,11 +501,11 @@
 .separador-p-p-2 {
   position: absolute;
   left: 40%; /* Lo centra horizontalmente */
-  top: 20%; /* Baja un poco desde el inicio */
+  top: 30%; /* Baja un poco desde el inicio */
   transform: translateX(-50%); /* Ajuste fino para centrar bien */
   width: 3px;
-  height: 75vh;
-  background-color: rgb(105, 105, 105);
+  height: 50vh;
+  background-color: var(--secondary-color); 
   border-radius: 5px;
 }
 
@@ -514,7 +514,7 @@
   justify-content: center;
   display: flex;
   margin-bottom: 2%;
-  margin-left: 15%;
+  margin-left: 27%;
 }
 
 .texto-paquete-p-p-2 {
@@ -537,13 +537,54 @@
 
 .centrar-caja-p-p-2 {
   place-items: center;
-  margin-left: 25%;
+  margin-left: 35%;
+}
+
+.paquete-basico-p-p-2 {
+  background-color: transparent; 
+  border-radius: 25px;      /* Bordes redondeados */
+  border: 2px solid var(--secondary-color);  
+  /*box-shadow: 0 2px 5px rgba(147, 35, 239, 0.1);*/
+  padding: 20px;
+  width: 240px;             /* Ancho fijo para uniformidad */
+  height: 315px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 17px;  
+}
+
+.paquete-premium-p-p-2 {
+  background-color: transparent; 
+  border-radius: 25px;      /* Bordes redondeados */
+  border: 3px solid var(--primary-color);  
+  /*box-shadow: 0 2px 5px rgba(147, 35, 239, 0.1);*/
+  padding: 20px;
+  width: 255px;             /* Ancho fijo para uniformidad */
+  height: 332px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.paquete-medio-p-p-2 {
+  background-color: transparent; 
+  border-radius: 25px;      /* Bordes redondeados */
+  border: 2px solid var(--secondary-color);  
+  /*box-shadow: 0 2px 5px rgba(147, 35, 239, 0.1);*/
+  padding: 20px;
+  width: 240px;             /* Ancho fijo para uniformidad */
+  height: 315px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 19px;  
 }
 
 .imagen-visa-p-p-2 {
-  height: 45px;
+  height: 26px;
   width: auto;
-  margin-right: 40px;
+  margin-right: 11px;
   justify-content: center;
 }
 
@@ -607,8 +648,8 @@
   position: relative;
   justify-content: center;
   display: flex;
-  margin-left: -37%;
-  margin-top: 5%;
+  margin-left: -17%;
+  margin-top: 7%;
 }
 /*------------------------------------------------------*/
 
