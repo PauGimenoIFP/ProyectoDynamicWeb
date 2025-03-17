@@ -1,19 +1,17 @@
 import './App.css'
 import { useNavigate } from 'react-router-dom';
 import logo_gym from './assets/logo_dynamic.png';
-import foto_perfil from './assets/foto-perfil-ej.png';
 import lupa from './assets/icono-lupa.png';
 import { clientes } from './clientesData';
+import { ProfileMenu } from './ProfileMenu';
 
 export function Main_Panel(){
     const navigate = useNavigate();
 
-    const goToStart = () => {
-        navigate('/');
-    };
     const goToPagos = () => {
         navigate('/Pagos');
     };
+    
     return (
         <main>
             <div className='main-m-p'>
@@ -25,15 +23,13 @@ export function Main_Panel(){
                 </div> 
                 <input type='text' id='search' className='input-m-p' placeholder=" Busca un cliente..."></input>
                 <img src={lupa} className='img-lupa-m-p'></img>
-                <img src={foto_perfil} alt='foto del gym' className='img-perfil-m-p'/>
+                <ProfileMenu />
             </div>
             <div className='main-m-p'>
                 <div className='btn-container-m-p'>
                     <button className='btn-selected-m-p'>Usuarios</button>
                     <button onClick={goToPagos} className='btn-m-p'>Pagos</button>
                     <button className='btn-m-p'>Rutinas</button>
-                    <br></br><br></br>
-                    <button onClick={goToStart} className='btn-m-p' id='log-off'>Cerrar sesión</button>
                 </div>
                 <div className='tabla-m-p'>
                     <table >
