@@ -1,10 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import foto_perfil from './assets/foto-perfil-ej.png';
 
 export function ProfileMenu() {
     const navigate = useNavigate();
     const [showMenu, setShowMenu] = useState(false);
+    const menuRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setShowMenu(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     const goToStart = () => {
         navigate('/');
@@ -15,7 +29,7 @@ export function ProfileMenu() {
     };
 
     return (
-        <div className="perfil-container-m-p">
+        <div className="perfil-container-m-p" ref={menuRef}>
             <img 
                 src={foto_perfil} 
                 alt='foto del gym' 
