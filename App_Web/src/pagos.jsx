@@ -5,14 +5,14 @@ import foto_perfil from './assets/foto-perfil-ej.png';
 import lupa from './assets/icono-lupa.png';
 import { clientes } from './clientesData';
 
-export function Main_Panel(){
+export function Pagos(){
     const navigate = useNavigate();
 
     const goToStart = () => {
         navigate('/');
     };
-    const goToPagos = () => {
-        navigate('/Pagos');
+    const goToUsers = () => {
+        navigate('/Main_Panel');
     };
     return (
         <main>
@@ -29,8 +29,8 @@ export function Main_Panel(){
             </div>
             <div className='main-m-p'>
                 <div className='btn-container-m-p'>
-                    <button className='btn-selected-m-p'>Usuarios</button>
-                    <button onClick={goToPagos} className='btn-m-p'>Pagos</button>
+                    <button onClick={goToUsers} className='btn-m-p'>Usuarios</button>
+                    <button className='btn-selected-m-p'>Pagos</button>
                     <button className='btn-m-p'>Rutinas</button>
                     <br></br><br></br>
                     <button onClick={goToStart} className='btn-m-p' id='log-off'>Cerrar sesión</button>
@@ -42,8 +42,8 @@ export function Main_Panel(){
                                 <th>Nº</th>
                                 <th>Nombre</th>
                                 <th>Pago del último mes</th>
-                                <th>Email</th>
-                                <th>Contacto de Emergencia</th>
+                                <th>Plan de suscripción</th>
+                                <th>Precio de suscripción</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,8 +64,8 @@ export function Main_Panel(){
                                             </div>
                                         )}
                                     </td>
-                                    <td>{cliente.email}</td>
-                                    <td>{cliente.contacto}</td>
+                                    <td>{cliente.plan}</td>
+                                    <td>{cliente.monto}</td>
                                 </tr>
                             ))}
                         </tbody>
