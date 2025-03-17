@@ -7,7 +7,7 @@ export function Login() {
   const navigate = useNavigate();
 
   const handleNewAccount = () => {
-    navigate('/Package_Payment');
+    navigate('/Main_Panel');
   };
 
   const handleBack = () => {
