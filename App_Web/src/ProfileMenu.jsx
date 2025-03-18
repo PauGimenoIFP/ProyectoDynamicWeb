@@ -32,7 +32,7 @@ export function ProfileMenu() {
         <div className="perfil-container-m-p" ref={menuRef}>
             <img 
                 src={foto_perfil} 
-                alt='foto del gym' 
+                alt='foto de perfil' 
                 className='img-perfil-m-p'
                 onClick={toggleMenu}
             />
