@@ -895,7 +895,7 @@
 .estado-pago-m-p {
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: normal;
   gap: 10px;
 }
 

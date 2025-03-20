@@ -46,22 +46,24 @@ export function Main_Panel(){
                             {clientes.map(cliente => (
                                 <tr key={cliente.id}>
                                     <td>{cliente.id}</td>
-                                    <td>{cliente.nombre}</td>
+                                    <td>{cliente.Nombre} {cliente.Apellido1} {cliente.Apellido2}</td>
                                     <td>
-                                        {cliente.estado === 'Pagado' ? (
+                                        {cliente.EstadoSuscripcion == true ? (
                                             <div className='estado-pago-m-p'>
+                                                &ensp;
                                                 <div className='circulo-verde-m-p'></div>
-                                                {cliente.estado}
+                                                <a>Pagado</a>
                                             </div>
                                         ) : (
                                             <div className='estado-pago-m-p'>
+                                                &ensp;
                                                 <div className='circulo-rojo-m-p'></div>
-                                                {cliente.estado}
+                                                <a>Pendiente</a>
                                             </div>
                                         )}
                                     </td>
-                                    <td>{cliente.email}</td>
-                                    <td>{cliente.contacto}</td>
+                                    <td>{cliente.Email}</td>
+                                    <td>{cliente.Telefono}</td>
                                 </tr>
                             ))}
                         </tbody>
