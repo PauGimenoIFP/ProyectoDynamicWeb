@@ -41,6 +41,9 @@ export function ProfileMenu() {
                     <div className="menu-item-m-p">
                         Ajustes
                     </div>
+                    <div className="menu-item-m-p">
+                        Mi cuenta
+                    </div>
                     <div className="menu-item-m-p" onClick={goToStart} id='log-off'>
                         Cerrar sesión
                     </div>
