@@ -10,6 +10,7 @@ import { Package_Payment3 } from './Package_Payment3.jsx'
 import { Login } from './login.jsx'
 import { Main_Panel } from './main_Panel.jsx'
 import { Pagos } from './pagos.jsx'
+import { Rutinas } from './rutinas.jsx'
 import './index.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -26,6 +27,7 @@ root.render(
             <Route path="/Main_Panel" element={<Main_Panel/>} />
             <Route path="/Pagos" element={<Pagos/>} />
             <Route path="/Login" element={<Login />} />
+            <Route path="/Rutinas" element={<Rutinas />} />
         </Routes>
     </BrowserRouter>
 )

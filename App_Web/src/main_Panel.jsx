@@ -11,6 +11,10 @@ export function Main_Panel(){
     const goToPagos = () => {
         navigate('/Pagos');
     };
+
+    const goToRutinas = () => {
+        navigate('/rutinas');
+    };
     
     return (
         <main>
@@ -29,7 +33,7 @@ export function Main_Panel(){
                 <div className='btn-container-m-p'>
                     <button className='btn-selected-m-p'>Usuarios</button>
                     <button onClick={goToPagos} className='btn-m-p'>Pagos</button>
-                    <button className='btn-m-p'>Rutinas</button>
+                    <button onClick={goToRutinas} className='btn-m-p'>Rutinas</button>
                 </div>
                 <div className='tabla-m-p'>
                     <table >
