@@ -1,3 +1,20 @@
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc } from "firebase/firestore"; // Importa Firestore
+
+// Configuración de Firebase (obtén esto desde la consola de Firebase)
+const firebaseConfig = {
+  apiKey: "AIzaSyAqnMhZ3u-z1hqlqGod7qUo7bb6PLIF_dI",
+  authDomain: "dynamic-dam.firebaseapp.com",
+  projectId: "dynamic-dam",
+  storageBucket: "dynamic-dam.firebasestorage.app",
+  messagingSenderId: "610391208242",
+  appId: "1:610391208242:web:31647d9cc6a9ee9b47a72b",
+  measurementId: "G-GJFL7VPG07"
+};
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app); // Inicializa Firestore
+
 export const clientes = [
     {
         id: 1,
@@ -340,3 +357,16 @@ export const clientes = [
         UdGimnasio: "DynamicGym"
     }
 ];
+export const subirClientes = async () => {
+    try {
+      // Itera sobre cada cliente y lo sube a Firestore
+      for (const cliente of clientes) {
+        // Agrega el cliente a la colección "clientes"
+        const docRef = await addDoc(collection(db, "clientes"), cliente);
+        console.log(`Cliente ${cliente.id} subido con ID: ${docRef.id}`);
+      }
+      console.log("Todos los clientes han sido subidos.");
+    } catch (error) {
+      console.error("Error al subir clientes:", error);
+    }
+  };

@@ -1,12 +1,33 @@
-import './App.css'
+import React, { useEffect, useState } from 'react';
+import './App.css';
 import { useNavigate } from 'react-router-dom';
 import logo_gym from './assets/logo_dynamic.png';
 import lupa from './assets/icono-lupa.png';
-import { clientes } from './clientesData';
 import { ProfileMenu } from './ProfileMenu';
+import { db } from './firebase'; // Importa la configuración de Firestore
+import { collection, getDocs } from 'firebase/firestore';
 
 export function Main_Panel(){
     const navigate = useNavigate();
+    const [clientes, setClientes] = useState([]);
+
+    const obtenerClientes = async () => {
+        try {
+          const querySnapshot = await getDocs(collection(db, "clientes")); // Consulta la colección "clientes"
+          const clientesData = querySnapshot.docs.map((doc) => ({
+            id: doc.id, // ID del documento
+            ...doc.data(), // Datos del cliente
+          }));
+          setClientes(clientesData); // Actualiza el estado con los datos obtenidos
+        } catch (error) {
+          console.error("Error obteniendo clientes:", error);
+        }
+      };
+    
+      // Obtén los clientes cuando el componente se monte
+      useEffect(() => {
+        obtenerClientes();
+      }, []);
 
     const goToPagos = () => {
         navigate('/Pagos');
@@ -15,7 +36,7 @@ export function Main_Panel(){
     const goToRutinas = () => {
         navigate('/rutinas');
     };
-    
+
     return (
         <main>
             <div className='main-m-p'>
@@ -47,12 +68,12 @@ export function Main_Panel(){
                             </tr>
                         </thead>
                         <tbody>
-                            {clientes.map(cliente => (
-                                <tr key={cliente.id}>
-                                    <td>{cliente.id}</td>
-                                    <td>{cliente.Nombre} {cliente.Apellido1} {cliente.Apellido2}</td>
+                            {clientes.map((clientes, index) => (
+                                <tr key={clientes.id}>
+                                    <td>{index + 1}</td>
+                                    <td>{clientes.Nombre} {clientes.Apellido1} {clientes.Apellido2}</td>
                                     <td>
-                                        {cliente.EstadoSuscripcion == true ? (
+                                        {clientes.EstadoSuscripcion == true ? (
                                             <div className='estado-pago-m-p'>
                                                 &ensp;
                                                 <div className='circulo-verde-m-p'></div>
@@ -66,8 +87,8 @@ export function Main_Panel(){
                                             </div>
                                         )}
                                     </td>
-                                    <td>{cliente.Email}</td>
-                                    <td>{cliente.Telefono}</td>
+                                    <td>{clientes.Email}</td>
+                                    <td>{clientes.Telefono}</td>
                                 </tr>
                             ))}
                         </tbody>
