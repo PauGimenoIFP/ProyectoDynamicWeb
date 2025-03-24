@@ -1,12 +1,33 @@
-import './App.css'
+import React, { useEffect, useState } from 'react';
+import './App.css';
 import { useNavigate } from 'react-router-dom';
 import logo_gym from './assets/logo_dynamic.png';
 import lupa from './assets/icono-lupa.png';
-import { clientes } from './clientesData';
 import { ProfileMenu } from './ProfileMenu';
+import { db } from './firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 export function Pagos(){
     const navigate = useNavigate();
+    const [clientes, setClientes] = useState([]);
+
+    const obtenerClientes = async () => {
+        try {
+          const querySnapshot = await getDocs(collection(db, "clientes")); // Consulta la colección "clientes"
+          const clientesData = querySnapshot.docs.map((doc) => ({
+            id: doc.id, // ID del documento
+            ...doc.data(), // Datos del cliente
+          }));
+          setClientes(clientesData); // Actualiza el estado con los datos obtenidos
+        } catch (error) {
+          console.error("Error obteniendo clientes:", error);
+        }
+      };
+    
+      // Obtén los clientes cuando el componente se monte
+      useEffect(() => {
+        obtenerClientes();
+      }, []);
 
     const goToUsers = () => {
         navigate('/Main_Panel');
@@ -47,12 +68,12 @@ export function Pagos(){
                             </tr>
                         </thead>
                         <tbody>
-                            {clientes.map(cliente => (
-                                <tr key={cliente.id}>
-                                    <td>{cliente.id}</td>
-                                    <td>{cliente.nombre} {cliente.Apellido1} {cliente.Apellido2}</td>
+                            {clientes.map((clientes, index) => (
+                                <tr key={clientes.id}>
+                                    <td>{index + 1}</td>
+                                    <td>{clientes.nombre} {clientes.Apellido1} {clientes.Apellido2}</td>
                                     <td>
-                                        {cliente.EstadoSuscripcion == true ? (
+                                        {clientes.EstadoSuscripcion == true ? (
                                             <div className='estado-pago-m-p'>
                                                 &ensp;
                                                 <div className='circulo-verde-m-p'></div>
@@ -66,8 +87,8 @@ export function Pagos(){
                                             </div>
                                         )}
                                     </td>
-                                    <td>{cliente.PlanSuscripcion}</td>
-                                    <td>{cliente.APagar}</td>
+                                    <td>{clientes.PlanSuscripcion}</td>
+                                    <td>{clientes.APagar}</td>
                                 </tr>
                             ))}
                         </tbody>

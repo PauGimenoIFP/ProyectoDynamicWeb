@@ -11,6 +11,7 @@ import { Login } from './login.jsx'
 import { Main_Panel } from './main_Panel.jsx'
 import { Pagos } from './pagos.jsx'
 import { Rutinas } from './rutinas.jsx'
+import { TestPage } from './TestPage.jsx'
 import './index.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -28,6 +29,7 @@ root.render(
             <Route path="/Pagos" element={<Pagos/>} />
             <Route path="/Login" element={<Login />} />
             <Route path="/Rutinas" element={<Rutinas />} />
+            <Route path="/test" element={<TestPage />} />
         </Routes>
     </BrowserRouter>
 )
