@@ -18,7 +18,7 @@ const db = getFirestore(app); // Inicializa Firestore
 export const clientes = [
     {
         id: 1,
-        APagar: 50,
+        APagar: "50 €",
         Altura: 1.70,
         Apellido1: "Martinez",
         Apellido2: "López",
@@ -35,7 +35,7 @@ export const clientes = [
     },
     {
         id: 2,
-        APagar: 600,
+        APagar: "600 €",
         Altura: 1.65,
         Apellido1: "Gómez",
         Apellido2: "Ramírez",
@@ -52,7 +52,7 @@ export const clientes = [
     },
     {
         id: 3,
-        APagar: 50,
+        APagar: "50 €",
         Altura: 1.68,
         Apellido1: "Rodríguez",
         Apellido2: "Sánchez",
@@ -69,7 +69,7 @@ export const clientes = [
     },
     {
         id: 4,
-        APagar: 600,
+        APagar: "600 €",
         Altura: 1.78,
         Apellido1: "Pablo",
         Apellido2: "Moreno",
@@ -86,7 +86,7 @@ export const clientes = [
     },
     {
         id: 5,
-        APagar: 50,
+        APagar: "50 €",
         Altura: 1.63,
         Apellido1: "García",
         Apellido2: "Torres",
@@ -103,7 +103,7 @@ export const clientes = [
     },
     {
         id: 6,
-        APagar: 50,
+        APagar: "50 €",
         Altura: 1.75,
         Apellido1: "Ángel",
         Apellido2: "Ruiz",
@@ -120,7 +120,7 @@ export const clientes = [
     },
     {
         id: 7,
-        APagar: 50,
+        APagar: "50 €",
         Altura: 1.67,
         Apellido1: "Fernández",
         Apellido2: "Díaz",
@@ -137,7 +137,7 @@ export const clientes = [
     },
     {
         id: 8,
-        APagar: 600,
+        APagar: "600 €",
         Altura: 1.72,
         Apellido1: "Jiménez",
         Apellido2: "Vega",
@@ -154,7 +154,7 @@ export const clientes = [
     },
     {
         id: 9,
-        APagar: 600,
+        APagar: "600 €",
         Altura: 1.65,
         Apellido1: "Muñoz",
         Apellido2: "Silva",
@@ -171,7 +171,7 @@ export const clientes = [
     },
     {
         id: 10,
-        APagar: 50,
+        APagar: "50 €",
         Altura: 1.75,
         Apellido1: "López",
         Apellido2: "Castro",
@@ -188,7 +188,7 @@ export const clientes = [
     },
     {
         id: 11,
-        APagar: 50,
+        APagar: "50 €",
         Altura: 1.70,
         Apellido1: "Martinez",
         Apellido2: "López",
@@ -205,7 +205,7 @@ export const clientes = [
     },
     {
         id: 12,
-        APagar: 600,
+        APagar: "600 €",
         Altura: 1.65,
         Apellido1: "Gómez",
         Apellido2: "Ramírez",
@@ -222,7 +222,7 @@ export const clientes = [
     },
     {
         id: 13,
-        APagar: 50,
+        APagar: "50 €",
         Altura: 1.68,
         Apellido1: "Rodríguez",
         Apellido2: "Sánchez",
@@ -239,7 +239,7 @@ export const clientes = [
     },
     {
         id: 14,
-        APagar: 600,
+        APagar: "600 €",
         Altura: 1.78,
         Apellido1: "Pablo",
         Apellido2: "Moreno",
@@ -256,7 +256,7 @@ export const clientes = [
     },
     {
         id: 15,
-        APagar: 50,
+        APagar: "50 €",
         Altura: 1.63,
         Apellido1: "García",
         Apellido2: "Torres",
@@ -273,7 +273,7 @@ export const clientes = [
     },
     {
         id: 16,
-        APagar: 50,
+        APagar: "50 €",
         Altura: 1.75,
         Apellido1: "Ángel",
         Apellido2: "Ruiz",
@@ -290,7 +290,7 @@ export const clientes = [
     },
     {
         id: 17,
-        APagar: 50,
+        APagar: "50 €",
         Altura: 1.67,
         Apellido1: "Fernández",
         Apellido2: "Díaz",
@@ -307,7 +307,7 @@ export const clientes = [
     },
     {
         id: 18,
-        APagar: 600,
+        APagar: "600 €",
         Altura: 1.72,
         Apellido1: "Jiménez",
         Apellido2: "Vega",
@@ -324,7 +324,7 @@ export const clientes = [
     },
     {
         id: 19,
-        APagar: 600,
+        APagar: "600 €",
         Altura: 1.65,
         Apellido1: "Muñoz",
         Apellido2: "Silva",
@@ -341,7 +341,7 @@ export const clientes = [
     },
     {
         id: 20,
-        APagar: 50,
+        APagar: "50 €",
         Altura: 1.75,
         Apellido1: "López",
         Apellido2: "Castro",

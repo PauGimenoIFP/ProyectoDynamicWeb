@@ -936,6 +936,30 @@
   background-color: rgba(255, 255, 255, 0.05);
 }
 
+.menu-contextual-m-p {
+  background-color: var(--inputs);
+  border-radius: 6px;
+  padding: 8px 4px;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  min-width: 100px;
+}
+
+.menu-contextual-m-p .menu-item-m-p {
+  width: 110px;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.menu-contextual-m-p .menu-item-m-p:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/*------------------------------------------------------*/
+
+
 /* Estilos para Rutinas */
 .btn-crear-ruti-container {
   display: flex;
