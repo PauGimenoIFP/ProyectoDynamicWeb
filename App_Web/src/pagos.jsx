@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { useNavigate } from 'react-router-dom';
 import logo_gym from './assets/logo_dynamic.png';
@@ -6,10 +6,12 @@ import lupa from './assets/icono-lupa.png';
 import { ProfileMenu } from './ProfileMenu';
 import { db } from './firebase';
 import { collection, getDocs } from 'firebase/firestore';
+import { UserContextMenu } from './UserContextMenu';
 
 export function Pagos(){
     const navigate = useNavigate();
     const [clientes, setClientes] = useState([]);
+    const [menuContextual, setMenuContextual] = useState({ visible: false, x: 0, y: 0, clienteId: null });
 
     const obtenerClientes = async () => {
         try {
@@ -35,6 +37,21 @@ export function Pagos(){
 
     const goToRutinas = () => {
         navigate('/rutinas');
+    };
+
+    const handleContextMenu = (e, clienteId) => {
+        e.preventDefault();
+        console.log("ID del cliente:", clienteId);
+        setMenuContextual({
+            visible: true,
+            x: e.pageX,
+            y: e.pageY,
+            clienteId
+        });
+    };
+
+    const handleCloseMenu = () => {
+        setMenuContextual({ ...menuContextual, visible: false });
     };
 
     return (
@@ -68,12 +85,15 @@ export function Pagos(){
                             </tr>
                         </thead>
                         <tbody>
-                            {clientes.map((clientes, index) => (
-                                <tr key={clientes.id}>
+                            {clientes.map((cliente, index) => (
+                                <tr 
+                                    key={cliente.id}
+                                    onContextMenu={(e) => handleContextMenu(e, cliente.id)}
+                                >
                                     <td>{index + 1}</td>
-                                    <td>{clientes.nombre} {clientes.Apellido1} {clientes.Apellido2}</td>
+                                    <td>{cliente.Nombre} {cliente.Apellido1} {cliente.Apellido2}</td>
                                     <td>
-                                        {clientes.EstadoSuscripcion == true ? (
+                                        {cliente.EstadoSuscripcion == true ? (
                                             <div className='estado-pago-m-p'>
                                                 &ensp;
                                                 <div className='circulo-verde-m-p'></div>
@@ -87,12 +107,19 @@ export function Pagos(){
                                             </div>
                                         )}
                                     </td>
-                                    <td>{clientes.PlanSuscripcion}</td>
-                                    <td>{clientes.APagar}</td>
+                                    <td>{cliente.PlanSuscripcion}</td>
+                                    <td>{cliente.APagar}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
+                    <UserContextMenu 
+                        x={menuContextual.x}
+                        y={menuContextual.y}
+                        isVisible={menuContextual.visible}
+                        onClose={handleCloseMenu}
+                        clienteId={menuContextual.clienteId}
+                    />
                 </div>
             </div>
         </main>
