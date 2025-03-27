@@ -290,21 +290,23 @@ export function Rutinas(){
 
     const handleDuplicarEjercicio = (dia, musculoIndex, ejercicioIndex) => {
         setEjerciciosPorDia(prev => ({
-            ...prev,
-            [dia]: prev[dia].map((musculo, idx) => 
-                idx === musculoIndex 
-                    ? {
-                        ...musculo,
-                        ejercicios: [...musculo.ejercicios, {
-                            nombre: '',
-                            series: 1,
-                            repeticiones: ['']
-                        }]
-                    }
-                    : musculo
-            )
+          ...prev,
+          [dia]: prev[dia].map((musculo, idx) => {
+            if (idx === musculoIndex) {
+              const newEjercicio = { nombre: '', series: 1, repeticiones: [''] };
+              const ejerciciosActuales = musculo.ejercicios;
+              const newEjercicios = [
+                ...ejerciciosActuales.slice(0, ejercicioIndex + 1),
+                newEjercicio,
+                ...ejerciciosActuales.slice(ejercicioIndex + 1)
+              ];
+              return { ...musculo, ejercicios: newEjercicios };
+            }
+            return musculo;
+          })
         }));
-    };
+      };
+      
 
     const contarDiasSeleccionados = () => {
         return Object.values(diasSeleccionados).filter(Boolean).length;
