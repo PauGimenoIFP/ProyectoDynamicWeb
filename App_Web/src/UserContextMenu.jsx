@@ -23,7 +23,7 @@ export function UserContextMenu({ x, y, isVisible, onClose, clienteId, onUserDel
             console.error("No se proporcionó un ID de cliente válido");
             return;
         }
-
+            // Cambia el ID de los clientes con el id de los documentos
         try {
             // Confirmación antes de eliminar
             if (!window.confirm("¿Estás seguro de eliminar este usuario?")) {
@@ -58,7 +58,7 @@ export function UserContextMenu({ x, y, isVisible, onClose, clienteId, onUserDel
             <div className="menu-item-m-p" onClick={() => {}}>
                 Ver rutinas
             </div>
-            <div className="menu-item-m-p" id="log-off" onClick={DeleteUser}>
+            <div className="menu-item-m-p" id="log-off" /*onClick={DeleteUser}*/>
                 Eliminar usuario
             </div>
         </div>

@@ -3,6 +3,9 @@ import logosolo from './assets/logo_dynamic_letras_blanco.png';
 import arrow from './assets/arrow-back.png';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { db } from './firebase';
+import { collection, addDoc, updateDoc } from "firebase/firestore"; 
+// import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 // ... otros imports
 
 export function SignUp_Form(){
@@ -46,6 +49,96 @@ export function SignUp_Form(){
     e.preventDefault();
   };
 
+  const handleNumberInput = (e) => {
+    const value = e.target.value;
+    e.target.value = value.replace(/[^0-9]/g, '');
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const requiredFields = [
+      'nomGym', 'NIF/CIF', 'direccion', 
+      'codPostal', 'ciudad', 'pais', 'telefono', 
+      'nom', 'primerApellido', 'email', 'contraseña', 'contraseña2',
+      'Mensual', 'Anual'
+    ];
+
+    for (let fieldId of requiredFields) {
+      const field = document.getElementById(fieldId);
+      if (!field.value.trim()) {
+        alert("Por favor, completa todos los campos obligatorios.");
+        return; // Detener la ejecución si algún campo requerido está vacío
+      }
+    }
+
+    const email = document.getElementById('email').value;
+    if (!email.includes('@')) {
+      alert("Por favor, introduce un correo electrónico válido.");
+      return; // Detener la ejecución si el correo electrónico no contiene "@"
+    }
+
+    const password = document.getElementById('contraseña').value;
+    const confirmPassword = document.getElementById('contraseña2').value;
+
+    if (password !== confirmPassword) {
+      alert("Las contraseñas no coinciden. Por favor, inténtalo de nuevo.");
+      return; // Detener la ejecución si las contraseñas no coinciden
+    }
+
+    // Verifica si hay un archivo de logo
+    if (!logoFile) {
+      alert("Por favor, sube un logo.");
+      return;
+    }
+
+    try {
+      // const storage = getStorage();
+      // const storageRef = ref(storage, `logos/${logoFile.name}`);
+      
+      // Sube el archivo a Firebase Storage
+      // await uploadBytes(storageRef, logoFile);
+      
+      // Obtén la URL de descarga del archivo
+      // const logoURL = await getDownloadURL(storageRef);
+      const Mensual = document.getElementById('Mensual').value + " €";
+      const Anual = document.getElementById('Anual').value + " €";
+      // Guarda los datos en Firestore
+      const docRef = await addDoc(collection(db, "centrosDeportivos"), {
+        nombre: document.getElementById('nomGym').value,
+        nifCif: document.getElementById('NIF/CIF').value,
+        direccion: document.getElementById('direccion').value,
+        codigoPostal: document.getElementById('codPostal').value,
+        ciudad: document.getElementById('ciudad').value,
+        pais: document.getElementById('pais').value,
+        telefono: document.getElementById('telefono').value,
+        mensual: Mensual,
+        anual: Anual,
+        // logoURL: logoURL,
+      });
+
+      const nombreCon = document.getElementById('nom').value + " " + document.getElementById('primerApellido').value + " " + document.getElementById('segundoApellido').value
+      
+      const docRefAdmin = await addDoc(collection(db, "Admin"), {
+        nombre: nombreCon,
+        email: document.getElementById('email').value,
+        password: document.getElementById('contraseña').value,
+        UdGym: docRef.id,
+      });
+
+      // Actualiza el documento de centrosDeportivos con el ID de Admin
+      await updateDoc(docRef, {
+        UdAdmin: docRefAdmin.id
+      });
+      
+      console.log("Gym escrito con ID: ", docRef.id);
+      console.log("Admin escrito con ID: ", docRefAdmin.id);
+      goToPlans(); // Navega a la siguiente página después de guardar
+    } catch (e) {
+      console.error("Error al añadir el documento: ", e);
+    }
+  };
+
   return (
     <main className="main-signup-s">
       <div className='boton-atras-s'>
@@ -61,45 +154,51 @@ export function SignUp_Form(){
               <h1>Datos del Centro Deportivo</h1>
             </div>
             <div className='form-s'>
-              <label>Nombre del centro deportivo</label>
+              <label>Nombre del centro deportivo *</label>
               <br />
-              <input type='text' className="input-s" id="nomGym" placeholder=" Obligatorio" required />
+              <input type='text' className="input-s" id="nomGym" />
               <br />
-              <label>Modalidad legal</label>
+              <label>Identificador fiscal (NIF/CIF) *</label>
               <br />
-              <input type='text' className="input-s" id="modalidad" placeholder=" Obligatorio" required />
+              <input type='text' className="input-s" id="NIF/CIF" />
               <br />
-              <label>Identificador fiscal (NIF/CIF)</label>
+              <label>Dirección completa *</label>
               <br />
-              <input type='text' className="input-s" id="NIF/CIF" placeholder=" Obligatorio" required />
-              <br />
-              <label>Dirección completa</label>
-              <br />
-              <input type='text' className="input-s" id="direccion" placeholder=" Obligatorio" required />
+              <input type='text' className="input-s" id="direccion" />
               <br />
             </div>
             <div className='form-pequeño-s'>
               <div className='grid-pequeño-s'>
                 <div className='marco-CodTel-pequeño-s'>
-                  <label>Código postal</label>
-                  <input className="input-pequeños-s" id="codPostal" max={99999} placeholder=" Obligatorio" required />
+                  <label>Código postal *</label>
+                  <input className="input-pequeños-s" id="codPostal" max={99999} onInput={handleNumberInput}/>
                 </div>
                 <div className='marco-CodTel-pequeño-derecho-s'>
-                  <label>Ciudad</label>
-                  <input className="input-pequeños-derecho-s" id="ciudad" max={999999999} placeholder=" Obligatorio" required />
+                  <label>Ciudad *</label>
+                  <input className="input-pequeños-derecho-s" id="ciudad" max={999999999} />
                 </div>
                 <div className='marco-CodTel-pequeño-s'>
-                  <label>País</label>
-                  <input className="input-pequeños-s" id="pais" max={99999} placeholder=" Obligatorio" required />
+                  <label>País *</label>
+                  <input className="input-pequeños-s" id="pais" />
                 </div>
                 <div className='marco-CodTel-pequeño-derecho-s'>
-                  <label>Teléfono</label>
-                  <input className="input-pequeños-derecho-s" id="telefono" max={999999999} placeholder=" Obligatorio" required />
+                  <label>Teléfono *</label>
+                  <input className="input-pequeños-derecho-s" id="telefono" max={999999999} onInput={handleNumberInput}/>
+                </div>
+                <div className='marco-CodTel-pequeño-s'>
+                  <label>Pago Mensual *</label>
+                  <input 
+                    className="input-pequeños-s" id="Mensual" max={99999} placeholder=" €" onInput={handleNumberInput}
+                  />
+                </div>
+                <div className='marco-CodTel-pequeño-derecho-s'>
+                  <label>Pago Anual *</label>
+                  <input className="input-pequeños-derecho-s" id="Anual" max={99999} placeholder=" €" onInput={handleNumberInput}/>
                 </div>
               </div>
             </div>
             <div className='form-pequeño-s'>
-              <label>Logo del Gym</label>
+              <label>Logo del Gym *</label>
               <br />
               <div 
                 className="logo-drop-area-s" 
@@ -139,36 +238,36 @@ export function SignUp_Form(){
               <h1>Datos del Responsable</h1>
             </div>
             <div className='form-derecho-s'>
-              <label>Nombre</label>
+              <label>Nombre *</label>
               <br />
-              <input type='text' className="input-s" id="nom" placeholder=" Obligatorio" required />
+              <input type='text' className="input-s" id="nom" />
               <br />
-              <label>Primer apellido</label>
+              <label>Primer apellido *</label>
               <br />
-              <input type='text' className="input-s" id="primerApellido" placeholder=" Obligatorio" required />
+              <input type='text' className="input-s" id="primerApellido" />
               <br />
               <label>Segundo apellido</label>
               <br />
-              <input type='text' className="input-s" id="segundoApellido" placeholder=" Obligatorio" required />
+              <input type='text' className="input-s" id="segundoApellido" placeholder=" Opcional"/>
               <br />
-              <label>Correo electrónico (Cuenta Dynamic)</label>
+              <label>Correo electrónico (Cuenta Dynamic) *</label>
               <br />
-              <input type='text' className="input-s" id="email" placeholder=" Obligatorio" required />
+              <input type='text' className="input-s" id="email" />
               <br />
-              <label>Contraseña</label>
+              <label>Contraseña *</label>
               <br />
-              <input type='password' className="input-s" id="contraseña" placeholder=" Obligatorio" required />
+              <input type='password' className="input-s" id="contraseña" />
               <br />
-              <label>Repite la contraseña</label>
+              <label>Repite la contraseña *</label>
               <br />
-              <input type='password' className="input-s" id="contraseña2" placeholder=" Obligatorio" required />
+              <input type='password' className="input-s" id="contraseña2" />
             </div>
           </div>
         </div>
       </form>
       <div className="separador-s"></div>
       <div className='btn-container-s'>
-        <button className='btn-save-s' onClick={goToPlans}>Confirmar</button>
+        <button className='btn-save-s' onClick={handleSubmit}>Confirmar</button>
       </div>
     </main>
   )
