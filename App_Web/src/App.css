@@ -241,10 +241,10 @@
 .separador-s {
   position: absolute;
   left: 50%; /* Lo centra horizontalmente */
-  top: 295px; /* Baja un poco desde el inicio */
+  top: 35%; /* Baja un poco desde el inicio */
   transform: translateX(-50%); /* Ajuste fino para centrar bien */
   width: 3px;
-  height: 50vh;
+  height: 65vh;
   background-color: var(--secondary-color);
   border-radius: 5px;
 }
@@ -1003,6 +1003,15 @@
   background-color: rgba(255, 255, 255, 0.05);
 }
 
+.gym-nombre-m-p {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.div-gym-nombre-m-p {
+  max-width: 20%;
+}
 /*------------------------------------------------------*/
 
 

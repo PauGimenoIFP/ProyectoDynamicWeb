@@ -5,13 +5,14 @@ import logo_gym from './assets/logo_dynamic.png';
 import lupa from './assets/icono-lupa.png';
 import { ProfileMenu } from './ProfileMenu';
 import { db } from './firebase'; // Importa la configuración de Firestore
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import { UserContextMenu } from './UserContextMenu';
 
 export function Main_Panel(){
     const navigate = useNavigate();
     const [clientes, setClientes] = useState([]);
     const [menuContextual, setMenuContextual] = useState({ visible: false, x: 0, y: 0, clienteId: null });
+    const [nombreGym, setNombreGym] = useState('');
 
     const obtenerClientes = async () => {
         try {
@@ -31,6 +32,23 @@ export function Main_Panel(){
         obtenerClientes();
       }, []);
 
+    useEffect(() => {
+        const fetchGymName = async () => {
+            const udGym = localStorage.getItem('UdGym');
+            if (udGym) {
+                const docRef = doc(db, "centrosDeportivos", udGym);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    setNombreGym(docSnap.data().nombre);
+                } else {
+                    console.error("No se encontró el documento del gimnasio.");
+                }
+            }
+        };
+
+        fetchGymName();
+    }, []);
+
     const goToPagos = () => {
         navigate('/Pagos');
     };
@@ -41,12 +59,12 @@ export function Main_Panel(){
 
     const handleContextMenu = (e, clienteId) => {
         e.preventDefault();
-        console.log("ID del cliente:", clienteId); // Para depuración
+        //console.log("ID del cliente:", clienteId); // Para depuración
         setMenuContextual({
             visible: true,
             x: e.pageX,
             y: e.pageY,
-            clienteId: clienteId.toString() // Aseguramos que sea string
+            // clienteId: clienteId.toString() // Aseguramos que sea string
         });
     };
 
@@ -64,8 +82,8 @@ export function Main_Panel(){
                 <div className='img-logo-m-p'>
                     <img src={logo_gym} alt='foto del gym' className='img-logo-m-p'/>
                 </div>
-                <div>
-                    <h2>Nombre Gym</h2>
+                <div className='div-gym-nombre-m-p'>
+                    <h2 className='gym-nombre-m-p' title={nombreGym}>{nombreGym}</h2>
                 </div> 
                 <input type='text' id='search' className='input-m-p' placeholder=" Busca un cliente..."></input>
                 <img src={lupa} className='img-lupa-m-p'></img>
