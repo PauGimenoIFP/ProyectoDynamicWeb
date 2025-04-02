@@ -21,6 +21,7 @@ export function Login() {
       if (!querySnapshot.empty) {
         const adminData = querySnapshot.docs[0].data();
         localStorage.setItem('UdGym', adminData.UdGym); // Guarda el UdGym en el almacenamiento local
+        localStorage.setItem('AdminName', adminData.nombre);
         navigate('/Main_Panel');
       } else {
         alert("Correo electrónico o contraseña incorrectos.");

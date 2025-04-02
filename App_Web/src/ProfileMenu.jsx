@@ -5,6 +5,7 @@ import foto_perfil from './assets/foto-perfil-ej.png';
 export function ProfileMenu() {
     const navigate = useNavigate();
     const [showMenu, setShowMenu] = useState(false);
+    const [adminName, setAdminName] = useState('');
     const menuRef = useRef(null);
 
     useEffect(() => {
@@ -18,6 +19,13 @@ export function ProfileMenu() {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
+    }, []);
+
+    useEffect(() => {
+        const storedAdminName = localStorage.getItem('AdminName');
+        if (storedAdminName) {
+            setAdminName(storedAdminName);
+        }
     }, []);
 
     const goToStart = () => {
@@ -35,6 +43,7 @@ export function ProfileMenu() {
                 alt='foto de perfil' 
                 className='img-perfil-m-p'
                 onClick={toggleMenu}
+                title={adminName}
             />
             {showMenu && (
                 <div className="menu-desplegable-m-p">

@@ -13,41 +13,42 @@ export function Main_Panel(){
     const [clientes, setClientes] = useState([]);
     const [menuContextual, setMenuContextual] = useState({ visible: false, x: 0, y: 0, clienteId: null });
     const [nombreGym, setNombreGym] = useState('');
-
-    const obtenerClientes = async () => {
-        try {
-          const querySnapshot = await getDocs(collection(db, "clientes")); // Consulta la colección "clientes"
-          const clientesData = querySnapshot.docs.map((doc) => ({
-            id: doc.id, // ID del documento
-            ...doc.data(), // Datos del cliente
-          }));
-          setClientes(clientesData); // Actualiza el estado con los datos obtenidos
-        } catch (error) {
-          console.error("Error obteniendo clientes:", error);
-        }
-      };
-    
-      // Obtén los clientes cuando el componente se monte
-      useEffect(() => {
-        obtenerClientes();
-      }, []);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [passwordGym, setPasswordGym] = useState('');
 
     useEffect(() => {
-        const fetchGymName = async () => {
+        const fetchGymData = async () => {
             const udGym = localStorage.getItem('UdGym');
             if (udGym) {
                 const docRef = doc(db, "centrosDeportivos", udGym);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     setNombreGym(docSnap.data().nombre);
+                    setPasswordGym(docSnap.data().password);
+                    obtenerClientes(docSnap.data().password); // Llama a obtenerClientes con el passwordGym
                 } else {
                     console.error("No se encontró el documento del gimnasio.");
                 }
             }
         };
 
-        fetchGymName();
+        fetchGymData();
     }, []);
+
+    const obtenerClientes = async (passwordGym) => {
+        try {
+            const querySnapshot = await getDocs(collection(db, "clientes")); // Consulta la colección "clientes"
+            const clientesData = querySnapshot.docs.map((doc) => ({
+                id: doc.id, // ID del documento
+                ...doc.data(), // Datos del cliente
+            }));
+            // Filtrar clientes que coinciden con UdGimnasio y passwordGym
+            const filteredClientesData = clientesData.filter(cliente => cliente.UdGimnasio === passwordGym);
+            setClientes(filteredClientesData); // Actualiza el estado con los datos filtrados
+        } catch (error) {
+            console.error("Error obteniendo clientes:", error);
+        }
+    };
 
     const goToPagos = () => {
         navigate('/Pagos');
@@ -64,6 +65,7 @@ export function Main_Panel(){
             visible: true,
             x: e.pageX,
             y: e.pageY,
+            clienteId
             // clienteId: clienteId.toString() // Aseguramos que sea string
         });
     };
@@ -72,9 +74,10 @@ export function Main_Panel(){
         setMenuContextual({ ...menuContextual, visible: false });
     };
 
-    const handleUserDeleted = () => {
-        obtenerClientes(); // Actualiza la lista de clientes después de eliminar
-    };
+    // Filtrar clientes según el texto de búsqueda
+    const filteredClientes = clientes.filter(cliente => 
+        `${cliente.Nombre} ${cliente.Apellido1} ${cliente.Apellido2}`.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <main>
@@ -85,7 +88,7 @@ export function Main_Panel(){
                 <div className='div-gym-nombre-m-p'>
                     <h2 className='gym-nombre-m-p' title={nombreGym}>{nombreGym}</h2>
                 </div> 
-                <input type='text' id='search' className='input-m-p' placeholder=" Busca un cliente..."></input>
+                <input type='text' id='search' className='input-m-p' placeholder=" Busca un cliente..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}></input>
                 <img src={lupa} className='img-lupa-m-p'></img>
                 <ProfileMenu />
             </div>
@@ -96,7 +99,7 @@ export function Main_Panel(){
                     <button onClick={goToRutinas} className='btn-m-p'>Rutinas</button>
                 </div>
                 <div className='tabla-m-p'>
-                    <table >
+                    <table>
                         <thead>
                             <tr>
                                 <th>Nº</th>
@@ -107,32 +110,35 @@ export function Main_Panel(){
                             </tr>
                         </thead>
                         <tbody>
-                            {clientes.map((cliente, index) => (
-                                <tr 
-                                    key={cliente.id}
-                                    onContextMenu={(e) => handleContextMenu(e, cliente.id)}
-                                >
-                                    <td>{index + 1}</td>
-                                    <td>{cliente.Nombre} {cliente.Apellido1} {cliente.Apellido2}</td>
-                                    <td>
-                                        {cliente.EstadoSuscripcion == true ? (
-                                            <div className='estado-pago-m-p'>
-                                                &ensp;
-                                                <div className='circulo-verde-m-p'></div>
-                                                <a>Pagado</a>
-                                            </div>
-                                        ) : (
-                                            <div className='estado-pago-m-p'>
-                                                &ensp;
-                                                <div className='circulo-rojo-m-p'></div>
-                                                <a>Pendiente</a>
-                                            </div>
-                                        )}
-                                    </td>
-                                    <td>{cliente.Email}</td>
-                                    <td>{cliente.Telefono}</td>
-                                </tr>
-                            ))}
+                            {filteredClientes.map((cliente) => {
+                                const originalIndex = clientes.findIndex(c => c.id === cliente.id); // Encuentra el índice original
+                                return (
+                                    <tr 
+                                        key={cliente.id}
+                                        onContextMenu={(e) => handleContextMenu(e, cliente.id)}
+                                    >
+                                        <td>{originalIndex + 1}</td>
+                                        <td>{cliente.Nombre} {cliente.Apellido1} {cliente.Apellido2}</td>
+                                        <td>
+                                            {cliente.EstadoSuscripcion === true ? (
+                                                <div className='estado-pago-m-p'>
+                                                    &ensp;
+                                                    <div className='circulo-verde-m-p'></div>
+                                                    <a>Pagado</a>
+                                                </div>
+                                            ) : (
+                                                <div className='estado-pago-m-p'>
+                                                    &ensp;
+                                                    <div className='circulo-rojo-m-p'></div>
+                                                    <a>Pendiente</a>
+                                                </div>
+                                            )}
+                                        </td>
+                                        <td>{cliente.Email}</td>
+                                        <td>{cliente.Telefono}</td>
+                                    </tr>
+                                );
+                            })}
                         </tbody>
                     </table>
                     <UserContextMenu 
@@ -141,7 +147,6 @@ export function Main_Panel(){
                         isVisible={menuContextual.visible}
                         onClose={handleCloseMenu}
                         clienteId={menuContextual.clienteId}
-                        onUserDeleted={handleUserDeleted}  // Esta función actualiza la lista
                     />
                 </div>
             </div>

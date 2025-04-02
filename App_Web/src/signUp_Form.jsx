@@ -4,7 +4,7 @@ import arrow from './assets/arrow-back.png';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { db } from './firebase';
-import { collection, addDoc, updateDoc } from "firebase/firestore"; 
+import { collection, addDoc, updateDoc, getDocs } from "firebase/firestore"; 
 // import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 // ... otros imports
 
@@ -54,6 +54,19 @@ export function SignUp_Form(){
     e.target.value = value.replace(/[^0-9]/g, '');
   };
 
+  const generateUniquePassword = async () => {
+    let uniquePassword;
+    let exists = true;
+
+    while (exists) {
+      uniquePassword = Math.floor(100000000 + Math.random() * 900000000); // Genera un número de 9 dígitos
+      const querySnapshot = await getDocs(collection(db, "centrosDeportivos"));
+      exists = querySnapshot.docs.some(doc => doc.data().password === uniquePassword.toString());
+    }
+
+    return uniquePassword.toString();
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -101,9 +114,12 @@ export function SignUp_Form(){
       
       // Obtén la URL de descarga del archivo
       // const logoURL = await getDownloadURL(storageRef);
+
+      const uniquePassword = await generateUniquePassword();
+
       const Mensual = document.getElementById('Mensual').value + " €";
       const Anual = document.getElementById('Anual').value + " €";
-      // Guarda los datos en Firestore
+
       const docRef = await addDoc(collection(db, "centrosDeportivos"), {
         nombre: document.getElementById('nomGym').value,
         nifCif: document.getElementById('NIF/CIF').value,
@@ -114,6 +130,7 @@ export function SignUp_Form(){
         telefono: document.getElementById('telefono').value,
         mensual: Mensual,
         anual: Anual,
+        password: uniquePassword,
         // logoURL: logoURL,
       });
 
@@ -136,6 +153,7 @@ export function SignUp_Form(){
       goToPlans(); // Navega a la siguiente página después de guardar
     } catch (e) {
       console.error("Error al añadir el documento: ", e);
+      alert.error("Error al añadir el gimnasio o Admin, vuelva a intentarlo más tarde o contacte con nosotros si persiste.");
     }
   };
 
