@@ -5,7 +5,7 @@ import logo_gym from './assets/logo_dynamic.png';
 import lupa from './assets/icono-lupa.png';
 import { ProfileMenu } from './ProfileMenu';
 import { db } from './firebase'; // Importa la configuración de Firestore
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { UserContextMenu } from './UserContextMenu';
 
 export function Main_Panel(){
@@ -15,6 +15,8 @@ export function Main_Panel(){
     const [nombreGym, setNombreGym] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
     const [passwordGym, setPasswordGym] = useState('');
+    const [precioMensual, setPrecioMensual] = useState('');
+    const [precioAnual, setPrecioAnual] = useState('');
 
     useEffect(() => {
         const fetchGymData = async () => {
@@ -25,15 +27,24 @@ export function Main_Panel(){
                 if (docSnap.exists()) {
                     setNombreGym(docSnap.data().nombre);
                     setPasswordGym(docSnap.data().password);
-                    obtenerClientes(docSnap.data().password); // Llama a obtenerClientes con el passwordGym
+                    setPrecioMensual(docSnap.data().mensual);
+                    setPrecioAnual(docSnap.data().anual);
+                    
                 } else {
                     console.error("No se encontró el documento del gimnasio.");
+                    console.log("Comprueba el gimnasio con id: " + passwordGym);
                 }
             }
         };
 
         fetchGymData();
     }, []);
+
+    useEffect(() => {
+        if (precioMensual !== "" && precioAnual !== "") {
+            obtenerClientes(passwordGym); // Llama a obtenerClientes solo si los precios están definidos
+        }
+    }, [precioMensual, precioAnual]); // Dependencias
 
     const obtenerClientes = async (passwordGym) => {
         try {
@@ -42,9 +53,29 @@ export function Main_Panel(){
                 id: doc.id, // ID del documento
                 ...doc.data(), // Datos del cliente
             }));
+
             // Filtrar clientes que coinciden con UdGimnasio y passwordGym
             const filteredClientesData = clientesData.filter(cliente => cliente.UdGimnasio === passwordGym);
             setClientes(filteredClientesData); // Actualiza el estado con los datos filtrados
+            // Actualizar el campo "APagar" de los clientes filtrados
+            Promise.all(filteredClientesData.map(async (cliente) => {
+                if (cliente.PlanSuscripcion === "Mensual") {
+                    if (cliente.APagar != precioMensual || cliente.APagar === "") {
+                        await updateDoc(doc(db, "clientes", cliente.id), {
+                            APagar: precioMensual
+                        });
+                    } 
+                } else if(cliente.PlanSuscripcion === "Anual")  {
+                    if(cliente.APagar != precioAnual || cliente.APagar === "") {
+                        await updateDoc(doc(db, "clientes", cliente.id), {
+                            APagar: precioAnual
+                        });
+                    }
+                } else {
+                    console.log("Ha pasado algún problema con el dato de pago");
+                    alert.log("Ha ocurrido un error, vuelve a intentarlo más tarde");
+                }
+            }));
         } catch (error) {
             console.error("Error obteniendo clientes:", error);
         }

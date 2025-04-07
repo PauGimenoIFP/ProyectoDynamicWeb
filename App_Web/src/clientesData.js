@@ -17,7 +17,7 @@ const db = getFirestore(app); // Inicializa Firestore
 
 export const clientes = [
     {
-        APagar: "50 €",
+        APagar: "",
         Altura: 1.70,
         Apellido1: "González",
         Apellido2: "Martínez",
@@ -34,7 +34,7 @@ export const clientes = [
         validated: false
     },
     {
-        APagar: "600 €",
+        APagar: "",
         Altura: 1.65,
         Apellido1: "Pérez",
         Apellido2: "Ramírez",
@@ -51,7 +51,7 @@ export const clientes = [
         validated: false
     },
     {
-        APagar: "50 €",
+        APagar: "",
         Altura: 1.68,
         Apellido1: "Sánchez",
         Apellido2: "López",
@@ -68,7 +68,7 @@ export const clientes = [
         validated: false
     },
     {
-        APagar: "600 €",
+        APagar: "",
         Altura: 1.78,
         Apellido1: "Moreno",
         Apellido2: "García",
@@ -85,7 +85,7 @@ export const clientes = [
         validated: false
     },
     {
-        APagar: "50 €",
+        APagar: "",
         Altura: 1.63,
         Apellido1: "Torres",
         Apellido2: "Hernández",
@@ -102,7 +102,7 @@ export const clientes = [
         validated: false
     },
     {
-        APagar: "50 €",
+        APagar: "",
         Altura: 1.75,
         Apellido1: "Ruiz",
         Apellido2: "Álvarez",
@@ -119,7 +119,7 @@ export const clientes = [
         validated: false
     },
     {
-        APagar: "50 €",
+        APagar: "",
         Altura: 1.67,
         Apellido1: "Díaz",
         Apellido2: "Fernández",
@@ -136,7 +136,7 @@ export const clientes = [
         validated: false
     },
     {
-        APagar: "600 €",
+        APagar: "",
         Altura: 1.72,
         Apellido1: "Vega",
         Apellido2: "Jiménez",
@@ -153,7 +153,7 @@ export const clientes = [
         validated: false
     },
     {
-        APagar: "600 €",
+        APagar: "",
         Altura: 1.65,
         Apellido1: "Silva",
         Apellido2: "Muñoz",
@@ -170,7 +170,7 @@ export const clientes = [
         validated: false
     },
     {
-        APagar: "50 €",
+        APagar: "",
         Altura: 1.75,
         Apellido1: "Castro",
         Apellido2: "López",
@@ -187,7 +187,7 @@ export const clientes = [
         validated: false
     },
     {
-        APagar: "50 €",
+        APagar: "",
         Altura: 1.70,
         Apellido1: "Martínez",
         Apellido2: "González",
@@ -204,7 +204,7 @@ export const clientes = [
         validated: false
     },
     {
-        APagar: "600 €",
+        APagar: "",
         Altura: 1.65,
         Apellido1: "Ramírez",
         Apellido2: "Gómez",
@@ -221,7 +221,7 @@ export const clientes = [
         validated: false
     },
     {
-        APagar: "50 €",
+        APagar: "",
         Altura: 1.68,
         Apellido1: "Sánchez",
         Apellido2: "Rodríguez",
@@ -238,7 +238,7 @@ export const clientes = [
         validated: false
     },
     {
-        APagar: "600 €",
+        APagar: "",
         Altura: 1.78,
         Apellido1: "Moreno",
         Apellido2: "Pablo",
@@ -255,7 +255,7 @@ export const clientes = [
         validated: false
     },
     {
-        APagar: "50 €",
+        APagar: "",
         Altura: 1.63,
         Apellido1: "Torres",
         Apellido2: "García",
@@ -272,7 +272,7 @@ export const clientes = [
         validated: false
     },
     {
-        APagar: "50 €",
+        APagar: "",
         Altura: 1.75,
         Apellido1: "Ruiz",
         Apellido2: "Ángel",
@@ -289,12 +289,12 @@ export const clientes = [
         validated: true
     },
     {
-        APagar: "50 €",
+        APagar: "",
         Altura: 1.67,
-        Apellido1: "Díaz",
-        Apellido2: "Fernández",
+        Apellido1: "Fernandez",
+        Apellido2: "Díaz",
         Contraseña: "",
-        Email: "isabel.diaz@gmail.com",
+        Email: "isabel.fernandez@gmail.com",
         EstadoSuscripcion: true,
         FechaNacimiento: "12/12/1994",
         Genero: "Femenino",
@@ -306,7 +306,7 @@ export const clientes = [
         validated: false
     },
     {
-        APagar: "600 €",
+        APagar: "",
         Altura: 1.72,
         Apellido1: "Jiménez",
         Apellido2: "Vega",
@@ -323,7 +323,7 @@ export const clientes = [
         validated: false
     },
     {
-        APagar: "600 €",
+        APagar: "",
         Altura: 1.65,
         Apellido1: "Muñoz",
         Apellido2: "Silva",
@@ -340,7 +340,7 @@ export const clientes = [
         validated: false
     },
     {
-        APagar: "50 €",
+        APagar: "",
         Altura: 1.75,
         Apellido1: "Castro",
         Apellido2: "López",
