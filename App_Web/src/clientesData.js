@@ -17,7 +17,6 @@ const db = getFirestore(app); // Inicializa Firestore
 
 export const clientes = [
     {
-        id: 1,
         APagar: "50 €",
         Altura: 1.70,
         Apellido1: "González",
@@ -35,7 +34,6 @@ export const clientes = [
         validated: false
     },
     {
-        id: 2,
         APagar: "600 €",
         Altura: 1.65,
         Apellido1: "Pérez",
@@ -53,7 +51,6 @@ export const clientes = [
         validated: false
     },
     {
-        id: 3,
         APagar: "50 €",
         Altura: 1.68,
         Apellido1: "Sánchez",
@@ -71,7 +68,6 @@ export const clientes = [
         validated: false
     },
     {
-        id: 4,
         APagar: "600 €",
         Altura: 1.78,
         Apellido1: "Moreno",
@@ -89,7 +85,6 @@ export const clientes = [
         validated: false
     },
     {
-        id: 5,
         APagar: "50 €",
         Altura: 1.63,
         Apellido1: "Torres",
@@ -107,7 +102,6 @@ export const clientes = [
         validated: false
     },
     {
-        id: 6,
         APagar: "50 €",
         Altura: 1.75,
         Apellido1: "Ruiz",
@@ -125,7 +119,6 @@ export const clientes = [
         validated: false
     },
     {
-        id: 7,
         APagar: "50 €",
         Altura: 1.67,
         Apellido1: "Díaz",
@@ -143,7 +136,6 @@ export const clientes = [
         validated: false
     },
     {
-        id: 8,
         APagar: "600 €",
         Altura: 1.72,
         Apellido1: "Vega",
@@ -161,7 +153,6 @@ export const clientes = [
         validated: false
     },
     {
-        id: 9,
         APagar: "600 €",
         Altura: 1.65,
         Apellido1: "Silva",
@@ -179,7 +170,6 @@ export const clientes = [
         validated: false
     },
     {
-        id: 10,
         APagar: "50 €",
         Altura: 1.75,
         Apellido1: "Castro",
@@ -197,7 +187,6 @@ export const clientes = [
         validated: false
     },
     {
-        id: 11,
         APagar: "50 €",
         Altura: 1.70,
         Apellido1: "Martínez",
@@ -215,7 +204,6 @@ export const clientes = [
         validated: false
     },
     {
-        id: 12,
         APagar: "600 €",
         Altura: 1.65,
         Apellido1: "Ramírez",
@@ -233,7 +221,6 @@ export const clientes = [
         validated: false
     },
     {
-        id: 13,
         APagar: "50 €",
         Altura: 1.68,
         Apellido1: "Sánchez",
@@ -251,7 +238,6 @@ export const clientes = [
         validated: false
     },
     {
-        id: 14,
         APagar: "600 €",
         Altura: 1.78,
         Apellido1: "Moreno",
@@ -269,7 +255,6 @@ export const clientes = [
         validated: false
     },
     {
-        id: 15,
         APagar: "50 €",
         Altura: 1.63,
         Apellido1: "Torres",
@@ -287,7 +272,6 @@ export const clientes = [
         validated: false
     },
     {
-        id: 16,
         APagar: "50 €",
         Altura: 1.75,
         Apellido1: "Ruiz",
@@ -305,7 +289,6 @@ export const clientes = [
         validated: true
     },
     {
-        id: 17,
         APagar: "50 €",
         Altura: 1.67,
         Apellido1: "Díaz",
@@ -323,7 +306,6 @@ export const clientes = [
         validated: false
     },
     {
-        id: 18,
         APagar: "600 €",
         Altura: 1.72,
         Apellido1: "Jiménez",
@@ -341,7 +323,6 @@ export const clientes = [
         validated: false
     },
     {
-        id: 19,
         APagar: "600 €",
         Altura: 1.65,
         Apellido1: "Muñoz",
@@ -359,7 +340,6 @@ export const clientes = [
         validated: false
     },
     {
-        id: 20,
         APagar: "50 €",
         Altura: 1.75,
         Apellido1: "Castro",

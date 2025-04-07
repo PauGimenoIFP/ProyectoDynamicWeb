@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { db } from './firebase';
-import { doc, deleteDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 
 export function UserContextMenu({ x, y, isVisible, onClose, clienteId, onUserDeleted }) {
     const menuRef = useRef(null);
@@ -18,28 +18,26 @@ export function UserContextMenu({ x, y, isVisible, onClose, clienteId, onUserDel
         };
     }, [onClose]);
 
-    const DeleteUser = async () => {
-        if (!clienteId) {
+    const updateUserGymId = async () => {
+        console.log(clienteId);
+        if (!clienteId || typeof clienteId !== 'string') {
             console.error("No se proporcionó un ID de cliente válido");
             return;
         }
-            // Cambia el ID de los clientes con el id de los documentos
         try {
-            // Confirmación antes de eliminar
-            if (!window.confirm("¿Estás seguro de eliminar este usuario?")) {
+            // Confirmación antes de actualizar
+            if (!window.confirm("¿Estás seguro de eliminar a este usuario del gimnasio?")) {
                 return;
             }
 
             const docRef = doc(db, "clientes", clienteId);
-            await deleteDoc(docRef);
-            
-            console.log("Usuario eliminado con éxito");
+            await updateDoc(docRef, { UdGimnasio: null });
             onClose();
             if (onUserDeleted) onUserDeleted(); // Notifica al componente padre para actualizar la lista
             
         } catch (error) {
-            console.error("Error al eliminar el usuario:", error);
-            alert("No se pudo eliminar el usuario. Error: " + error.message);
+            console.error("Error al actualizar el UdGimnasio:", error);
+            alert("No se pudo actualizar el UdGimnasio. Error: " + error.message);
         }
     };
 
@@ -58,7 +56,7 @@ export function UserContextMenu({ x, y, isVisible, onClose, clienteId, onUserDel
             <div className="menu-item-m-p" onClick={() => {}}>
                 Ver rutinas
             </div>
-            <div className="menu-item-m-p" id="log-off" /*onClick={DeleteUser}*/>
+            <div className="menu-item-m-p" id="log-off" onClick={updateUserGymId}>
                 Eliminar usuario
             </div>
         </div>
