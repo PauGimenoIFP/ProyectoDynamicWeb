@@ -60,18 +60,20 @@ export function Main_Panel(){
 
     const handleContextMenu = (e, clienteId) => {
         e.preventDefault();
-        //console.log("ID del cliente:", clienteId); // Para depuración
         setMenuContextual({
             visible: true,
             x: e.pageX,
             y: e.pageY,
-            clienteId
-            // clienteId: clienteId.toString() // Aseguramos que sea string
+            clienteId: clienteId
         });
     };
 
     const handleCloseMenu = () => {
         setMenuContextual({ ...menuContextual, visible: false });
+    };
+
+    const handleUserDeleted = () => {
+        obtenerClientes(passwordGym); // Vuelve a obtener la lista de clientes después de eliminar uno
     };
 
     // Filtrar clientes según el texto de búsqueda
@@ -147,6 +149,7 @@ export function Main_Panel(){
                         isVisible={menuContextual.visible}
                         onClose={handleCloseMenu}
                         clienteId={menuContextual.clienteId}
+                        onUserDeleted={handleUserDeleted}
                     />
                 </div>
             </div>
