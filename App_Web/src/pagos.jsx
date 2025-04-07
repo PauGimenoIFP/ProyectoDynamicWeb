@@ -28,6 +28,7 @@ export function Pagos(){
                     obtenerClientes(docSnap.data().password); // Llama a obtenerClientes con el passwordGym
                 } else {
                     console.error("No se encontró el documento del gimnasio.");
+                    console.log("Comprueba el gimnasio con id: " + passwordGym);
                 }
             }
         };
@@ -118,7 +119,7 @@ export function Pagos(){
                                         key={cliente.id}
                                         onContextMenu={(e) => handleContextMenu(e, cliente.id)}
                                     >
-                                        <td>{originalIndex + 1}</td> {/* Mantiene el índice original de la lista completa */}
+                                        <td>{originalIndex + 1}</td>
                                         <td>{cliente.Nombre} {cliente.Apellido1} {cliente.Apellido2}</td>
                                         <td>
                                             {cliente.EstadoSuscripcion === true ? (
