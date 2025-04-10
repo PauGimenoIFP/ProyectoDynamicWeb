@@ -14,7 +14,7 @@ export function Package_Payment2(){
     };
 
     const goToPanel = () => {
-        navigate('/login');
+        navigate('/SignUp_Form');
     };
     return (
         <main className='main-p-p-2'>

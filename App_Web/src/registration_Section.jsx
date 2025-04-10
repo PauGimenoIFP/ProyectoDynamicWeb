@@ -6,7 +6,7 @@ export function Registration_Section() {
   const navigate = useNavigate();
 
   const handleNewAccount = () => {
-    navigate('/SignUp_Form');
+    navigate('/Package_Payment');
   };
 
   const handleExistingAccount = () => {

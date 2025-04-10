@@ -54,7 +54,7 @@ export function UserContextMenu({ x, y, isVisible, onClose, clienteId, onUserDel
             }}
         >
             <div className="menu-item-m-p" onClick={() => {}}>
-                Ver rutinas
+                Asignar rutinas
             </div>
             <div className="menu-item-m-p" id="log-off" onClick={updateUserGymId}>
                 Eliminar usuario

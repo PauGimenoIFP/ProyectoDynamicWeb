@@ -30,6 +30,8 @@ export function ProfileMenu() {
 
     const goToStart = () => {
         navigate('/');
+    }; const goToEdit = () => {
+        navigate('/Edit_Profile');
     };
 
     const toggleMenu = () => {
@@ -50,8 +52,8 @@ export function ProfileMenu() {
                     <div className="menu-item-m-p">
                         Ajustes
                     </div>
-                    <div className="menu-item-m-p">
-                        Mi cuenta
+                    <div className="menu-item-m-p" onClick={goToEdit}>
+                        Mi gimnasio
                     </div>
                     <div className="menu-item-m-p" onClick={goToStart} id='log-off'>
                         Cerrar sesión
