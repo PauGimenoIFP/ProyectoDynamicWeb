@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { useNavigate } from 'react-router-dom';
-import logo_gym from './assets/logo_dynamic.png';
 import lupa from './assets/icono-lupa.png';
 import { ProfileMenu } from './ProfileMenu';
 import { db } from './firebase';
@@ -15,6 +14,7 @@ export function Pagos(){
     const [nombreGym, setNombreGym] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
     const [passwordGym, setPasswordGym] = useState('');
+    const [Logo, setLogo] = useState('');
 
     useEffect(() => {
         const fetchGymData = async () => {
@@ -26,6 +26,7 @@ export function Pagos(){
                     setNombreGym(docSnap.data().nombre);
                     setPasswordGym(docSnap.data().password);
                     obtenerClientes(docSnap.data().password); // Llama a obtenerClientes con el passwordGym
+                    setLogo(docSnap.data().logoUrl);
                 } else {
                     console.error("No se encontró el documento del gimnasio.");
                     console.log("Comprueba el gimnasio con id: " + passwordGym);
@@ -85,7 +86,7 @@ export function Pagos(){
         <main>
             <div className='main-m-p'>
                 <div className='img-logo-m-p'>
-                    <img src={logo_gym} alt='foto del gym' className='img-logo-m-p'/>
+                    <img src={Logo} alt='foto del gym' className='img-logo-m-p'/>
                 </div>
                 <div className='div-gym-nombre-m-p'>
                     <h2 className='gym-nombre-m-p' title={nombreGym}>{nombreGym}</h2>

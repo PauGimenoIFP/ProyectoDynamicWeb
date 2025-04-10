@@ -1,13 +1,16 @@
 import './App.css'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo_gym from './assets/logo_dynamic.png';
 import lupa from './assets/icono-lupa.png';
 import { clientes } from './clientesData';
 import { ProfileMenu } from './ProfileMenu';
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { db } from './firebase'; // Importa la configuración de Firestore
 
 export function Rutinas(){
     const navigate = useNavigate();
+    const [nombreGym, setNombreGym] = useState('');
+    const [Logo, setLogo] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [nombreRutina, setNombreRutina] = useState('');
     const [diasSeleccionados, setDiasSeleccionados] = useState({
@@ -347,15 +350,33 @@ export function Rutinas(){
         return Object.values(diasSeleccionados).some(dia => dia === true);
     };
 
+    useEffect(() => {
+        fetchGymData(); // Llama a la función para obtener datos del gimnasio al montar el componente
+    }, []);
+
+    const fetchGymData = async () => {
+        const udGym = localStorage.getItem('UdGym');
+        if (udGym) {
+            const docRef = doc(db, "centrosDeportivos", udGym);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                setNombreGym(docSnap.data().nombre);
+                setLogo(docSnap.data().logoUrl);
+            } else {
+                console.error("No se encontró el documento del gimnasio.");
+            }
+        }
+    };
+
     return (
         <main>
             <div className='main-m-p'>
                 <div className='img-logo-m-p'>
-                    <img src={logo_gym} alt='foto del gym' className='img-logo-m-p'/>
+                    <img src={Logo} alt='foto del gym' className='img-logo-m-p'/>
                 </div>
-                <div>
-                    <h2>Nombre Gym</h2>
-                </div> 
+                <div className='div-gym-nombre-m-p'>
+                    <h2 className='gym-nombre-m-p' title={nombreGym}>{nombreGym}</h2>
+                </div>
                 <input type='text' id='search' className='input-m-p' placeholder=" Busca un cliente..."></input>
                 <img src={lupa} className='img-lupa-m-p'></img>
                 <ProfileMenu />

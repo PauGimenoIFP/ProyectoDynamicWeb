@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { useNavigate } from 'react-router-dom';
-import logo_gym from './assets/logo_dynamic.png';
 import lupa from './assets/icono-lupa.png';
 import { ProfileMenu } from './ProfileMenu';
 import { db } from './firebase'; // Importa la configuración de Firestore

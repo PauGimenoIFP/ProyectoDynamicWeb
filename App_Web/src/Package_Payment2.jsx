@@ -10,11 +10,10 @@ export function Package_Payment2(){
     const navigate = useNavigate();
 
     const goToPlans = () => {
-        navigate('/Package_Payment');
-    };
-
-    const goToPanel = () => {
         navigate('/SignUp_Form');
+    };
+    const goToPanel = () => {
+        navigate('Login');
     };
     return (
         <main className='main-p-p-2'>

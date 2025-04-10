@@ -20,7 +20,18 @@ export function SignUp_Form(){
   };
 
   const goToPlans = () => {
-    navigate('/Login');
+    const selectedPlan = localStorage.getItem('selectedPlan'); // Obtener el plan seleccionado
+
+    // Navegar a la página correspondiente según el plan
+    if (selectedPlan === 'basic') {
+      navigate('/Package_Payment1');
+    } else if (selectedPlan === 'premium') {
+      navigate('/Package_Payment2');
+    } else if (selectedPlan === 'medium') {
+      navigate('/Package_Payment3');
+    } else {
+      navigate('/Login'); // Navegar a Login si no hay un plan seleccionado
+    }
   };
 
   // Maneja el cambio de archivo tanto para el input como para el drop
@@ -161,6 +172,9 @@ export function SignUp_Form(){
       alert.error("Error al añadir el gimnasio o Admin, vuelva a intentarlo más tarde o contacte con nosotros si persiste.");
     }
   };
+
+  const selectedPlan = localStorage.getItem('selectedPlan');
+  console.log("Plan seleccionado:", selectedPlan);
 
   return (
     <main className="main-signup-s">
