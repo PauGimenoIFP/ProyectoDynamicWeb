@@ -11,15 +11,18 @@ export function Package_Payment(){
   };
 
   const goToForm1 = () => {
-    navigate('/Package_Payment1');
+    localStorage.setItem('selectedPlan', 'basic');
+    navigate('/SignUp_Form');
   };
 
   const goToForm2 = () => {
-    navigate('/Package_Payment2');
+    localStorage.setItem('selectedPlan', 'premium');
+    navigate('/SignUp_Form');
   };
 
   const goToForm3 = () => {
-    navigate('/Package_Payment3');
+    localStorage.setItem('selectedPlan', 'medium');
+    navigate('/SignUp_Form');
   };
 
   return (
