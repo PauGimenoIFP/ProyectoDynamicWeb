@@ -983,7 +983,7 @@
 }
 
 .menu-contextual-m-p {
-  background-color: var(--inputs);
+  background-color: #1c1c1c;
   border-radius: 6px;
   padding: 8px 4px;
   z-index: 1000;
@@ -1423,4 +1423,19 @@
     margin-top: 50px;
     font-size: 16px;
     opacity: 0.7;
+}
+/*------------------------------------------------------*/
+
+
+/* Estilos para Editar perfil */
+.texto-titulo-ep{
+  position: relative;
+  justify-content: center;
+  display: flex;
+  margin-bottom: 2%;
+}
+
+.img-logo-ep{
+  height: 50px;
+  width: auto;
 }

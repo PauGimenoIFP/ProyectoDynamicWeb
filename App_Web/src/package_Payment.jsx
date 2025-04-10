@@ -7,7 +7,7 @@ export function Package_Payment(){
   const navigate = useNavigate();
 
   const goToStart = () => {
-    navigate('/SignUp_Form');
+    navigate('/');
   };
 
   const goToForm1 = () => {

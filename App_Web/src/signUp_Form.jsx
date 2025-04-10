@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { db } from './firebase';
 import { collection, addDoc, updateDoc, getDocs } from "firebase/firestore"; 
-// import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-// ... otros imports
+import axios from 'axios';
 
 export function SignUp_Form(){
   const navigate = useNavigate();
@@ -14,33 +13,48 @@ export function SignUp_Form(){
   // Estados para el logo
   const [logoFile, setLogoFile] = useState(null);
   const [logoPreview, setLogoPreview] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null); // Estado para almacenar la URL de la imagen
 
   const goToStart = () => {
-    navigate('/');
-  };
-
-  const goToPlans = () => {
     navigate('/Package_Payment');
   };
 
+  const goToPlans = () => {
+    navigate('/Login');
+  };
+
   // Maneja el cambio de archivo tanto para el input como para el drop
-  const handleLogoChange = (file) => {
-    if(file){
+  const handleLogoChange = async (file) => {
+    if (file) {
       setLogoFile(file);
       const previewUrl = URL.createObjectURL(file);
       setLogoPreview(previewUrl);
+      
+      // Subir la imagen a Cloudinary
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', 'Dynamic'); // Reemplaza con tu upload preset
+
+      try {
+        const response = await axios.post('https://api.cloudinary.com/v1_1/deggvl6qi/image/upload', formData);
+        const uploadedImageUrl = response.data.secure_url; // Obtén la URL de la imagen
+        setImageUrl(uploadedImageUrl); // Almacena la URL en el estado
+        console.log("URL de la imagen en Cloudinary: ", uploadedImageUrl);
+      } catch (error) {
+        console.error("Error al subir la imagen a Cloudinary: ", error);
+      }
     }
   };
 
   const handleFileInputChange = (e) => {
-    if(e.target.files && e.target.files[0]){
+    if (e.target.files && e.target.files[0]) {
       handleLogoChange(e.target.files[0]);
     }
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
-    if(e.dataTransfer.files && e.dataTransfer.files[0]){
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       handleLogoChange(e.dataTransfer.files[0]);
     }
   };
@@ -106,15 +120,6 @@ export function SignUp_Form(){
     }
 
     try {
-      // const storage = getStorage();
-      // const storageRef = ref(storage, `logos/${logoFile.name}`);
-      
-      // Sube el archivo a Firebase Storage
-      // await uploadBytes(storageRef, logoFile);
-      
-      // Obtén la URL de descarga del archivo
-      // const logoURL = await getDownloadURL(storageRef);
-
       const uniquePassword = await generateUniquePassword();
 
       const Mensual = document.getElementById('Mensual').value + " €";
@@ -131,7 +136,7 @@ export function SignUp_Form(){
         mensual: Mensual,
         anual: Anual,
         password: uniquePassword,
-        // logoURL: logoURL,
+        logoUrl: imageUrl, // Añadir la URL de la imagen a la base de datos
       });
 
       const nombreCon = document.getElementById('nom').value + " " + document.getElementById('primerApellido').value + " " + document.getElementById('segundoApellido').value

@@ -17,6 +17,7 @@ export function Main_Panel(){
     const [passwordGym, setPasswordGym] = useState('');
     const [precioMensual, setPrecioMensual] = useState('');
     const [precioAnual, setPrecioAnual] = useState('');
+    const [Logo, setLogo] = useState('');
 
     useEffect(() => {
         const fetchGymData = async () => {
@@ -29,7 +30,7 @@ export function Main_Panel(){
                     setPasswordGym(docSnap.data().password);
                     setPrecioMensual(docSnap.data().mensual);
                     setPrecioAnual(docSnap.data().anual);
-                    
+                    setLogo(docSnap.data().logoUrl);
                 } else {
                     console.error("No se encontró el documento del gimnasio.");
                     console.log("Comprueba el gimnasio con id: " + passwordGym);
@@ -116,7 +117,7 @@ export function Main_Panel(){
         <main>
             <div className='main-m-p'>
                 <div className='img-logo-m-p'>
-                    <img src={logo_gym} alt='foto del gym' className='img-logo-m-p'/>
+                    <img src={Logo} alt='foto del gym' className='img-logo-m-p'/>
                 </div>
                 <div className='div-gym-nombre-m-p'>
                     <h2 className='gym-nombre-m-p' title={nombreGym}>{nombreGym}</h2>
