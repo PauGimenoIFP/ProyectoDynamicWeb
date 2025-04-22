@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import lupa from './assets/icono-lupa.png';
 import { clientes } from './clientesData';
 import { ProfileMenu } from './ProfileMenu';
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, addDoc, updateDoc } from 'firebase/firestore';
 import { db } from './firebase'; // Importa la configuración de Firestore
 
 export function Rutinas(){
@@ -34,6 +34,9 @@ export function Rutinas(){
         }]
     });
     const [diaSeleccionado, setDiaSeleccionado] = useState(1);
+    const [rutinas, setRutinas] = useState([]);
+    const [editandoRutina, setEditandoRutina] = useState(null);
+    const [modoEdicion, setModoEdicion] = useState(false);
 
     // Agregar un objeto para mapear días a iniciales
     const inicialesDias = {
@@ -55,11 +58,13 @@ export function Rutinas(){
     };
 
     const handleCrearRutina = () => {
+        setModoEdicion(false);
+        setEditandoRutina(null);
+        resetearFormulario();
         setModalVisible(true);
     };
 
-    const handleCerrarModal = () => {
-        setModalVisible(false);
+    const resetearFormulario = () => {
         setNombreRutina('');
         setDiasSeleccionados({
             lunes: false,
@@ -80,14 +85,41 @@ export function Rutinas(){
                 }]
             }]
         });
+        setDiaSeleccionado(1);
     };
 
-    const handleSubmit = (e) => {
+    const handleCerrarModal = () => {
+        setModalVisible(false);
+        resetearFormulario();
+        setModoEdicion(false);
+        setEditandoRutina(null);
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault(); // Evita el comportamiento por defecto del formulario
-        // Aquí puedes manejar la lógica de lo que quieres hacer al enviar el formulario
-        console.log('Nombre de la rutina:', nombreRutina);
-        console.log('Días de rutina:', Object.keys(diasSeleccionados).filter(d => diasSeleccionados[d]).join(', '));
-        handleCerrarModal(); // Cierra el modal después de "enviar"
+
+        // Recoger los datos de la rutina
+        const rutinaData = {
+            nombre: nombreRutina,
+            dias: Object.keys(diasSeleccionados).filter(d => diasSeleccionados[d]),
+            ejercicios: ejerciciosPorDia
+        };
+
+        try {
+            if (modoEdicion && editandoRutina) {
+                // Actualizar rutina existente
+                await updateDoc(doc(db, "rutinas", editandoRutina), rutinaData);
+                console.log("Rutina actualizada con ID: ", editandoRutina);
+            } else {
+                // Crear nueva rutina
+                const docRef = await addDoc(collection(db, "rutinas"), rutinaData);
+                console.log("Rutina creada con ID: ", docRef.id);
+            }
+            fetchRutinas(); // Actualizar la lista de rutinas
+            handleCerrarModal(); // Cierra el modal después de "enviar"
+        } catch (error) {
+            console.error("Error al guardar la rutina: ", error);
+        }
     };
 
     const handleMusculoChange = (dia, musculoIndex, valor) => {
@@ -243,31 +275,35 @@ export function Rutinas(){
                 [dia]: !prev[dia]
             };
             
-            // Actualizar ejerciciosPorDia basado en los días seleccionados
+            // Contar cuántos días están seleccionados
             const diasActivos = Object.entries(nuevosSeleccionados)
                 .filter(([_, seleccionado]) => seleccionado)
                 .length;
 
             if (!nuevosSeleccionados[dia]) {
                 // Si se deselecciona un día, eliminar sus ejercicios
-                setEjerciciosPorDia(prev => {
-                    const nuevoEjercicios = { ...prev };
-                    delete nuevoEjercicios[Object.keys(prev).length];
-                    return nuevoEjercicios;
-                });
+                if (!modoEdicion) {
+                    setEjerciciosPorDia(prev => {
+                        const nuevoEjercicios = { ...prev };
+                        delete nuevoEjercicios[Object.keys(prev).length];
+                        return nuevoEjercicios;
+                    });
+                }
             } else {
                 // Si se selecciona un nuevo día, agregar estructura base
-                setEjerciciosPorDia(prev => ({
-                    ...prev,
-                    [diasActivos]: [{
-                        musculo: '',
-                        ejercicios: [{
-                            nombre: '',
-                            series: 1,
-                            repeticiones: ['']
+                if (!modoEdicion) {
+                    setEjerciciosPorDia(prev => ({
+                        ...prev,
+                        [diasActivos]: [{
+                            musculo: '',
+                            ejercicios: [{
+                                nombre: '',
+                                series: 1,
+                                repeticiones: ['']
+                            }]
                         }]
-                    }]
-                }));
+                    }));
+                }
             }
 
             return nuevosSeleccionados;
@@ -350,8 +386,46 @@ export function Rutinas(){
         return Object.values(diasSeleccionados).some(dia => dia === true);
     };
 
+    // Función para abrir una rutina existente
+    const handleAbrirRutina = async (rutina) => {
+        setModoEdicion(true);
+        setEditandoRutina(rutina.id);
+        setNombreRutina(rutina.nombre);
+        
+        // Configurar días seleccionados
+        const nuevoDiasSeleccionados = {
+            lunes: false,
+            martes: false,
+            miercoles: false,
+            jueves: false,
+            viernes: false,
+            sabado: false,
+            domingo: false
+        };
+        
+        rutina.dias.forEach(dia => {
+            nuevoDiasSeleccionados[dia] = true;
+        });
+        
+        setDiasSeleccionados(nuevoDiasSeleccionados);
+        
+        // Cargar ejercicios por día
+        if (rutina.ejercicios) {
+            setEjerciciosPorDia(rutina.ejercicios);
+            
+            // Si hay días seleccionados, establecer el primero como día actual
+            if (rutina.dias && rutina.dias.length > 0) {
+                // Establecer el primer día como seleccionado
+                setDiaSeleccionado(1);
+            }
+        }
+        
+        setModalVisible(true);
+    };
+
     useEffect(() => {
         fetchGymData(); // Llama a la función para obtener datos del gimnasio al montar el componente
+        fetchRutinas(); // Llama a la función para obtener las rutinas
     }, []);
 
     const fetchGymData = async () => {
@@ -365,6 +439,19 @@ export function Rutinas(){
             } else {
                 console.error("No se encontró el documento del gimnasio.");
             }
+        }
+    };
+
+    const fetchRutinas = async () => {
+        try {
+            const querySnapshot = await getDocs(collection(db, "rutinas"));
+            const rutinasData = querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            setRutinas(rutinasData);
+        } catch (error) {
+            console.error("Error al obtener las rutinas: ", error);
         }
     };
 
@@ -390,6 +477,15 @@ export function Rutinas(){
                 <div className='tabla-ruti'>
                     <div className='btn-crear-ruti-container'>
                         <button className='btn-crear-ruti' onClick={handleCrearRutina}> + Crear nueva rutina</button>
+                        {rutinas.map((rutina) => (
+                            <div 
+                                key={rutina.id} 
+                                className='btn-crear-ruti' 
+                                onClick={() => handleAbrirRutina(rutina)}
+                            >
+                                {rutina.nombre}
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -401,7 +497,7 @@ export function Rutinas(){
                     >
                         ×
                     </button>
-                    <div className='Titulo-nueva-ruti'>Nueva Rutina</div>
+                    <div className='Titulo-nueva-ruti'>{modoEdicion ? 'Editar Rutina' : 'Nueva Rutina'}</div>
                     <div className='input-container-ruti'>
                         <div className='nombre-ruti-container'>
                             <input
@@ -545,7 +641,7 @@ export function Rutinas(){
                         className='btn-crear-rutina-modal-ruti'
                         onClick={handleSubmit}
                     >
-                        Crear rutina
+                        {modoEdicion ? 'Guardar' : 'Crear rutina'}
                     </button>
                 </div>
             )}

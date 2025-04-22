@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { db } from './firebase';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
 
 export function UserContextMenu({ x, y, isVisible, onClose, clienteId, onUserDeleted }) {
     const menuRef = useRef(null);
@@ -41,6 +41,36 @@ export function UserContextMenu({ x, y, isVisible, onClose, clienteId, onUserDel
         }
     };
 
+    const toggleSubscriptionStatus = async () => {
+        if (!clienteId || typeof clienteId !== 'string') {
+            console.error("No se proporcionó un ID de cliente válido");
+            return;
+        }
+        try {
+            const docRef = doc(db, "clientes", clienteId);
+            
+            // Obtener el estado actual
+            const docSnap = await getDoc(docRef);
+            if (!docSnap.exists()) {
+                console.error("El documento del cliente no existe");
+                return;
+            }
+            
+            // Invertir el valor actual
+            const currentStatus = docSnap.data().EstadoSuscripcion;
+            const newStatus = !currentStatus;
+            
+            // Actualizar el documento
+            await updateDoc(docRef, { EstadoSuscripcion: newStatus });
+            onClose();
+            if (onUserDeleted) onUserDeleted(); // Notifica al componente padre para actualizar la lista
+            
+        } catch (error) {
+            console.error("Error al actualizar el estado de suscripción:", error);
+            alert("No se pudo actualizar el estado de suscripción. Error: " + error.message);
+        }
+    };
+
     if (!isVisible) return null;
 
     return (
@@ -53,8 +83,8 @@ export function UserContextMenu({ x, y, isVisible, onClose, clienteId, onUserDel
                 left: x
             }}
         >
-            <div className="menu-item-m-p" onClick={() => {}}>
-                Asignar rutinas
+            <div className="menu-item-m-p" onClick={toggleSubscriptionStatus}>
+                Cambiar estado de pago
             </div>
             <div className="menu-item-m-p" id="log-off" onClick={updateUserGymId}>
                 Eliminar usuario
