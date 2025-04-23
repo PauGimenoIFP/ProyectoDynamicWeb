@@ -43,6 +43,8 @@ export function Rutinas(){
     const [emailParaAsignar, setEmailParaAsignar] = useState('');
     const [emailsAsignados, setEmailsAsignados] = useState([]);
     const [clientesCentro, setClientesCentro] = useState([]);
+    // Detecto si la rutina es global (sin gymPassword) y no es editable
+    const isGlobalRutina = modoEdicion && rutinaActual?.gymPassword == null;
 
     // Agregar un objeto para mapear días a iniciales
     const inicialesDias = {
@@ -642,45 +644,47 @@ export function Rutinas(){
                         ×
                     </button>
                     <div className='Titulo-nueva-ruti'>{modoEdicion ? 'Editar Rutina' : 'Nueva Rutina'}</div>
-                    <div className='input-container-ruti'>
-                        <div className='nombre-ruti-container'>
-                            <input
-                                type='text'
-                                value={nombreRutina}
-                                onChange={(e) => setNombreRutina(e.target.value)}
-                                className='nombre-ruti-input'
-                                placeholder="Nombre"
-                            />
-                        </div>
-                        <div className='dias-ruti-container'>
-                            <div className='dias-selector-wrapper-ruti'>
-                                <div 
-                                    className='dias-display-ruti'
-                                    onClick={() => setMostrarDias(!mostrarDias)}
-                                >
-                                    <span>{contarDiasSeleccionados() > 0 ? contarDiasSeleccionados() : 'Días'}</span>
-                                </div>
-                                {mostrarDias && (
-                                    <div className='dias-selector-ruti'>
-                                        {Object.entries(diasSeleccionados).map(([dia, seleccionado]) => (
-                                            <div key={dia} className='dia-checkbox-container-ruti'>
-                                                <label htmlFor={dia} className='dia-label-ruti'>
-                                                    {dia.charAt(0).toUpperCase() + dia.slice(1)}
-                                                </label>
-                                                <input
-                                                    type="checkbox"
-                                                    id={dia}
-                                                    checked={seleccionado}
-                                                    onChange={() => handleDiaChange(dia)}
-                                                    className='dia-checkbox-ruti'
-                                                />
-                                            </div>
-                                        ))}
+                    <fieldset disabled={isGlobalRutina} style={{ border: 'none', padding: 0 }}>
+                        <div className='input-container-ruti'>
+                            <div className='nombre-ruti-container'>
+                                <input
+                                    type='text'
+                                    value={nombreRutina}
+                                    onChange={(e) => setNombreRutina(e.target.value)}
+                                    className='nombre-ruti-input'
+                                    placeholder="Nombre"
+                                />
+                            </div>
+                            <div className='dias-ruti-container'>
+                                <div className='dias-selector-wrapper-ruti'>
+                                    <div 
+                                        className='dias-display-ruti'
+                                        onClick={() => setMostrarDias(!mostrarDias)}
+                                    >
+                                        <span>{contarDiasSeleccionados() > 0 ? contarDiasSeleccionados() : 'Días'}</span>
                                     </div>
-                                )}
+                                    {mostrarDias && (
+                                        <div className='dias-selector-ruti'>
+                                            {Object.entries(diasSeleccionados).map(([dia, seleccionado]) => (
+                                                <div key={dia} className='dia-checkbox-container-ruti'>
+                                                    <label htmlFor={dia} className='dia-label-ruti'>
+                                                        {dia.charAt(0).toUpperCase() + dia.slice(1)}
+                                                    </label>
+                                                    <input
+                                                        type="checkbox"
+                                                        id={dia}
+                                                        checked={seleccionado}
+                                                        onChange={() => handleDiaChange(dia)}
+                                                        className='dia-checkbox-ruti'
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </fieldset>
                     <div className='botones-dias-container-ruti'>
                         {obtenerDiasSeleccionados().map((dia, index) => (
                             <button 
@@ -692,111 +696,120 @@ export function Rutinas(){
                             </button>
                         ))}
                     </div>
-
-                    {hayDiasSeleccionados() ? (
-                        <div className='ejercicios-container-ruti'>
-                            {ejerciciosPorDia[diaSeleccionado]?.map((musculo, musculoIndex) => (
-                                <div key={musculoIndex} className='ejercicio-item-ruti'>
-                                    <div className='ejercicio-header-ruti'>
-                                        <button 
-                                            className='btn-eliminar-widget-ruti'
-                                            onClick={() => handleEliminarWidget(diaSeleccionado, musculoIndex)}
-                                        >
-                                            ×
-                                        </button>
-                                        <div className='fila-titulos-ruti'>
-                                            <input
-                                                type='text'
-                                                value={musculo.musculo}
-                                                onChange={(e) => handleMusculoChange(diaSeleccionado, musculoIndex, e.target.value)}
-                                                className='input-musculo-ruti'
-                                                placeholder="Músculo"
-                                            />
-                                            <div className='titulo-seccion-ruti'>Series</div>
-                                            <div className='titulo-seccion-ruti'>Repeticiones</div>
-                                            <div className='espacio-botones-ruti'></div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className='ejercicios-lista-ruti'>
-                                        {musculo.ejercicios.map((ejercicio, ejercicioIndex) => (
-                                            <div key={ejercicioIndex} className='ejercicio-fila-ruti'>
+                    <fieldset disabled={isGlobalRutina} style={{ border: 'none', padding: 0 }}>
+                        {hayDiasSeleccionados() ? (
+                            <div className='ejercicios-container-ruti'>
+                                {ejerciciosPorDia[diaSeleccionado]?.map((musculo, musculoIndex) => (
+                                    <div key={musculoIndex} className='ejercicio-item-ruti'>
+                                        <div className='ejercicio-header-ruti'>
+                                            <button 
+                                                className='btn-eliminar-widget-ruti'
+                                                onClick={() => handleEliminarWidget(diaSeleccionado, musculoIndex)}
+                                            >
+                                                ×
+                                            </button>
+                                            <div className='fila-titulos-ruti'>
                                                 <input
                                                     type='text'
-                                                    value={ejercicio.nombre}
-                                                    onChange={(e) => handleNombreEjercicioChange(diaSeleccionado, musculoIndex, ejercicioIndex, e.target.value)}
-                                                    placeholder="Ejercicio"
-                                                    className='input-nombre-ejercicio-ruti'
+                                                    value={musculo.musculo}
+                                                    onChange={(e) => handleMusculoChange(diaSeleccionado, musculoIndex, e.target.value)}
+                                                    className='input-musculo-ruti'
+                                                    placeholder="Músculo"
                                                 />
-                                                <select
-                                                    value={ejercicio.series}
-                                                    onChange={(e) => handleSeriesChange(diaSeleccionado, musculoIndex, ejercicioIndex, e.target.value)}
-                                                    className='select-series-ruti'
-                                                >
-                                                    {[...Array(10)].map((_, i) => (
-                                                        <option key={i + 1} value={i + 1}>{i + 1}</option>
-                                                    ))}
-                                                </select>
-                                                <div className='repeticiones-inputs-ruti'>
-                                                    {ejercicio.repeticiones.map((rep, serieIndex) => (
-                                                        <input
-                                                            key={serieIndex}
-                                                            type='text'
-                                                            value={rep}
-                                                            onChange={(e) => handleRepeticionChange(diaSeleccionado, musculoIndex, ejercicioIndex, serieIndex, e.target.value)}
-                                                            className='input-repeticiones-ruti'
-                                                            placeholder={`S${serieIndex + 1}`}
-                                                        />
-                                                    ))}
-                                                </div>
-                                                <div className='botones-fila-ruti'>
-                                                    <button 
-                                                        className='btn-fila-ruti minus'
-                                                        onClick={() => handleEliminarEjercicioDeMusculo(diaSeleccionado, musculoIndex, ejercicioIndex)}
-                                                    >
-                                                        -
-                                                    </button>
-                                                    <button 
-                                                        className='btn-fila-ruti plus'
-                                                        onClick={() => handleDuplicarEjercicio(diaSeleccionado, musculoIndex, ejercicioIndex)}
-                                                    >
-                                                        +
-                                                    </button>
-                                                </div>
+                                                <div className='titulo-seccion-ruti'>Series</div>
+                                                <div className='titulo-seccion-ruti'>Repeticiones</div>
+                                                <div className='espacio-botones-ruti'></div>
                                             </div>
-                                        ))}
+                                        </div>
+                                        
+                                        <div className='ejercicios-lista-ruti'>
+                                            {musculo.ejercicios.map((ejercicio, ejercicioIndex) => (
+                                                <div key={ejercicioIndex} className='ejercicio-fila-ruti'>
+                                                    <input
+                                                        type='text'
+                                                        value={ejercicio.nombre}
+                                                        onChange={(e) => handleNombreEjercicioChange(diaSeleccionado, musculoIndex, ejercicioIndex, e.target.value)}
+                                                        placeholder="Ejercicio"
+                                                        className='input-nombre-ejercicio-ruti'
+                                                    />
+                                                    <select
+                                                        value={ejercicio.series}
+                                                        onChange={(e) => handleSeriesChange(diaSeleccionado, musculoIndex, ejercicioIndex, e.target.value)}
+                                                        className='select-series-ruti'
+                                                    >
+                                                        {[...Array(10)].map((_, i) => (
+                                                            <option key={i + 1} value={i + 1}>{i + 1}</option>
+                                                        ))}
+                                                    </select>
+                                                    <div className='repeticiones-inputs-ruti'>
+                                                        {ejercicio.repeticiones.map((rep, serieIndex) => (
+                                                            <input
+                                                                key={serieIndex}
+                                                                type='text'
+                                                                value={rep}
+                                                                onChange={(e) => {
+                                                                    const val = e.target.value;
+                                                                    // Permitir solo dígitos y máximo 2 caracteres
+                                                                    if (/^\d{0,2}$/.test(val)) {
+                                                                        handleRepeticionChange(diaSeleccionado, musculoIndex, ejercicioIndex, serieIndex, val);
+                                                                    }
+                                                                }}
+                                                                className='input-repeticiones-ruti'
+                                                                placeholder={`S${serieIndex + 1}`}
+                                                                inputMode='numeric'
+                                                            />
+                                                        ))}
+                                                    </div>
+                                                    <div className='botones-fila-ruti'>
+                                                        <button 
+                                                            className='btn-fila-ruti minus'
+                                                            onClick={() => handleEliminarEjercicioDeMusculo(diaSeleccionado, musculoIndex, ejercicioIndex)}
+                                                        >
+                                                            -
+                                                        </button>
+                                                        <button 
+                                                            className='btn-fila-ruti plus'
+                                                            onClick={() => handleDuplicarEjercicio(diaSeleccionado, musculoIndex, ejercicioIndex)}
+                                                        >
+                                                            +
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                            <button 
-                                className='btn-agregar-ejercicio-ruti'
-                                onClick={() => handleAgregarMusculo(diaSeleccionado)}
-                            >
-                                + Añadir ejercicio
-                            </button>
-                        </div>
-                    ) : (
-                        <div className='mensaje-seleccion-dias-ruti'>
-                            Selecciona un día para comenzar
-                        </div>
+                                ))}
+                                <button 
+                                    className='btn-agregar-ejercicio-ruti'
+                                    onClick={() => handleAgregarMusculo(diaSeleccionado)}
+                                >
+                                    + Añadir ejercicio
+                                </button>
+                            </div>
+                        ) : (
+                            <div className='mensaje-seleccion-dias-ruti'>
+                                Selecciona un día para comenzar
+                            </div>
+                        )}
+                        {modoEdicion && (
+                            rutinaActual?.gymPassword != null && (
+                                <button
+                                    className='btn-asignar-rutina-modal-ruti'
+                                    onClick={handleAbrirAsignarModal}
+                                >
+                                    Asignar rutina
+                                </button>
+                            )
+                        )}
+                    </fieldset>
+                    {!isGlobalRutina && (
+                        <button 
+                            className='btn-crear-rutina-modal-ruti'
+                            onClick={handleSubmit}
+                        >
+                            {modoEdicion ? 'Guardar' : 'Crear rutina'}
+                        </button>
                     )}
-                    {modoEdicion && (
-                        rutinaActual?.gymPassword != null && (
-                            <button
-                                className='btn-asignar-rutina-modal-ruti'
-                                onClick={handleAbrirAsignarModal}
-                            >
-                                Asignar rutina
-                            </button>
-                        )
-                    )}
-
-                    <button 
-                        className='btn-crear-rutina-modal-ruti'
-                        onClick={handleSubmit}
-                    >
-                        {modoEdicion ? 'Guardar' : 'Crear rutina'}
-                    </button>
                 </div>
             )}
 
