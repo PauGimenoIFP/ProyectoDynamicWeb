@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import lupa from './assets/icono-lupa.png';
 import { ProfileMenu } from './ProfileMenu';
 import { db } from './firebase'; // Importa la configuración de Firestore
-import { collection, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, updateDoc, addDoc } from 'firebase/firestore';
 import { UserContextMenu } from './UserContextMenu';
 
 export function Main_Panel(){
@@ -17,6 +17,11 @@ export function Main_Panel(){
     const [precioMensual, setPrecioMensual] = useState('');
     const [precioAnual, setPrecioAnual] = useState('');
     const [Logo, setLogo] = useState('');
+    const [allClientes, setAllClientes] = useState([]);
+    const [isAddModalVisible, setAddModalVisible] = useState(false);
+    const [selectedExistingUser, setSelectedExistingUser] = useState('');
+    const [existingUserSearch, setExistingUserSearch] = useState('');
+    const [newUserData, setNewUserData] = useState({ Nombre: '', Apellido1: '', Apellido2: '', Email: '', Telefono: '', PlanSuscripcion: 'Mensual' });
 
     useEffect(() => {
         const fetchGymData = async () => {
@@ -45,6 +50,15 @@ export function Main_Panel(){
             obtenerClientes(passwordGym); // Llama a obtenerClientes solo si los precios están definidos
         }
     }, [precioMensual, precioAnual]); // Dependencias
+
+    useEffect(() => {
+        const fetchAllClientes = async () => {
+            const querySnapshot = await getDocs(collection(db, 'clientes'));
+            const allData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setAllClientes(allData);
+        };
+        fetchAllClientes();
+    }, []);
 
     const obtenerClientes = async (passwordGym) => {
         try {
@@ -104,7 +118,43 @@ export function Main_Panel(){
     };
 
     const handleUserDeleted = () => {
-        obtenerClientes(passwordGym); // Vuelve a obtener la lista de clientes después de eliminar uno
+        obtenerClientes(passwordGym);
+    };
+
+    const handleAddUser = () => {
+        setAddModalVisible(true);
+    };
+
+    const handleCloseAddModal = () => {
+        setAddModalVisible(false);
+        setSelectedExistingUser('');
+        setExistingUserSearch('');
+        setNewUserData({ Nombre: '', Apellido1: '', Apellido2: '', Email: '', Telefono: '', PlanSuscripcion: 'Mensual' });
+    };
+
+    const addExistingUser = async () => {
+        if (selectedExistingUser) {
+            await updateDoc(doc(db, 'clientes', selectedExistingUser), { UdGimnasio: passwordGym });
+            handleCloseAddModal();
+            obtenerClientes(passwordGym);
+        }
+    };
+
+    const addNewUser = async () => {
+        if (!newUserData.Nombre.trim() || !newUserData.Apellido1.trim() || !newUserData.Email.trim() || !newUserData.Telefono.trim()) {
+            alert('Por favor completa los campos obligatorios: Nombre, Apellido1, Email y Teléfono');
+            return;
+        }
+        // Validar formato de email con dominio .es o .com
+        if (!/.+@.+\.(es|com)$/.test(newUserData.Email.trim())) {
+            alert('El correo debe contener @ y terminar en .es o .com');
+            return;
+        }
+        const { Nombre, Apellido1, Apellido2, Email, Telefono, PlanSuscripcion } = newUserData;
+        const APagar = PlanSuscripcion === 'Mensual' ? precioMensual : precioAnual;
+        await addDoc(collection(db, 'clientes'), { Nombre, Apellido1, Apellido2, Email, Telefono, PlanSuscripcion, EstadoSuscripcion: false, UdGimnasio: passwordGym, APagar });
+        handleCloseAddModal();
+        obtenerClientes(passwordGym);
     };
 
     // Filtrar clientes según el texto de búsqueda
@@ -130,6 +180,7 @@ export function Main_Panel(){
                     <button className='btn-selected-m-p'>Usuarios</button>
                     <button onClick={goToPagos} className='btn-m-p'>Pagos</button>
                     <button onClick={goToRutinas} className='btn-m-p'>Rutinas</button>
+                    <button onClick={handleAddUser} className='btn-m-p'>+</button>
                 </div>
                 <div className='tabla-m-p'>
                     <table>
@@ -184,6 +235,81 @@ export function Main_Panel(){
                     />
                 </div>
             </div>
+            {isAddModalVisible && (
+                <div className='modal-overlay-m-p'>
+                    <div className='modal-add-user-m-p'>
+                        <h2>Añadir usuario</h2>
+                        <button className='close-btn-m-p' onClick={handleCloseAddModal}>×</button>
+                        <div className='modal-section-m-p'>
+                            <h3>Usuario existente</h3>
+                            <div className='input-dropdown-wrapper-m-p'>
+                                <input
+                                    type='text'
+                                    placeholder='Buscar usuario existente...'
+                                    value={existingUserSearch}
+                                    onChange={(e) => { setExistingUserSearch(e.target.value); setSelectedExistingUser(''); }}
+                                    className='input-search-m-p'
+                                    autoComplete='off'
+                                />
+                                {existingUserSearch && (
+                                    <ul style={{ position:'absolute', top:'100%', left:0, right:0, zIndex:1002, backgroundColor:'var(--background-color)', listStyle:'none', margin:0, padding:0, maxHeight:'150px', overflowY:'auto', border:'1px solid var(--secondary-color)', borderRadius:'4px' }}>
+                                        {allClientes
+                                            .filter(c => c.UdGimnasio !== passwordGym && (`${c.Nombre} ${c.Apellido1} ${c.Apellido2}`.toLowerCase().includes(existingUserSearch.toLowerCase())))
+                                            .map(c => (
+                                                <li
+                                                    key={c.id}
+                                                    style={{ padding:'8px', cursor:'pointer' }}
+                                                    onClick={() => { setSelectedExistingUser(c.id); setExistingUserSearch(`${c.Nombre} ${c.Apellido1} ${c.Apellido2}`); }}
+                                                >
+                                                    {c.Nombre} {c.Apellido1} {c.Apellido2}
+                                                </li>
+                                            ))}
+                                    </ul>
+                                )}
+                            </div>
+                            <button onClick={addExistingUser} disabled={!selectedExistingUser} className='btn-agregar-existente-m-p'>Agregar existente</button>
+                        </div>
+                        <div className='modal-section-m-p'>
+                            <h3>Crear nuevo usuario</h3>
+                            <input type='text' className='input-cliente-nuevo-m-p' placeholder='Nombre' value={newUserData.Nombre} onChange={(e) => setNewUserData({ ...newUserData, Nombre: e.target.value })} />
+                            <input type='text' className='input-cliente-nuevo-m-p' placeholder='Apellido1' value={newUserData.Apellido1} onChange={(e) => setNewUserData({ ...newUserData, Apellido1: e.target.value })} />
+                            <input type='text' className='input-cliente-nuevo-m-p' placeholder='Apellido2' value={newUserData.Apellido2} onChange={(e) => setNewUserData({ ...newUserData, Apellido2: e.target.value })} />
+                            <input
+                                type='email'
+                                pattern='.+@.+\.(es|com)$'
+                                required
+                                className='input-cliente-nuevo-m-p'
+                                placeholder='Email'
+                                value={newUserData.Email}
+                                onChange={(e) => setNewUserData({ ...newUserData, Email: e.target.value })}
+                            />
+                            <input
+                                type='tel'
+                                pattern="\+?[0-9]*"
+                                inputMode='tel'
+                                className='input-cliente-nuevo-m-p'
+                                placeholder='Teléfono'
+                                value={newUserData.Telefono}
+                                onChange={(e) => {
+                                    const val = e.target.value;
+                                    if (/^[+\d]*$/.test(val)) {
+                                        setNewUserData({ ...newUserData, Telefono: val });
+                                    }
+                                }}
+                            />
+                            <select value={newUserData.PlanSuscripcion} onChange={(e) => setNewUserData({ ...newUserData, PlanSuscripcion: e.target.value })}>
+                                <option value='Mensual'>Mensual</option>
+                                <option value='Anual'>Anual</option>
+                            </select>
+                            <br></br>
+                            <button
+                                onClick={addNewUser}
+                                className='btn-agregar-nuevo-m-p'
+                            >Crear y agregar</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </main>
     )
 }

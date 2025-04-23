@@ -809,7 +809,7 @@ export function Rutinas(){
                     >
                         ×
                     </button>
-                    <h3 className='titulo-asignar-ruti'>Asignar Rutina a Usuarios</h3>
+                    <h3 className='titulo-asignar-ruti'>Asignar Rutina a un usuario</h3>
                     <div className='asignar-input-container' style={{ position: 'relative' }}>
                         <input
                             type='text'

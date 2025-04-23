@@ -49,9 +49,6 @@ export function ProfileMenu() {
             />
             {showMenu && (
                 <div className="menu-desplegable-m-p">
-                    <div className="menu-item-m-p">
-                        Ajustes
-                    </div>
                     <div className="menu-item-m-p" onClick={goToEdit}>
                         Mi gimnasio
                     </div>
