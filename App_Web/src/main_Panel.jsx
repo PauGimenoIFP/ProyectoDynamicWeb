@@ -48,7 +48,7 @@ export function Main_Panel(){
 
     const obtenerClientes = async (passwordGym) => {
         try {
-            const querySnapshot = await getDocs(collection(db, "clientes")); // Consulta la colección "clientes"
+            const querySnapshot = await getDocs(collection(db, "clientes"));
             const clientesData = querySnapshot.docs.map((doc) => ({
                 id: doc.id, // ID del documento
                 ...doc.data(), // Datos del cliente

@@ -1426,6 +1426,26 @@
     background-color: var(--primary-color);
     border: 2px solid var(--primary-color);
 }
+.btn-asignar-rutina-modal-ruti {
+    position: absolute;
+    bottom: 20px;
+    left: 30px;
+    padding: 10px 20px;
+    background-color: transparent;
+    border: 2px solid var(--text-color);
+    color: var(--text-color);
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    width: 150px;
+    height: 40px;
+}
+
+.btn-asignar-rutina-modal-ruti:hover {
+    background-color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
 
 .mensaje-seleccion-dias-ruti {
     text-align: center;
@@ -1433,6 +1453,175 @@
     margin-top: 50px;
     font-size: 16px;
     opacity: 0.7;
+}
+
+/* Estilos para el Modal de Asignación */
+.modal-asignar-ruti {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--background-color);
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+  z-index: 1001; /* Asegurar que esté por encima del modal principal */
+  width: 450px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--secondary-color);
+}
+
+.btn-cerrar-asignar-ruti {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background-color: transparent;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.btn-cerrar-asignar-ruti:hover {
+  background-color: var(--cerrar);
+}
+
+.titulo-asignar-ruti {
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 20px;
+  margin-top: 5px;
+}
+
+.asignar-input-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.input-asignar-email {
+  flex-grow: 1; /* Ocupa el espacio disponible */
+  padding: 8px 12px;
+  border: 1px solid var(--secondary-color);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border-radius: 20px;
+}
+
+.btn-agregar-email {
+  padding: 8px 15px;
+  background-color: transparent;
+  border: 2px solid var(--text-color);
+  color: var(--text-color);
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.btn-agregar-email:hover {
+  background-color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+}
+
+.lista-emails-asignados {
+  flex-grow: 1; /* Ocupa el espacio restante */
+  overflow-y: auto; /* Scroll si la lista es larga */
+  border-top: 1px solid var(--secondary-color);
+  margin-top: 15px;
+  padding-top: 15px;
+}
+
+.lista-emails-asignados h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.lista-emails-asignados ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lista-emails-asignados li {
+  display: flex; /* Usa flexbox para alinear el email y el botón */
+  justify-content: space-between; /* Separa el email y el botón */
+  align-items: center; /* Centra verticalmente */
+  padding: 6px 5px; /* Ajusta el padding si es necesario */
+  font-size: 14px;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.lista-emails-asignados li:last-child {
+  border-bottom: none;
+}
+
+.btn-eliminar-email {
+  background-color: transparent;
+  border: none;
+  color: var(--cerrar); /* Color rojo o de eliminación */
+  cursor: pointer;
+  font-size: 18px; /* Tamaño del icono 'x' */
+  font-weight: bold;
+  padding: 0 5px; /* Espaciado pequeño */
+  line-height: 1; /* Ajusta la altura de línea si es necesario */
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.btn-eliminar-email:hover {
+  background-color: rgba(255, 0, 0, 0.2); /* Fondo rojo claro al pasar el ratón */
+}
+
+/* Puedes necesitar ajustar el span si el texto es muy largo */
+.lista-emails-asignados li span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-grow: 1; /* Permite que el span crezca */
+  margin-right: 10px; /* Espacio entre el email y el botón */
+}
+
+/* Ajustar posición del botón de asignar en el modal principal si es necesario */
+.btn-asignar-rutina-modal-ruti {
+    position: absolute;
+    bottom: 20px;
+    left: 30px;
+}
+
+.btn-crear-rutina-modal-ruti {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+}
+
+/* Estilos para botón 'X' eliminar rutina */
+.btn-eliminar-rutina {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: transparent;
+  border: none;
+  color: var(--cerrar);
+  font-size: 25px;
+  cursor: pointer;
+  line-height: 1;
+  transition: background-color 0.2s ease;
+}
+.btn-eliminar-rutina:hover {
+  background-color: rgba(255, 0, 0, 0.2);
+  border-radius: 8px;
 }
 /*------------------------------------------------------*/
 
