@@ -4,13 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import lupa from './assets/icono-lupa.png';
 import { clientes } from './clientesData';
 import { ProfileMenu } from './ProfileMenu';
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { db } from './firebase'; // Importa la configuración de Firestore
 
 export function Rutinas(){
     const navigate = useNavigate();
     const [nombreGym, setNombreGym] = useState('');
     const [Logo, setLogo] = useState('');
+    const [gymPassword, setGymPassword] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [nombreRutina, setNombreRutina] = useState('');
     const [diasSeleccionados, setDiasSeleccionados] = useState({
@@ -34,6 +35,14 @@ export function Rutinas(){
         }]
     });
     const [diaSeleccionado, setDiaSeleccionado] = useState(1);
+    const [rutinas, setRutinas] = useState([]);
+    const [editandoRutina, setEditandoRutina] = useState(null);
+    const [rutinaActual, setRutinaActual] = useState(null);
+    const [modoEdicion, setModoEdicion] = useState(false);
+    const [asignarModalVisible, setAsignarModalVisible] = useState(false);
+    const [emailParaAsignar, setEmailParaAsignar] = useState('');
+    const [emailsAsignados, setEmailsAsignados] = useState([]);
+    const [clientesCentro, setClientesCentro] = useState([]);
 
     // Agregar un objeto para mapear días a iniciales
     const inicialesDias = {
@@ -55,11 +64,14 @@ export function Rutinas(){
     };
 
     const handleCrearRutina = () => {
+        setModoEdicion(false);
+        setEditandoRutina(null);
+        setRutinaActual(null);
+        resetearFormulario();
         setModalVisible(true);
     };
 
-    const handleCerrarModal = () => {
-        setModalVisible(false);
+    const resetearFormulario = () => {
         setNombreRutina('');
         setDiasSeleccionados({
             lunes: false,
@@ -80,14 +92,44 @@ export function Rutinas(){
                 }]
             }]
         });
+        setDiaSeleccionado(1);
     };
 
-    const handleSubmit = (e) => {
+    const handleCerrarModal = () => {
+        setModalVisible(false);
+        resetearFormulario();
+        setModoEdicion(false);
+        setEditandoRutina(null);
+        setRutinaActual(null);
+        handleCerrarAsignarModal();
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault(); // Evita el comportamiento por defecto del formulario
-        // Aquí puedes manejar la lógica de lo que quieres hacer al enviar el formulario
-        console.log('Nombre de la rutina:', nombreRutina);
-        console.log('Días de rutina:', Object.keys(diasSeleccionados).filter(d => diasSeleccionados[d]).join(', '));
-        handleCerrarModal(); // Cierra el modal después de "enviar"
+
+        // Recoger los datos de la rutina
+        const rutinaData = {
+            nombre: nombreRutina,
+            dias: Object.keys(diasSeleccionados).filter(d => diasSeleccionados[d]),
+            ejercicios: ejerciciosPorDia,
+            gymPassword: gymPassword
+        };
+
+        try {
+            if (modoEdicion && editandoRutina) {
+                // Actualizar rutina existente
+                await updateDoc(doc(db, "rutinas", editandoRutina), rutinaData);
+                console.log("Rutina actualizada con ID: ", editandoRutina);
+            } else {
+                // Crear nueva rutina
+                const docRef = await addDoc(collection(db, "rutinas"), rutinaData);
+                console.log("Rutina creada con ID: ", docRef.id);
+            }
+            fetchRutinas(); // Actualizar la lista de rutinas
+            handleCerrarModal(); // Cierra el modal después de "enviar"
+        } catch (error) {
+            console.error("Error al guardar la rutina: ", error);
+        }
     };
 
     const handleMusculoChange = (dia, musculoIndex, valor) => {
@@ -243,31 +285,35 @@ export function Rutinas(){
                 [dia]: !prev[dia]
             };
             
-            // Actualizar ejerciciosPorDia basado en los días seleccionados
+            // Contar cuántos días están seleccionados
             const diasActivos = Object.entries(nuevosSeleccionados)
                 .filter(([_, seleccionado]) => seleccionado)
                 .length;
 
             if (!nuevosSeleccionados[dia]) {
                 // Si se deselecciona un día, eliminar sus ejercicios
-                setEjerciciosPorDia(prev => {
-                    const nuevoEjercicios = { ...prev };
-                    delete nuevoEjercicios[Object.keys(prev).length];
-                    return nuevoEjercicios;
-                });
+                if (!modoEdicion) {
+                    setEjerciciosPorDia(prev => {
+                        const nuevoEjercicios = { ...prev };
+                        delete nuevoEjercicios[Object.keys(prev).length];
+                        return nuevoEjercicios;
+                    });
+                }
             } else {
                 // Si se selecciona un nuevo día, agregar estructura base
-                setEjerciciosPorDia(prev => ({
-                    ...prev,
-                    [diasActivos]: [{
-                        musculo: '',
-                        ejercicios: [{
-                            nombre: '',
-                            series: 1,
-                            repeticiones: ['']
+                if (!modoEdicion) {
+                    setEjerciciosPorDia(prev => ({
+                        ...prev,
+                        [diasActivos]: [{
+                            musculo: '',
+                            ejercicios: [{
+                                nombre: '',
+                                series: 1,
+                                repeticiones: ['']
+                            }]
                         }]
-                    }]
-                }));
+                    }));
+                }
             }
 
             return nuevosSeleccionados;
@@ -350,9 +396,153 @@ export function Rutinas(){
         return Object.values(diasSeleccionados).some(dia => dia === true);
     };
 
+    // Función para abrir una rutina existente
+    const handleAbrirRutina = async (rutina) => {
+        setRutinaActual(rutina);
+        setModoEdicion(true);
+        setEditandoRutina(rutina.id);
+        setNombreRutina(rutina.nombre);
+        
+        // Configurar días seleccionados
+        const nuevoDiasSeleccionados = {
+            lunes: false,
+            martes: false,
+            miercoles: false,
+            jueves: false,
+            viernes: false,
+            sabado: false,
+            domingo: false
+        };
+        
+        rutina.dias.forEach(dia => {
+            nuevoDiasSeleccionados[dia] = true;
+        });
+        
+        setDiasSeleccionados(nuevoDiasSeleccionados);
+        
+        // Cargar ejercicios por día
+        if (rutina.ejercicios) {
+            setEjerciciosPorDia(rutina.ejercicios);
+            
+            // Si hay días seleccionados, establecer el primero como día actual
+            if (rutina.dias && rutina.dias.length > 0) {
+                // Establecer el primer día como seleccionado
+                setDiaSeleccionado(1);
+            }
+        }
+        
+        setModalVisible(true);
+    };
+
+    // --- Funciones para el Modal de Asignación ---
+
+    const handleAbrirAsignarModal = async () => {
+        if (!rutinaActual || rutinaActual.gymPassword == null) return; // Solo rutinas con gymPassword
+
+        try {
+            const rutinaRef = doc(db, "rutinas", editandoRutina);
+            const rutinaSnap = await getDoc(rutinaRef);
+            if (rutinaSnap.exists() && rutinaSnap.data().asignados) {
+                setEmailsAsignados(rutinaSnap.data().asignados);
+            } else {
+                setEmailsAsignados([]);
+            }
+            // Cargar los clientes de este gimnasio (filtrar por gymPassword)
+            await fetchClientesCentro(gymPassword);
+            setAsignarModalVisible(true);
+        } catch (error) {
+            console.error("Error al obtener emails asignados:", error);
+            setEmailsAsignados([]);
+            setAsignarModalVisible(true);
+        }
+    };
+
+    const handleCerrarAsignarModal = () => {
+        setAsignarModalVisible(false);
+        setEmailParaAsignar('');
+    };
+
+    const handleAsignarEmail = async () => {
+        if (!editandoRutina || !emailParaAsignar) return;
+
+        // Validación simple de email (puedes mejorarla)
+        if (!/\S+@\S+\.\S+/.test(emailParaAsignar)) {
+            alert("Por favor, introduce un email válido.");
+            return;
+        }
+
+        if (emailsAsignados.includes(emailParaAsignar)) {
+            alert("Este email ya está asignado a la rutina.");
+            setEmailParaAsignar(''); // Limpiar input
+            return;
+        }
+
+        // Validar que el email corresponda a un cliente del gimnasio
+        if (!clientesCentro.some(c => c.Email === emailParaAsignar)) {
+            alert("El usuario no pertenece a este gimnasio.");
+            setEmailParaAsignar('');
+            return;
+        }
+
+        try {
+            const rutinaRef = doc(db, "rutinas", editandoRutina);
+            await updateDoc(rutinaRef, {
+                asignados: arrayUnion(emailParaAsignar) // Añadir email al array
+            });
+            setEmailsAsignados([...emailsAsignados, emailParaAsignar]); // Actualizar estado local
+            setEmailParaAsignar(''); // Limpiar input
+            console.log(`Email ${emailParaAsignar} asignado a la rutina ${editandoRutina}`);
+        } catch (error) {
+            console.error("Error al asignar el email:", error);
+            alert("Hubo un error al asignar el email. Inténtalo de nuevo.");
+        }
+    };
+
+    const handleEliminarEmailAsignado = async (emailAEliminar) => {
+        if (!editandoRutina || !emailAEliminar) return;
+
+        if (!emailsAsignados.includes(emailAEliminar)) {
+            console.warn("Intentando eliminar un email que no está asignado:", emailAEliminar);
+            return; // El email no está en la lista local, no hacer nada
+        }
+
+        try {
+            const rutinaRef = doc(db, "rutinas", editandoRutina);
+            // Eliminar el email del array en Firestore
+            await updateDoc(rutinaRef, {
+                asignados: arrayRemove(emailAEliminar)
+            });
+
+            // Actualizar el estado local eliminando el email
+            setEmailsAsignados(emailsAsignados.filter(email => email !== emailAEliminar));
+            console.log(`Email ${emailAEliminar} eliminado de la rutina ${editandoRutina}`);
+        } catch (error) {
+            console.error("Error al eliminar el email asignado:", error);
+            alert("Hubo un error al eliminar el email. Inténtalo de nuevo.");
+        }
+    };
+
+    const handleEliminarRutina = async (rutinaId, rutinaPassword) => {
+        if (rutinaPassword == null) return; // No eliminar rutinas globales
+        if (window.confirm("¿Estás seguro de querer borrarla?")) {
+            const rutDocRef = doc(db, "rutinas", rutinaId);
+            await deleteDoc(rutDocRef);
+            fetchRutinas();
+        }
+    };
+
+    // --- Fin Funciones Modal Asignación ---
+
     useEffect(() => {
-        fetchGymData(); // Llama a la función para obtener datos del gimnasio al montar el componente
+        fetchGymData(); // Obtener datos del gimnasio
     }, []);
+
+    // Después de cargar gymPassword, obtener rutinas
+    useEffect(() => {
+        if (gymPassword) {
+            fetchRutinas();
+        }
+    }, [gymPassword]);
 
     const fetchGymData = async () => {
         const udGym = localStorage.getItem('UdGym');
@@ -362,9 +552,41 @@ export function Rutinas(){
             if (docSnap.exists()) {
                 setNombreGym(docSnap.data().nombre);
                 setLogo(docSnap.data().logoUrl);
+                setGymPassword(docSnap.data().password);
             } else {
                 console.error("No se encontró el documento del gimnasio.");
             }
+        }
+    };
+
+    const fetchRutinas = async () => {
+        try {
+            const querySnapshot = await getDocs(collection(db, "rutinas"));
+            const rutinasData = querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            // Filtrar las rutinas por gymPassword de estado o globales
+            const rutinasFiltradas = rutinasData.filter(rutina =>
+                rutina.gymPassword === gymPassword || // Rutinas del gimnasio actual
+                rutina.gymPassword == null           // Rutinas sin gymPassword (globales)
+            );
+            setRutinas(rutinasFiltradas);
+        } catch (error) {
+            console.error("Error al obtener las rutinas: ", error);
+        }
+    };
+
+    // Función para cargar los clientes del gimnasio actual
+    const fetchClientesCentro = async (passwordGym) => {
+        try {
+            const querySnapshot = await getDocs(collection(db, "clientes"));
+            const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            const filtrados = data.filter(c => c.UdGimnasio === passwordGym);
+            setClientesCentro(filtrados);
+        } catch (error) {
+            console.error("Error al obtener clientes del centro:", error);
+            setClientesCentro([]);
         }
     };
 
@@ -390,6 +612,24 @@ export function Rutinas(){
                 <div className='tabla-ruti'>
                     <div className='btn-crear-ruti-container'>
                         <button className='btn-crear-ruti' onClick={handleCrearRutina}> + Crear nueva rutina</button>
+                        {rutinas.map((rutina) => (
+                            <div 
+                                key={rutina.id} 
+                                className='btn-crear-ruti' 
+                                style={{ position: 'relative' }}
+                                onClick={() => handleAbrirRutina(rutina)}
+                            >
+                                {rutina.gymPassword != null && (
+                                    <button
+                                        className='btn-eliminar-rutina'
+                                        onClick={(e) => { e.stopPropagation(); handleEliminarRutina(rutina.id, rutina.gymPassword); }}
+                                    >
+                                        ×
+                                    </button>
+                                )}
+                                {rutina.nombre}
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -401,7 +641,7 @@ export function Rutinas(){
                     >
                         ×
                     </button>
-                    <div className='Titulo-nueva-ruti'>Nueva Rutina</div>
+                    <div className='Titulo-nueva-ruti'>{modoEdicion ? 'Editar Rutina' : 'Nueva Rutina'}</div>
                     <div className='input-container-ruti'>
                         <div className='nombre-ruti-container'>
                             <input
@@ -540,15 +780,93 @@ export function Rutinas(){
                             Selecciona un día para comenzar
                         </div>
                     )}
+                    {modoEdicion && (
+                        rutinaActual?.gymPassword != null && (
+                            <button
+                                className='btn-asignar-rutina-modal-ruti'
+                                onClick={handleAbrirAsignarModal}
+                            >
+                                Asignar rutina
+                            </button>
+                        )
+                    )}
 
                     <button 
                         className='btn-crear-rutina-modal-ruti'
                         onClick={handleSubmit}
                     >
-                        Crear rutina
+                        {modoEdicion ? 'Guardar' : 'Crear rutina'}
                     </button>
                 </div>
             )}
+
+            {/* --- Modal de Asignación --- */}
+            {asignarModalVisible && (
+                <div className='modal-asignar-ruti'>
+                    <button
+                        className='btn-cerrar-asignar-ruti'
+                        onClick={handleCerrarAsignarModal}
+                    >
+                        ×
+                    </button>
+                    <h3 className='titulo-asignar-ruti'>Asignar Rutina a un usuario</h3>
+                    <div className='asignar-input-container' style={{ position: 'relative' }}>
+                        <input
+                            type='text'
+                            value={emailParaAsignar}
+                            onChange={(e) => setEmailParaAsignar(e.target.value)}
+                            placeholder="Buscar cliente..."
+                            className='input-asignar-email'
+                            autoComplete="off"
+                        />
+                        {emailParaAsignar && (
+                            <ul style={{ position:'absolute', top:'100%', left:0, right:0, zIndex:1002, backgroundColor:'var(--background-color)', listStyle:'none', margin:0, padding:0, maxHeight:'150px', overflowY:'auto', border:'1px solid var(--secondary-color)', borderRadius:'4px' }}>
+                                {clientesCentro
+                                    .filter(c => (
+                                        (`${c.Nombre} ${c.Apellido1} ${c.Apellido2}`.toLowerCase().includes(emailParaAsignar.toLowerCase()) ||
+                                         c.Email.toLowerCase().includes(emailParaAsignar.toLowerCase()))
+                                    ))
+                                    .map(cliente => (
+                                        <li key={cliente.id}
+                                            style={{ padding:'8px', cursor:'pointer' }}
+                                            onClick={() => setEmailParaAsignar(cliente.Email)}
+                                        >
+                                            {cliente.Nombre} {cliente.Apellido1} {cliente.Apellido2} - {cliente.Email}
+                                        </li>
+                                ))}
+                            </ul>
+                        )}
+                        <button
+                            onClick={handleAsignarEmail}
+                            className='btn-agregar-email'
+                        >
+                            Añadir
+                        </button>
+                    </div>
+                    <div className='lista-emails-asignados'>
+                        <h4>Usuarios Asignados:</h4>
+                        {emailsAsignados.length > 0 ? (
+                            <ul>
+                                {emailsAsignados.map((email, index) => (
+                                    <li key={index}>
+                                        <span>{email}</span>
+                                        <button
+                                            className='btn-eliminar-email'
+                                            onClick={() => handleEliminarEmailAsignado(email)}
+                                        >
+                                            ×
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p>No hay usuarios asignados a esta rutina.</p>
+                        )}
+                    </div>
+                </div>
+            )}
+            {/* --- Fin Modal de Asignación --- */}
+
         </main>
     )
 }
