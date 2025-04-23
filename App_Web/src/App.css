@@ -1039,10 +1039,15 @@
   top: 0.5rem;
   right: 0.5rem;
   background: transparent;
-  color: var(--cerrar);
+  color: var(--text-color);
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+.close-btn-m-p:hover {
+  background-color: var(--cerrar);
+  border-radius: 50%;
 }
 
 .modal-section-m-p {
