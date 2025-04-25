@@ -108,8 +108,8 @@ export function Edit_Profile(){
 
     try {
       // Usa el docId que has almacenado
-      const Mensual = document.getElementById('Mensual').value + " €";
-      const Anual = document.getElementById('Anual').value + " €";
+      const Mensual = document.getElementById('Mensual').value;
+      const Anual = document.getElementById('Anual').value;
 
       // Crea un objeto para almacenar los cambios
       const updates = {};
@@ -147,7 +147,7 @@ export function Edit_Profile(){
         let valueToUpdate = null;
         if (field.key === 'mensual' || field.key === 'anual') {
            // Para precios, usar el valor del estado formateado si existe
-           valueToUpdate = field.key === 'mensual' ? (precioMensual ? precioMensual + ' €' : null) : (precioAnual ? precioAnual + ' €' : null);
+           valueToUpdate = field.key === 'mensual' ? (precioMensual ? precioMensual : null) : (precioAnual ? precioAnual : null);
         } else if (stateValue !== null && stateValue !== '') {
            valueToUpdate = stateValue;
         } else if (elementValue !== null && elementValue !== '') {

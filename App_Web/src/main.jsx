@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Registration_Section } from './registration_Section.jsx'
@@ -13,6 +12,8 @@ import { Pagos } from './pagos.jsx'
 import { Rutinas } from './rutinas.jsx'
 import { TestPage } from './TestPage.jsx'
 import { Edit_Profile } from './edit_Profile.jsx'
+import { ProtectedRoute } from './ProtectedRoute.jsx'
+import { PublicRoute } from './PublicRoute.jsx'
 import './index.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -20,18 +21,24 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
     <BrowserRouter>
         <Routes>
-            <Route path="/" element={<Registration_Section />} />
-            <Route path="/SignUp_Form" element={<SignUp_Form />} />
-            <Route path="/Package_Payment" element={<Package_Payment/>} />
-            <Route path="/Package_Payment1" element={<Package_Payment1/>} />
-            <Route path="/Package_Payment2" element={<Package_Payment2/>} />
-            <Route path="/Package_Payment3" element={<Package_Payment3/>} />
-            <Route path="/Main_Panel" element={<Main_Panel/>} />
-            <Route path="/Pagos" element={<Pagos/>} />
-            <Route path="/Login" element={<Login />} />
-            <Route path="/Rutinas" element={<Rutinas />} />
+            <Route element={<PublicRoute />}>
+                <Route path="/" element={<Registration_Section />} />
+                <Route path="/SignUp_Form" element={<SignUp_Form />} />
+                <Route path="/Package_Payment" element={<Package_Payment />} />
+                <Route path="/Package_Payment1" element={<Package_Payment1 />} />
+                <Route path="/Package_Payment2" element={<Package_Payment2 />} />
+                <Route path="/Package_Payment3" element={<Package_Payment3 />} />
+                <Route path="/Login" element={<Login />} />
+            </Route>
+
+            <Route element={<ProtectedRoute />}>
+                <Route path="/Main_Panel" element={<Main_Panel />} />
+                <Route path="/Pagos" element={<Pagos />} />
+                <Route path="/Rutinas" element={<Rutinas />} />
+                <Route path="/Edit_Profile" element={<Edit_Profile />} />
+            </Route>
+
             <Route path="/test" element={<TestPage />} />
-            <Route path="/Edit_Profile" element={<Edit_Profile />} />
         </Routes>
     </BrowserRouter>
 )

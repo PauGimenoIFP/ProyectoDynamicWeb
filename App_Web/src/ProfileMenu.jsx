@@ -29,7 +29,9 @@ export function ProfileMenu() {
     }, []);
 
     const goToStart = () => {
-        navigate('/');
+        localStorage.removeItem('UdGym');
+        localStorage.removeItem('AdminName');
+        navigate('/Login');
     }; const goToEdit = () => {
         navigate('/Edit_Profile');
     };
