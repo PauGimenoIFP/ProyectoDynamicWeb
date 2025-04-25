@@ -805,6 +805,7 @@
 
 .main-m-p {
   display: flex;
+  align-items: flex-start; /* Alineo hijos al inicio para que .tabla-m-p no se estire */
   margin-top: 2%;
 }
 .btn-selected-m-p {
