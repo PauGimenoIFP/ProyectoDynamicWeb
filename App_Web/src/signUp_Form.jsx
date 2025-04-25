@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { db } from './firebase';
 import { collection, addDoc, updateDoc, getDocs } from "firebase/firestore"; 
 import axios from 'axios';
+import defaultLogo from './assets/logo_Dynamic.png';
 
 export function SignUp_Form(){
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export function SignUp_Form(){
   const [logoFile, setLogoFile] = useState(null);
   const [logoPreview, setLogoPreview] = useState(null);
   const [imageUrl, setImageUrl] = useState(null); // Estado para almacenar la URL de la imagen
+  const [confirmLogo, setConfirmLogo] = useState(false);
 
   const goToStart = () => {
     navigate('/Package_Payment');
@@ -124,11 +126,16 @@ export function SignUp_Form(){
       return; // Detener la ejecución si las contraseñas no coinciden
     }
 
-    // Verifica si hay un archivo de logo
-    if (!logoFile) {
-      alert("Por favor, sube un logo.");
-      return;
+    // Verifica si hay un archivo de logo y si el usuario ya ha sido advertido
+    if (!logoFile && !confirmLogo) {
+      alert("Si no se sube un logo, se usará el logo por defecto, ¿estás seguro de continuar?");
+      setConfirmLogo(true); // Marcar que el usuario ha sido advertido
+      return; // Detener la ejecución, esperar al segundo clic
     }
+
+    // Si llegamos aquí, o se subió un logo, o el usuario confirmó usar el logo por defecto.
+    // Determinar la URL del logo a guardar
+    const logoUrlToSave = imageUrl ? imageUrl : defaultLogo; // Usar la URL de Cloudinary si existe, si no, el logo por defecto
 
     try {
       const uniquePassword = await generateUniquePassword();
@@ -147,7 +154,7 @@ export function SignUp_Form(){
         mensual: Mensual,
         anual: Anual,
         password: uniquePassword,
-        logoUrl: imageUrl, // Añadir la URL de la imagen a la base de datos
+        logoUrl: logoUrlToSave, // Usar la URL determinada
       });
 
       const nombreCon = document.getElementById('nom').value + " " + document.getElementById('primerApellido').value + " " + document.getElementById('segundoApellido').value

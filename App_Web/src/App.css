@@ -837,6 +837,25 @@
   margin-right: 5%;
 }
 
+.btn-añadir-usuario-m-p {
+  padding: 10px 20px;
+  cursor: pointer; 
+  background-color: var(--background-color);
+  color: var(--text-color);        
+  border: none;
+  border-radius: 30px;    
+  width: 150px;     
+  height: 60px;
+  margin-top: 10px;
+  position: relative;
+  margin-left: auto;
+  margin-right: 5%;
+}
+
+.btn-añadir-usuario-m-p:hover {
+  background-color: var(--inputs);
+}
+
 .btn-m-p:hover{
   background-color: var(--inputs);
 }
