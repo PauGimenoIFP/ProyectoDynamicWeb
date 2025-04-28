@@ -108,8 +108,8 @@ export function Edit_Profile(){
 
     try {
       // Usa el docId que has almacenado
-      const Mensual = document.getElementById('Mensual').value + " €";
-      const Anual = document.getElementById('Anual').value + " €";
+      const Mensual = document.getElementById('Mensual').value;
+      const Anual = document.getElementById('Anual').value;
 
       // Crea un objeto para almacenar los cambios
       const updates = {};
@@ -127,23 +127,59 @@ export function Edit_Profile(){
 
       // Solo agrega al objeto de actualizaciones si el campo tiene un valor
       fieldsToUpdate.forEach(field => {
-        const value = field.value || document.getElementById(field.id).value;
-        if (value) {
-          updates[field.key] = value;
+        // Obtener el valor del estado si existe, de lo contrario del elemento DOM
+        const stateValue = 
+          field.key === 'nombre' ? nombreGym :
+          field.key === 'nifCif' ? NifCif :
+          field.key === 'direccion' ? Direccion :
+          field.key === 'codigoPostal' ? CodigoPostal :
+          field.key === 'ciudad' ? Ciudad :
+          field.key === 'pais' ? Pais :
+          field.key === 'telefono' ? Telefono :
+          field.key === 'mensual' ? precioMensual : // Usar estado para precios
+          field.key === 'anual' ? precioAnual :     // Usar estado para precios
+          null; 
+        
+        const elementValue = field.value !== undefined ? field.value : (document.getElementById(field.id) ? document.getElementById(field.id).value : null);
+        
+        // Dar prioridad al valor del estado si existe y es diferente al inicial o si es un campo de precio
+        // De lo contrario, usar el valor del elemento DOM si existe
+        let valueToUpdate = null;
+        if (field.key === 'mensual' || field.key === 'anual') {
+           // Para precios, usar el valor del estado formateado si existe
+           valueToUpdate = field.key === 'mensual' ? (precioMensual ? precioMensual : null) : (precioAnual ? precioAnual : null);
+        } else if (stateValue !== null && stateValue !== '') {
+           valueToUpdate = stateValue;
+        } else if (elementValue !== null && elementValue !== '') {
+           valueToUpdate = elementValue;
+        }
+
+
+        // Solo actualizar si hay un valor no vacío
+        if (valueToUpdate !== null && valueToUpdate !== '' && valueToUpdate !== ' €') { // Asegurarse de no guardar solo " €"
+          updates[field.key] = valueToUpdate;
         }
       });
 
-      // Actualiza el documento existente en lugar de crear uno nuevo
-      await updateDoc(doc(db, "centrosDeportivos", docId), {
-        ...updates,
-        logoUrl: imageUrl, // Guarda la URL de Cloudinary
-      });
+      // Solo añade logoUrl a las actualizaciones si se ha subido una nueva imagen (imageUrl tiene valor)
+      if (imageUrl) {
+        updates.logoUrl = imageUrl; // Guarda la URL de Cloudinary
+      }
+
+      // Actualiza el documento existente en lugar de crear uno nuevo, solo si hay algo que actualizar
+      if (Object.keys(updates).length > 0) {
+          await updateDoc(doc(db, "centrosDeportivos", docId), updates);
+          console.log("Gym actualizado con ID: ", docId);
+      } else {
+          console.log("No hay cambios para guardar.");
+      }
       
-      console.log("Gym actualizado con ID: ", docId);
       goToPanel(); // Navega a la siguiente página después de guardar
     } catch (e) {
       console.error("Error al actualizar el documento: ", e);
-      alert.error("Error al actualizar el gimnasio, vuelva a intentarlo más tarde o contacte con nosotros si persiste.");
+      // Asegúrate de tener implementado el sistema de alertas o usa alert()
+      // alert.error("Error al actualizar el gimnasio, vuelva a intentarlo más tarde o contacte con nosotros si persiste.");
+       alert("Error al actualizar el gimnasio, vuelva a intentarlo más tarde o contacte con nosotros si persiste.");
     }
   };
 

@@ -138,7 +138,7 @@ export function Pagos(){
                                             )}
                                         </td>
                                         <td>{cliente.PlanSuscripcion}</td>
-                                        <td>{cliente.APagar}</td>
+                                        <td>{cliente.APagar} €</td>
                                     </tr>
                                 );
                             })}

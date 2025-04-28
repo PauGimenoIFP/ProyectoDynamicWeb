@@ -33,7 +33,7 @@ export function Login() {
   };
 
   const handleBack = () => {
-    navigate(-1); // O la ruta que prefieras para "atrás"
+    navigate('/'); // O la ruta que prefieras para "atrás"
   };
 
   return(

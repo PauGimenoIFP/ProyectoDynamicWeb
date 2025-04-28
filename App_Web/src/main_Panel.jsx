@@ -133,10 +133,36 @@ export function Main_Panel(){
     };
 
     const addExistingUser = async () => {
-        if (selectedExistingUser) {
-            await updateDoc(doc(db, 'clientes', selectedExistingUser), { UdGimnasio: passwordGym });
+        if (!selectedExistingUser) {
+            alert('No has seleccionado ningún usuario existente válido');
+            return;
+        }
+        try {
+            const clienteDocRef = doc(db, 'clientes', selectedExistingUser);
+            const clienteSnap = await getDoc(clienteDocRef);
+
+            if (clienteSnap.exists()) {
+                const clienteData = clienteSnap.data();
+                if (clienteData.UdGimnasio && clienteData.UdGimnasio !== '') {
+                    const confirmacion = window.confirm(`Este usuario ya está asignado a otro gimnasio. ¿Quieres quitarlo de su gimnasio actual y añadirlo al tuyo?`);
+                    if (!confirmacion) {
+                        return; // El usuario canceló
+                    }
+                }
+            } else {
+                alert("No se encontró el usuario seleccionado.");
+                return;
+            }
+
+            await updateDoc(doc(db, 'clientes', selectedExistingUser), { 
+                UdGimnasio: passwordGym, 
+                EstadoSuscripcion: false 
+            });
             handleCloseAddModal();
             obtenerClientes(passwordGym);
+        } catch (error) {
+            console.error("Error al agregar usuario existente:", error);
+            alert("Hubo un error al agregar el usuario. Inténtalo de nuevo.");
         }
     };
 
@@ -150,6 +176,15 @@ export function Main_Panel(){
             alert('El correo debe contener @ y terminar en .es o .com');
             return;
         }
+
+        // Verificar si el email ya está en uso
+        const querySnapshot = await getDocs(collection(db, "clientes"));
+        const emailExists = querySnapshot.docs.some(doc => doc.data().Email === newUserData.Email);
+        if (emailExists) {
+            alert("Este correo electrónico ya está en uso. Agreguelo en el apartado de usuarios existentes.");
+            return; // Detener la ejecución si el correo electrónico ya está en uso
+        }
+
         const { Nombre, Apellido1, Apellido2, Email, Telefono, PlanSuscripcion } = newUserData;
         const APagar = PlanSuscripcion === 'Mensual' ? precioMensual : precioAnual;
         await addDoc(collection(db, 'clientes'), { Nombre, Apellido1, Apellido2, Email, Telefono, PlanSuscripcion, EstadoSuscripcion: false, UdGimnasio: passwordGym, APagar });
@@ -180,7 +215,7 @@ export function Main_Panel(){
                     <button className='btn-selected-m-p'>Usuarios</button>
                     <button onClick={goToPagos} className='btn-m-p'>Pagos</button>
                     <button onClick={goToRutinas} className='btn-m-p'>Rutinas</button>
-                    <button onClick={handleAddUser} className='btn-m-p'>+</button>
+                    <button onClick={handleAddUser} className='btn-añadir-usuario-m-p'>Añadir usuario</button>
                 </div>
                 <div className='tabla-m-p'>
                     <table>
@@ -251,23 +286,29 @@ export function Main_Panel(){
                                     className='input-search-m-p'
                                     autoComplete='off'
                                 />
-                                {existingUserSearch && (
+                                {/* Mostrar dropdown solo si hay texto y NO se ha seleccionado un usuario exacto */}
+                                {existingUserSearch && !selectedExistingUser && (
                                     <ul style={{ position:'absolute', top:'100%', left:0, right:0, zIndex:1002, backgroundColor:'var(--background-color)', listStyle:'none', margin:0, padding:0, maxHeight:'150px', overflowY:'auto', border:'1px solid var(--secondary-color)', borderRadius:'4px' }}>
                                         {allClientes
-                                            .filter(c => c.UdGimnasio !== passwordGym && (`${c.Nombre} ${c.Apellido1} ${c.Apellido2}`.toLowerCase().includes(existingUserSearch.toLowerCase())))
+                                            .filter(c => c.UdGimnasio !== passwordGym && 
+                                                        (`${c.Nombre} ${c.Apellido1} ${c.Apellido2}`.toLowerCase().includes(existingUserSearch.toLowerCase()) ||
+                                                         c.Email.toLowerCase().includes(existingUserSearch.toLowerCase())))
                                             .map(c => (
                                                 <li
                                                     key={c.id}
                                                     style={{ padding:'8px', cursor:'pointer' }}
-                                                    onClick={() => { setSelectedExistingUser(c.id); setExistingUserSearch(`${c.Nombre} ${c.Apellido1} ${c.Apellido2}`); }}
+                                                    onClick={() => { 
+                                                        setSelectedExistingUser(c.id); 
+                                                        setExistingUserSearch(`${c.Nombre} ${c.Apellido1} ${c.Apellido2} - ${c.Email}`);
+                                                    }}
                                                 >
-                                                    {c.Nombre} {c.Apellido1} {c.Apellido2}
+                                                    {c.Nombre} {c.Apellido1} {c.Apellido2} - {c.Email}
                                                 </li>
                                             ))}
                                     </ul>
                                 )}
                             </div>
-                            <button onClick={addExistingUser} disabled={!selectedExistingUser} className='btn-agregar-existente-m-p'>Agregar existente</button>
+                            <button onClick={addExistingUser} className='btn-agregar-existente-m-p'>Agregar existente</button>
                         </div>
                         <div className='modal-section-m-p'>
                             <h3>Crear nuevo usuario</h3>
