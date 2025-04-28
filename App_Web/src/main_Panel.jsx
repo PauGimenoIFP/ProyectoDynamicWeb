@@ -176,6 +176,15 @@ export function Main_Panel(){
             alert('El correo debe contener @ y terminar en .es o .com');
             return;
         }
+
+        // Verificar si el email ya está en uso
+        const querySnapshot = await getDocs(collection(db, "clientes"));
+        const emailExists = querySnapshot.docs.some(doc => doc.data().Email === newUserData.Email);
+        if (emailExists) {
+            alert("Este correo electrónico ya está en uso. Agreguelo en el apartado de usuarios existentes.");
+            return; // Detener la ejecución si el correo electrónico ya está en uso
+        }
+
         const { Nombre, Apellido1, Apellido2, Email, Telefono, PlanSuscripcion } = newUserData;
         const APagar = PlanSuscripcion === 'Mensual' ? precioMensual : precioAnual;
         await addDoc(collection(db, 'clientes'), { Nombre, Apellido1, Apellido2, Email, Telefono, PlanSuscripcion, EstadoSuscripcion: false, UdGimnasio: passwordGym, APagar });

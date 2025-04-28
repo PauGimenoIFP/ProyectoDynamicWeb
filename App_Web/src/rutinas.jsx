@@ -110,12 +110,19 @@ export function Rutinas(){
     const handleSubmit = async (e) => {
         e.preventDefault(); // Evita el comportamiento por defecto del formulario
 
+        // Validar que el nombre de la rutina no esté vacío
+        if (!nombreRutina.trim()) {
+            alert('Por favor, introduce un nombre para la rutina.');
+            return;
+        }
+
         // Recoger los datos de la rutina
         const rutinaData = {
             nombre: nombreRutina,
             dias: Object.keys(diasSeleccionados).filter(d => diasSeleccionados[d]),
             ejercicios: ejerciciosPorDia,
-            gymPassword: gymPassword
+            gymPassword: gymPassword,
+            CreadaPorGym: true
         };
 
         try {
@@ -213,11 +220,23 @@ export function Rutinas(){
         }));
     };
 
+    // Agrego función para eliminar un ejercicio de un músculo específico
+    const handleEliminarEjercicioDeMusculo = (dia, musculoIndex, ejercicioIndex) => {
+        setEjerciciosPorDia(prev => ({
+            ...prev,
+            [dia]: prev[dia].map((musculo, idx) =>
+                idx === musculoIndex
+                    ? { ...musculo, ejercicios: musculo.ejercicios.filter((_, i) => i !== ejercicioIndex) }
+                    : musculo
+            )
+        }));
+    };
+
     const handleDiaChange = (dia) => {
         setDiasSeleccionados(prev => {
             const nuevosSeleccionados = { ...prev, [dia]: !prev[dia] };
             const diasActivos = Object.entries(nuevosSeleccionados)
-                .filter(([_diaKey, seleccionado]) => seleccionado)
+                .filter(([, seleccionado]) => seleccionado)
                 .length;
 
             if (!nuevosSeleccionados[dia]) {
@@ -284,8 +303,7 @@ export function Rutinas(){
             return musculo;
           })
         }));
-      };
-      
+    };
 
     const contarDiasSeleccionados = () => {
         return Object.values(diasSeleccionados).filter(Boolean).length;
@@ -294,7 +312,7 @@ export function Rutinas(){
     // Función para obtener los días seleccionados en orden
     const obtenerDiasSeleccionados = () => {
         return Object.entries(diasSeleccionados)
-            .filter(([_diaKey, seleccionado]) => seleccionado)
+            .filter(([, seleccionado]) => seleccionado)
             .map(([dia]) => dia);
     };
 
@@ -367,12 +385,12 @@ export function Rutinas(){
     // --- Funciones para el Modal de Asignación ---
 
     const handleAbrirAsignarModal = async () => {
-        if (!rutinaActual || !editandoRutina || allClientes.length === 0) return; // Necesitamos rutina, ID y clientes cargados
+        let asignadosActuales = [];
+        if (!rutinaActual || !editandoRutina || allClientes.length === 0) return;
 
         try {
             const rutinaRef = doc(db, "rutinas", editandoRutina);
             const rutinaSnap = await getDoc(rutinaRef);
-            let asignadosActuales = [];
             if (rutinaSnap.exists() && rutinaSnap.data().asignados) {
                 asignadosActuales = rutinaSnap.data().asignados;
             }

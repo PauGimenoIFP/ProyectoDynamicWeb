@@ -97,6 +97,16 @@ export function SignUp_Form(){
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    const email = document.getElementById('email').value;
+    
+    // Verificar si el email ya está en uso
+    const querySnapshot = await getDocs(collection(db, "Admin"));
+    const emailExists = querySnapshot.docs.some(doc => doc.data().email === email);
+    if (emailExists) {
+      alert("Este correo electrónico ya está en uso. Por favor, utiliza otro.");
+      return; // Detener la ejecución si el correo electrónico ya está en uso
+    }
+
     const requiredFields = [
       'nomGym', 'NIF/CIF', 'direccion', 
       'codPostal', 'ciudad', 'pais', 'telefono', 
@@ -112,7 +122,6 @@ export function SignUp_Form(){
       }
     }
 
-    const email = document.getElementById('email').value;
     if (!email.includes('@')) {
       alert("Por favor, introduce un correo electrónico válido.");
       return; // Detener la ejecución si el correo electrónico no contiene "@"
