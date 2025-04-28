@@ -22,6 +22,7 @@ export function Main_Panel(){
     const [selectedExistingUser, setSelectedExistingUser] = useState('');
     const [existingUserSearch, setExistingUserSearch] = useState('');
     const [newUserData, setNewUserData] = useState({ Nombre: '', Apellido1: '', Apellido2: '', Email: '', Telefono: '', PlanSuscripcion: 'Mensual' });
+    const [selectedExistingUserPlan, setSelectedExistingUserPlan] = useState('Mensual');
 
     useEffect(() => {
         const fetchGymData = async () => {
@@ -130,6 +131,7 @@ export function Main_Panel(){
         setSelectedExistingUser('');
         setExistingUserSearch('');
         setNewUserData({ Nombre: '', Apellido1: '', Apellido2: '', Email: '', Telefono: '', PlanSuscripcion: 'Mensual' });
+        setSelectedExistingUserPlan('Mensual');
     };
 
     const addExistingUser = async () => {
@@ -156,7 +158,8 @@ export function Main_Panel(){
 
             await updateDoc(doc(db, 'clientes', selectedExistingUser), { 
                 UdGimnasio: passwordGym, 
-                EstadoSuscripcion: false 
+                EstadoSuscripcion: false,
+                PlanSuscripcion: selectedExistingUserPlan
             });
             handleCloseAddModal();
             obtenerClientes(passwordGym);
@@ -307,7 +310,17 @@ export function Main_Panel(){
                                             ))}
                                     </ul>
                                 )}
+                                
                             </div>
+                            <select 
+                                className='select-search-m-p' 
+                                value={selectedExistingUserPlan} 
+                                onChange={(e) => setSelectedExistingUserPlan(e.target.value)}
+                            >
+                                <option value='Mensual'>Mensual</option>
+                                <option value='Anual'>Anual</option>
+                            </select>
+                            <br></br>
                             <button onClick={addExistingUser} className='btn-agregar-existente-m-p'>Agregar existente</button>
                         </div>
                         <div className='modal-section-m-p'>
