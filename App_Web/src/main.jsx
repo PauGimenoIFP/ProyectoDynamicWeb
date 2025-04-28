@@ -14,6 +14,7 @@ import { TestPage } from './TestPage.jsx'
 import { Edit_Profile } from './edit_Profile.jsx'
 import { ProtectedRoute } from './ProtectedRoute.jsx'
 import { PublicRoute } from './PublicRoute.jsx'
+import { LandingPage } from './LandingPage.jsx'
 import './index.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -37,7 +38,7 @@ root.render(
                 <Route path="/Rutinas" element={<Rutinas />} />
                 <Route path="/Edit_Profile" element={<Edit_Profile />} />
             </Route>
-
+            <Route path="/LandingPage" element={<LandingPage />} />
             <Route path="/test" element={<TestPage />} />
         </Routes>
     </BrowserRouter>

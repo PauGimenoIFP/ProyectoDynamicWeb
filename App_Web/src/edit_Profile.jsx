@@ -156,7 +156,7 @@ export function Edit_Profile(){
 
 
         // Solo actualizar si hay un valor no vacío
-        if (valueToUpdate !== null && valueToUpdate !== '' && valueToUpdate !== ' €') { // Asegurarse de no guardar solo " €"
+        if (valueToUpdate !== null && valueToUpdate !== '' && valueToUpdate !== '') { // Asegurarse de no guardar solo " €"
           updates[field.key] = valueToUpdate;
         }
       });

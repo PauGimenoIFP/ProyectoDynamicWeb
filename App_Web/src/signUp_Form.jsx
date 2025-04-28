@@ -149,8 +149,8 @@ export function SignUp_Form(){
     try {
       const uniquePassword = await generateUniquePassword();
 
-      const Mensual = document.getElementById('Mensual').value + " €";
-      const Anual = document.getElementById('Anual').value + " €";
+      const Mensual = document.getElementById('Mensual').value;
+      const Anual = document.getElementById('Anual').value;
 
       const docRef = await addDoc(collection(db, "centrosDeportivos"), {
         nombre: document.getElementById('nomGym').value,
