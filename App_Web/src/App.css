@@ -1080,6 +1080,12 @@
   border-radius: 30px;
 }
 
+.select-search-m-p {
+  width: 30% !important; 
+  padding: 10px;
+  border-radius: 30px;
+}
+
 .btn-agregar-existente-m-p {
   margin-top: 18px;
   padding: 10px 20px;
