@@ -170,8 +170,8 @@ export function Main_Panel(){
     };
 
     const addNewUser = async () => {
-        if (!newUserData.Nombre.trim() || !newUserData.Apellido1.trim() || !newUserData.Email.trim() || !newUserData.Telefono.trim()) {
-            alert('Por favor completa los campos obligatorios: Nombre, Apellido1, Email y Teléfono');
+        if (!newUserData.Nombre.trim() || !newUserData.Apellido1.trim() || !newUserData.Apellido2.trim() || !newUserData.Email.trim() || !newUserData.Telefono.trim()) {
+            alert('Por favor completa los campos obligatorios: Nombre, los apellidos, Email y Teléfono');
             return;
         }
         // Validar formato de email con dominio .es o .com
