@@ -1,4 +1,5 @@
 import './app.css';
+import './index.css';
 import logo from './assets/logo_dynamic_lema_blanco.png';
 import arrow from './assets/arrow-back.png';
 import { useNavigate } from 'react-router-dom';

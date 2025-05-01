@@ -1220,7 +1220,7 @@
 }
 
 .nombre-ruti-input {
-  width: 450px;
+  width: 300px;
   padding: 5px 15px;
   border: 1px solid var(--inputs);
 }
@@ -1757,6 +1757,18 @@
   background-color: rgba(255, 0, 0, 0.2);
   border-radius: 8px;
 }
+
+.objetivo-ruti-input {
+  width: 190px;
+  height: 30px;
+  padding: 5px 15px;
+  border: 1px solid var(--inputs);
+  margin-right: 10px;
+  border-radius: 30px;
+  background-color: var(--inputs);
+  color: var(--text-color);
+}
+
 /*------------------------------------------------------*/
 
 
