@@ -11,7 +11,7 @@ export function Rutinas(){
     const [nombreGym, setNombreGym] = useState('');
     const [Logo, setLogo] = useState('');
     const [gymPassword, setGymPassword] = useState('');
-    const [Objetivo, setObjetivo] = useState('Hipertrofia');
+    const [objetivo, setObjetivo] = useState('Hipertrofia');
     const [modalVisible, setModalVisible] = useState(false);
     const [nombreRutina, setNombreRutina] = useState('');
     const [diasSeleccionados, setDiasSeleccionados] = useState({
@@ -121,7 +121,7 @@ export function Rutinas(){
         // Recoger los datos de la rutina
         const rutinaData = {
             nombre: nombreRutina,
-            Objetivo: Objetivo,
+            objetivo: objetivo,
             dias: Object.keys(diasSeleccionados).filter(d => diasSeleccionados[d]),
             ejercicios: ejerciciosPorDia,
             gymPassword: gymPassword,
@@ -647,7 +647,7 @@ export function Rutinas(){
                             </div>
                             <div className='dias-ruti-container'>
                                 <select
-                                    value={Objetivo}
+                                    value={objetivo}
                                     onChange={(e) => setObjetivo(e.target.value)}
                                     className='objetivo-ruti-input'
                                     placeholder="Objetivo"
