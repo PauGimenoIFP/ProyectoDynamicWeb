@@ -929,7 +929,7 @@
     z-index: 1;
   }
   th {
-    background-color: var(--background-color);
+    background-color: #171717;
     color: var(--text-color);
     padding: 15px;
     border-bottom: 1px solid var(--secondary-color);

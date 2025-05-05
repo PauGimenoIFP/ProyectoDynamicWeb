@@ -263,35 +263,43 @@ export function Main_Panel(){
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredClientes.map((cliente) => {
-                                const originalIndex = clientes.findIndex(c => c.id === cliente.id); // Encuentra el índice original
-                                return (
-                                    <tr 
-                                        key={cliente.id}
-                                        onContextMenu={(e) => handleContextMenu(e, cliente.id)}
-                                    >
-                                        <td>{originalIndex + 1}</td>
-                                        <td>{cliente.Nombre} {cliente.Apellido1} {cliente.Apellido2}</td>
-                                        <td>
-                                            {cliente.EstadoSuscripcion === true ? (
-                                                <div className='estado-pago-m-p'>
-                                                    &ensp;
-                                                    <div className='circulo-verde-m-p'></div>
-                                                    <a>Pagado</a>
-                                                </div>
-                                            ) : (
-                                                <div className='estado-pago-m-p'>
-                                                    &ensp;
-                                                    <div className='circulo-rojo-m-p'></div>
-                                                    <a>Pendiente</a>
-                                                </div>
-                                            )}
-                                        </td>
-                                        <td>{cliente.Email}</td>
-                                        <td>{cliente.Telefono}</td>
-                                    </tr>
-                                );
-                            })}
+                            {filteredClientes.length === 0 ? (
+                                <tr>
+                                    <td colSpan={5} style={{ textAlign: 'center' }}>
+                                        Parece que no tienes usuarios ¡Añade algunos!
+                                    </td>
+                                </tr>
+                            ) : (
+                                filteredClientes.map((cliente) => {
+                                    const originalIndex = clientes.findIndex(c => c.id === cliente.id); // Encuentra el índice original
+                                    return (
+                                        <tr 
+                                            key={cliente.id}
+                                            onContextMenu={(e) => handleContextMenu(e, cliente.id)}
+                                        >
+                                            <td>{originalIndex + 1}</td>
+                                            <td>{cliente.Nombre} {cliente.Apellido1} {cliente.Apellido2}</td>
+                                            <td>
+                                                {cliente.EstadoSuscripcion === true ? (
+                                                    <div className='estado-pago-m-p'>
+                                                        &ensp;
+                                                        <div className='circulo-verde-m-p'></div>
+                                                        <a>Pagado</a>
+                                                    </div>
+                                                ) : (
+                                                    <div className='estado-pago-m-p'>
+                                                        &ensp;
+                                                        <div className='circulo-rojo-m-p'></div>
+                                                        <a>Pendiente</a>
+                                                    </div>
+                                                )}
+                                            </td>
+                                            <td>{cliente.Email}</td>
+                                            <td>{cliente.Telefono}</td>
+                                        </tr>
+                                    );
+                                })
+                            )}
                         </tbody>
                     </table>
                     <UserContextMenu 
