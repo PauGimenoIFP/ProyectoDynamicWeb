@@ -132,6 +132,7 @@ export function Main_Panel(){
     };
 
     const handleAddUser = () => {
+        fetchAllClientesData();
         setAddModalVisible(true);
     };
 
