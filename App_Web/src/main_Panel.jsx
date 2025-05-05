@@ -21,7 +21,7 @@ export function Main_Panel(){
     const [isAddModalVisible, setAddModalVisible] = useState(false);
     const [selectedExistingUser, setSelectedExistingUser] = useState('');
     const [existingUserSearch, setExistingUserSearch] = useState('');
-    const [newUserData, setNewUserData] = useState({ Nombre: '', Apellido1: '', Apellido2: '', Email: '', Telefono: '', PlanSuscripcion: 'Mensual' });
+    const [newUserData, setNewUserData] = useState({ Nombre: '', Apellido1: '', Apellido2: '', Email: '', Telefono: '', PlanSuscripcion: 'Mensual', Peso: '', Altura: '', PesoIdeal: '', Genero: 'Masculino', FechaNacimiento: '', Objetivo: 'Hipertrofia'});
     const [selectedExistingUserPlan, setSelectedExistingUserPlan] = useState('Mensual');
 
     useEffect(() => {
@@ -130,8 +130,13 @@ export function Main_Panel(){
         setAddModalVisible(false);
         setSelectedExistingUser('');
         setExistingUserSearch('');
-        setNewUserData({ Nombre: '', Apellido1: '', Apellido2: '', Email: '', Telefono: '', PlanSuscripcion: 'Mensual' });
+        setNewUserData({ Nombre: '', Apellido1: '', Apellido2: '', Email: '', Telefono: '', PlanSuscripcion: 'Mensual', Peso: '', Altura: '', PesoIdeal: '', Genero: 'Masculino', FechaNacimiento: '', Objetivo: 'Hipertrofia'});
         setSelectedExistingUserPlan('Mensual');
+    };
+
+    const formatDate = (dateString) => {
+        const [year, month, day] = dateString.split('-');
+        return `${day}/${month}/${year}`;
     };
 
     const addExistingUser = async () => {
@@ -170,8 +175,8 @@ export function Main_Panel(){
     };
 
     const addNewUser = async () => {
-        if (!newUserData.Nombre.trim() || !newUserData.Apellido1.trim() || !newUserData.Apellido2.trim() || !newUserData.Email.trim() || !newUserData.Telefono.trim()) {
-            alert('Por favor completa los campos obligatorios: Nombre, los apellidos, Email y Teléfono');
+        if (!newUserData.Nombre.trim() || !newUserData.Apellido1.trim() || !newUserData.Apellido2.trim() || !newUserData.Email.trim() || !newUserData.Telefono.trim() || !newUserData.Peso.trim() || !newUserData.Altura.trim() || !newUserData.PesoIdeal.trim() || !newUserData.Genero.trim() || !newUserData.FechaNacimiento.trim() || !newUserData.Objetivo.trim()) {
+            alert('Por favor completa los campos obligatorios: Nombre, los apellidos, Email, Teléfono, Peso, Altura, Peso Ideal, Genero, Fecha de nacimiento y Objetivo');
             return;
         }
         // Validar formato de email con dominio .es o .com
@@ -188,9 +193,30 @@ export function Main_Panel(){
             return; // Detener la ejecución si el correo electrónico ya está en uso
         }
 
-        const { Nombre, Apellido1, Apellido2, Email, Telefono, PlanSuscripcion } = newUserData;
+        const { Nombre, Apellido1, Apellido2, Email, Telefono, PlanSuscripcion, Genero, FechaNacimiento, Objetivo } = newUserData;
+        const Peso = Number(newUserData.Peso); // Convertir a número
+        const Altura = Number(newUserData.Altura); // Convertir a número
+        const PesoIdeal = Number(newUserData.PesoIdeal); // Convertir a número
+        const formattedFechaNacimiento = formatDate(FechaNacimiento);
         const APagar = PlanSuscripcion === 'Mensual' ? precioMensual : precioAnual;
-        await addDoc(collection(db, 'clientes'), { Nombre, Apellido1, Apellido2, Email, Telefono, PlanSuscripcion, EstadoSuscripcion: false, UdGimnasio: passwordGym, APagar });
+
+        await addDoc(collection(db, 'clientes'), { 
+            Nombre, 
+            Apellido1, 
+            Apellido2, 
+            Email, 
+            Telefono, 
+            PlanSuscripcion, 
+            EstadoSuscripcion: false, 
+            UdGimnasio: passwordGym, 
+            APagar, 
+            Peso, 
+            Altura, 
+            PesoIdeal, 
+            Genero, 
+            FechaNacimiento: formattedFechaNacimiento,
+            Objetivo 
+        });
         handleCloseAddModal();
         obtenerClientes(passwordGym);
     };
@@ -199,6 +225,11 @@ export function Main_Panel(){
     const filteredClientes = clientes.filter(cliente => 
         `${cliente.Nombre} ${cliente.Apellido1} ${cliente.Apellido2}`.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    const handleNumberInput = (e) => {
+        const value = e.target.value;
+        e.target.value = value.replace(/[^0-9.]/g, '');
+    };
 
     return (
         <main>
@@ -276,10 +307,10 @@ export function Main_Panel(){
             {isAddModalVisible && (
                 <div className='modal-overlay-m-p'>
                     <div className='modal-add-user-m-p'>
-                        <h2>Añadir usuario</h2>
+                        <h2 style={{margin:'0px', marginBottom:'5px'}}>Añadir usuario</h2>
                         <button className='close-btn-m-p' onClick={handleCloseAddModal}>×</button>
                         <div className='modal-section-m-p'>
-                            <h3>Usuario existente</h3>
+                            <h3 style={{margin:'0px', marginBottom:'15px'}}>Usuario existente</h3>
                             <div className='input-dropdown-wrapper-m-p'>
                                 <input
                                     type='text'
@@ -324,7 +355,7 @@ export function Main_Panel(){
                             <button onClick={addExistingUser} className='btn-agregar-existente-m-p'>Agregar existente</button>
                         </div>
                         <div className='modal-section-m-p'>
-                            <h3>Crear nuevo usuario</h3>
+                            <h3 style={{margin:'0px', marginBottom:'5px'}}>Crear nuevo usuario</h3>
                             <input type='text' className='input-cliente-nuevo-m-p' placeholder='Nombre' value={newUserData.Nombre} onChange={(e) => setNewUserData({ ...newUserData, Nombre: e.target.value })} />
                             <input type='text' className='input-cliente-nuevo-m-p' placeholder='Apellido1' value={newUserData.Apellido1} onChange={(e) => setNewUserData({ ...newUserData, Apellido1: e.target.value })} />
                             <input type='text' className='input-cliente-nuevo-m-p' placeholder='Apellido2' value={newUserData.Apellido2} onChange={(e) => setNewUserData({ ...newUserData, Apellido2: e.target.value })} />
@@ -351,6 +382,20 @@ export function Main_Panel(){
                                     }
                                 }}
                             />
+                            <input type='text' className='input-cliente-nuevo-m-p' placeholder='Altura (m)' value={newUserData.Altura} onChange={(e) => setNewUserData({ ...newUserData, Altura: e.target.value })} onInput={handleNumberInput} />
+                            <input type='text' className='input-cliente-nuevo-m-p' placeholder='Peso (kg)' value={newUserData.Peso} onChange={(e) => setNewUserData({ ...newUserData, Peso: e.target.value })} onInput={handleNumberInput} />
+                            <input type='text' className='input-cliente-nuevo-m-p' placeholder='Peso Ideal (kg)' value={newUserData.PesoIdeal} onChange={(e) => setNewUserData({ ...newUserData, PesoIdeal: e.target.value })} onInput={handleNumberInput}/>
+                            <input type='date' className='input-cliente-nuevo-m-p' placeholder='Fecha nacimiento' value={newUserData.FechaNacimiento} onChange={(e) => setNewUserData({ ...newUserData, FechaNacimiento: e.target.value })}/>
+                            <select value={newUserData.Genero} onChange={(e) => setNewUserData({ ...newUserData, Genero: e.target.value })}>
+                                <option value='Masculino'>Masculino</option>
+                                <option value='Femenino'>Femenino</option>
+                                <option value='Otro'>Otro</option>
+                            </select>
+                            <select value={newUserData.Objetivo} onChange={(e) => setNewUserData({ ...newUserData, Objetivo: e.target.value })}>
+                                <option value='Hipertrofia'>Hipertrofia</option>
+                                <option value='Definicion muscular'>Definicion muscular</option>
+                                <option value='Perder peso'>Perder peso</option>
+                            </select>
                             <select value={newUserData.PlanSuscripcion} onChange={(e) => setNewUserData({ ...newUserData, PlanSuscripcion: e.target.value })}>
                                 <option value='Mensual'>Mensual</option>
                                 <option value='Anual'>Anual</option>
