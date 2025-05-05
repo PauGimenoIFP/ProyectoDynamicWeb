@@ -11,6 +11,7 @@ export function Rutinas(){
     const [nombreGym, setNombreGym] = useState('');
     const [Logo, setLogo] = useState('');
     const [gymPassword, setGymPassword] = useState('');
+    const [objetivo, setObjetivo] = useState('Hipertrofia');
     const [modalVisible, setModalVisible] = useState(false);
     const [nombreRutina, setNombreRutina] = useState('');
     const [diasSeleccionados, setDiasSeleccionados] = useState({
@@ -46,6 +47,7 @@ export function Rutinas(){
     const [allClientes, setAllClientes] = useState([]); // Estado para todos los clientes
     // Detecto si la rutina es global (sin gymPassword) y no es editable
     const isGlobalRutina = modoEdicion && rutinaActual?.gymPassword == null;
+    const [isClientDropdownVisible, setIsClientDropdownVisible] = useState(false); // Estado para visibilidad del dropdown
 
     // Agregar un objeto para mapear días a iniciales
     const inicialesDias = {
@@ -119,6 +121,7 @@ export function Rutinas(){
         // Recoger los datos de la rutina
         const rutinaData = {
             nombre: nombreRutina,
+            objetivo: objetivo,
             dias: Object.keys(diasSeleccionados).filter(d => diasSeleccionados[d]),
             ejercicios: ejerciciosPorDia,
             gymPassword: gymPassword,
@@ -643,6 +646,18 @@ export function Rutinas(){
                                 />
                             </div>
                             <div className='dias-ruti-container'>
+                                <select
+                                    value={objetivo}
+                                    onChange={(e) => setObjetivo(e.target.value)}
+                                    className='objetivo-ruti-input'
+                                    placeholder="Objetivo"
+                                >
+                                    <option value="Hipertrofia">Hipertrofia</option>
+                                    <option value="Definicion muscular">Definicion muscular</option>
+                                    <option value="Perder peso">Perder peso</option>
+                                </select>
+                            </div>
+                            <div className='dias-ruti-container'>
                                 <div className='dias-selector-wrapper-ruti'>
                                     <div 
                                         className='dias-display-ruti'
@@ -814,12 +829,15 @@ export function Rutinas(){
                         <input
                             type='text'
                             value={emailParaAsignar}
-                            onChange={(e) => setEmailParaAsignar(e.target.value)}
+                            onChange={(e) => {
+                                setEmailParaAsignar(e.target.value);
+                                setIsClientDropdownVisible(true); // Mostrar dropdown al escribir
+                            }}
                             placeholder="Buscar cliente..."
                             className='input-asignar-email'
                             autoComplete="off"
                         />
-                        {emailParaAsignar && (
+                        {isClientDropdownVisible && emailParaAsignar && ( // Usar el nuevo estado para controlar visibilidad
                             <ul style={{ position:'absolute', top:'100%', left:0, right:0, zIndex:1002, backgroundColor:'var(--background-color)', listStyle:'none', margin:0, padding:0, maxHeight:'150px', overflowY:'auto', border:'1px solid var(--secondary-color)', borderRadius:'4px' }}>
                                 {clientesCentro
                                     .filter(c => (
@@ -829,7 +847,10 @@ export function Rutinas(){
                                     .map(cliente => (
                                         <li key={cliente.id}
                                             style={{ padding:'8px', cursor:'pointer' }}
-                                            onClick={() => setEmailParaAsignar(cliente.Email)}
+                                            onClick={() => {
+                                                setEmailParaAsignar(cliente.Email);
+                                                setIsClientDropdownVisible(false); // Ocultar dropdown al seleccionar
+                                            }}
                                         >
                                             {cliente.Nombre} {cliente.Apellido1} {cliente.Apellido2} - {cliente.Email}
                                         </li>

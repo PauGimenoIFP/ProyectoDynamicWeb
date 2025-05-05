@@ -110,7 +110,7 @@ export function SignUp_Form(){
     const requiredFields = [
       'nomGym', 'NIF/CIF', 'direccion', 
       'codPostal', 'ciudad', 'pais', 'telefono', 
-      'nom', 'primerApellido', 'email', 'contraseña', 'contraseña2',
+      'nom', 'primerApellido', 'segundoApellido', 'email', 'contraseña', 'contraseña2',
       'Mensual', 'Anual'
     ];
 
@@ -207,15 +207,15 @@ export function SignUp_Form(){
               <h1>Datos del Centro Deportivo</h1>
             </div>
             <div className='form-s'>
-              <label>Nombre del centro deportivo *</label>
+              <label>Nombre del centro deportivo</label>
               <br />
               <input type='text' className="input-s" id="nomGym" />
               <br />
-              <label>Identificador fiscal (NIF/CIF) *</label>
+              <label>Identificador fiscal (NIF/CIF)</label>
               <br />
               <input type='text' className="input-s" id="NIF/CIF" />
               <br />
-              <label>Dirección completa *</label>
+              <label>Dirección completa</label>
               <br />
               <input type='text' className="input-s" id="direccion" />
               <br />
@@ -223,35 +223,35 @@ export function SignUp_Form(){
             <div className='form-pequeño-s'>
               <div className='grid-pequeño-s'>
                 <div className='marco-CodTel-pequeño-s'>
-                  <label>Código postal *</label>
+                  <label>Código postal</label>
                   <input className="input-pequeños-s" id="codPostal" max={99999} onInput={handleNumberInput}/>
                 </div>
                 <div className='marco-CodTel-pequeño-derecho-s'>
-                  <label>Ciudad *</label>
+                  <label>Ciudad</label>
                   <input className="input-pequeños-derecho-s" id="ciudad" max={999999999} />
                 </div>
                 <div className='marco-CodTel-pequeño-s'>
-                  <label>País *</label>
+                  <label>País</label>
                   <input className="input-pequeños-s" id="pais" />
                 </div>
                 <div className='marco-CodTel-pequeño-derecho-s'>
-                  <label>Teléfono *</label>
+                  <label>Teléfono</label>
                   <input className="input-pequeños-derecho-s" id="telefono" max={999999999} onInput={handleNumberInput}/>
                 </div>
                 <div className='marco-CodTel-pequeño-s'>
-                  <label>Pago Mensual *</label>
+                  <label>Pago Mensual</label>
                   <input 
                     className="input-pequeños-s" id="Mensual" max={99999} placeholder=" €" onInput={handleNumberInput}
                   />
                 </div>
                 <div className='marco-CodTel-pequeño-derecho-s'>
-                  <label>Pago Anual *</label>
+                  <label>Pago Anual</label>
                   <input className="input-pequeños-derecho-s" id="Anual" max={99999} placeholder=" €" onInput={handleNumberInput}/>
                 </div>
               </div>
             </div>
             <div className='form-pequeño-s'>
-              <label>Logo del Gym *</label>
+              <label>Logo del Gym</label>
               <br />
               <div 
                 className="logo-drop-area-s" 
@@ -291,11 +291,11 @@ export function SignUp_Form(){
               <h1>Datos del Responsable</h1>
             </div>
             <div className='form-derecho-s'>
-              <label>Nombre *</label>
+              <label>Nombre</label>
               <br />
               <input type='text' className="input-s" id="nom" />
               <br />
-              <label>Primer apellido *</label>
+              <label>Primer apellido</label>
               <br />
               <input type='text' className="input-s" id="primerApellido" />
               <br />
@@ -303,15 +303,15 @@ export function SignUp_Form(){
               <br />
               <input type='text' className="input-s" id="segundoApellido" placeholder=" Opcional"/>
               <br />
-              <label>Correo electrónico (Cuenta Dynamic) *</label>
+              <label>Correo electrónico (Cuenta Dynamic)</label>
               <br />
               <input type='text' className="input-s" id="email" />
               <br />
-              <label>Contraseña *</label>
+              <label>Contraseña</label>
               <br />
               <input type='password' className="input-s" id="contraseña" />
               <br />
-              <label>Repite la contraseña *</label>
+              <label>Repite la contraseña</label>
               <br />
               <input type='password' className="input-s" id="contraseña2" />
             </div>

@@ -929,7 +929,7 @@
     z-index: 1;
   }
   th {
-    background-color: var(--background-color);
+    background-color: #171717;
     color: var(--text-color);
     padding: 15px;
     border-bottom: 1px solid var(--secondary-color);
@@ -1061,13 +1061,13 @@
   background: transparent;
   color: var(--text-color);
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   cursor: pointer;
 }
 
 .close-btn-m-p:hover {
   background-color: var(--cerrar);
-  border-radius: 50%;
+  border-radius: 40%;
 }
 
 .modal-section-m-p {
@@ -1087,7 +1087,7 @@
 }
 
 .btn-agregar-existente-m-p {
-  margin-top: 18px;
+  margin-top: 10px;
   padding: 10px 20px;
   background-color: transparent;
   border: 2px solid var(--text-color);
@@ -1127,7 +1127,7 @@
 
 .input-cliente-nuevo-m-p {
   margin: 8px 8px 8px 0;
-  width: 40%;
+  width: 40.5%;
   border: 1px solid #282828;
   border-radius: 30px;
   padding: 10px;
@@ -1220,7 +1220,7 @@
 }
 
 .nombre-ruti-input {
-  width: 450px;
+  width: 270px;
   padding: 5px 15px;
   border: 1px solid var(--inputs);
 }
@@ -1757,6 +1757,18 @@
   background-color: rgba(255, 0, 0, 0.2);
   border-radius: 8px;
 }
+
+.objetivo-ruti-input {
+  width: 190px;
+  height: 30px;
+  padding: 5px 15px;
+  border: 1px solid var(--inputs);
+  margin-right: 10px;
+  border-radius: 30px;
+  background-color: var(--inputs);
+  color: var(--text-color);
+}
+
 /*------------------------------------------------------*/
 
 
@@ -1772,3 +1784,7 @@
   height: 50px;
   width: auto;
 }
+/*------------------------------------------------------*/
+
+
+/* Estilos para la landing page */
