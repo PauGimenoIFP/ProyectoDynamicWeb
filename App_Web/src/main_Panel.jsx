@@ -24,6 +24,18 @@ export function Main_Panel(){
     const [newUserData, setNewUserData] = useState({ Nombre: '', Apellido1: '', Apellido2: '', Email: '', Telefono: '', PlanSuscripcion: 'Mensual', Peso: '', Altura: '', PesoIdeal: '', Genero: 'Masculino', FechaNacimiento: '', Objetivo: 'Hipertrofia'});
     const [selectedExistingUserPlan, setSelectedExistingUserPlan] = useState('Mensual');
 
+    // Función para obtener todos los clientes de la base de datos
+    const fetchAllClientesData = async () => {
+        try {
+            const querySnapshot = await getDocs(collection(db, 'clientes'));
+            const allData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setAllClientes(allData);
+             console.log("All clients data fetched."); // Log para depuración
+        } catch (error) {
+            console.error("Error fetching all clients data:", error);
+        }
+    };
+
     useEffect(() => {
         const fetchGymData = async () => {
             const udGym = localStorage.getItem('UdGym');
@@ -52,13 +64,9 @@ export function Main_Panel(){
         }
     }, [precioMensual, precioAnual]); // Dependencias
 
+    // Cargar todos los clientes al montar el componente
     useEffect(() => {
-        const fetchAllClientes = async () => {
-            const querySnapshot = await getDocs(collection(db, 'clientes'));
-            const allData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            setAllClientes(allData);
-        };
-        fetchAllClientes();
+        fetchAllClientesData(); // Llama a la nueva función
     }, []);
 
     const obtenerClientes = async (passwordGym) => {
@@ -119,7 +127,8 @@ export function Main_Panel(){
     };
 
     const handleUserDeleted = () => {
-        obtenerClientes(passwordGym);
+        obtenerClientes(passwordGym); // Actualiza la lista de clientes del gimnasio
+        fetchAllClientesData(); // Actualiza la lista de todos los clientes
     };
 
     const handleAddUser = () => {
