@@ -324,7 +324,7 @@ export function Main_Panel(){
                                 {existingUserSearch && !selectedExistingUser && (
                                     <ul style={{ position:'absolute', top:'100%', left:0, right:0, zIndex:1002, backgroundColor:'var(--background-color)', listStyle:'none', margin:0, padding:0, maxHeight:'150px', overflowY:'auto', border:'1px solid var(--secondary-color)', borderRadius:'4px' }}>
                                         {allClientes
-                                            .filter(c => c.UdGimnasio !== passwordGym && 
+                                            .filter(c => c.UdGimnasio !== passwordGym && (c.UdGimnasio == null || c.UdGimnasio === '') && 
                                                         (`${c.Nombre} ${c.Apellido1} ${c.Apellido2}`.toLowerCase().includes(existingUserSearch.toLowerCase()) ||
                                                          c.Email.toLowerCase().includes(existingUserSearch.toLowerCase())))
                                             .map(c => (
