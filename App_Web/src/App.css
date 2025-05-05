@@ -1061,13 +1061,13 @@
   background: transparent;
   color: var(--text-color);
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   cursor: pointer;
 }
 
 .close-btn-m-p:hover {
   background-color: var(--cerrar);
-  border-radius: 50%;
+  border-radius: 40%;
 }
 
 .modal-section-m-p {
