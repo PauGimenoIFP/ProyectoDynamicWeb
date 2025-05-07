@@ -7859,3 +7859,10 @@ footer h5 {
   margin-top: 15%;
   position: relative;
 }
+
+.box:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Cambia el color según tu preferencia */
+    transition: background-color 0.5s ease; /* Suaviza la transición */
+    border: 1px solid #2979ff; /* Cambia el color según tu preferencia */
+    border-radius: 10px;
+}
