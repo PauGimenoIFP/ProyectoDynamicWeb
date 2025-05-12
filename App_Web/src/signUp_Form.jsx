@@ -301,7 +301,7 @@ export function SignUp_Form(){
               <br />
               <label>Segundo apellido</label>
               <br />
-              <input type='text' className="input-s" id="segundoApellido" placeholder=" Opcional"/>
+              <input type='text' className="input-s" id="segundoApellido" />
               <br />
               <label>Correo electrónico (Cuenta Dynamic)</label>
               <br />
