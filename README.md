@@ -44,6 +44,6 @@
     </details>
 </details>
 <details>
-    <summary><h2>Instalación</h2></summary>
+    <summary><h2>💾​Instalación</h2></summary>
     <a>Cuando descargue el archivo zip, en la zona donde lo extraeremos entraremos en la carpeta de App_Web y haremos el siguiente comando en la terminal de windows "npm install vite". Luego de esto solo tendremos que hacer npm run dev y entonces en el local nos tendra una pagina preparada que es http://localhost:5173/. Dentro de esta pagina estara todo el proyecto y ya sera interactivo sin ningun problema.</a>
 </details>
