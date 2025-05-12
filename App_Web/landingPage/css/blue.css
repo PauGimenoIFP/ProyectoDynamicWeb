@@ -65,7 +65,9 @@ body {
   line-height: 1.5;
   color: #CFD8DC;
   text-align: left;
-  background-color: #000000; }
+  background-color: #000000;
+  overflow-x: hidden;
+}
 
 [tabindex="-1"]:focus {
   outline: 0 !important; }
@@ -7717,35 +7719,10 @@ footer h5 {
 /* Icon Boxes */
 .icon-box {
   position: relative;
-  border-radius: 50%;
   display: inline-block;
   vertical-align: middle;
-  background-color: #ffffff;
   margin: 1rem; }
-  .icon-box.box-primary {
-    color: #2979ff;
-    background-color: rgba(41, 121, 255, 0.1); }
-  .icon-box.box-secondary {
-    color: #ffffff;
-    background-color: rgba(255, 255, 255, 0.1); }
-  .icon-box.box-success {
-    color: #00e676;
-    background-color: rgba(0, 230, 118, 0.1); }
-  .icon-box.box-info {
-    color: #00e5ff;
-    background-color: rgba(0, 229, 255, 0.1); }
-  .icon-box.box-warning {
-    color: #ffea00;
-    background-color: rgba(255, 234, 0, 0.1); }
-  .icon-box.box-danger {
-    color: #ff1744;
-    background-color: rgba(255, 23, 68, 0.1); }
-  .icon-box.box-light {
-    color: #ECEFF1;
-    background-color: rgba(236, 239, 241, 0.1); }
-  .icon-box.box-dark {
-    color: #11171a;
-    background-color: rgba(17, 23, 26, 0.1); }
+
   .icon-box .icon-box-inner {
     display: -ms-flexbox;
     display: flex;
@@ -7864,4 +7841,20 @@ footer h5 {
     background-color: rgba(0, 123, 255, 0.1); /* Cambia el color según tu preferencia */
     transition: background-color 0.5s ease; /* Suaviza la transición */
     border-radius: 10px;
+}
+
+.feature-row {
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 24px 16px;
+    margin-bottom: 32px;
+}
+@media (max-width: 768px) {
+    .feature-row {
+        flex-direction: column !important;
+        text-align: center;
+    }
+    .feature-row .icon-box {
+        margin: 0 0 16px 0 !important;
+    }
 }
